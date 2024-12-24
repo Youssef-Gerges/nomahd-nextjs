@@ -46,7 +46,7 @@ export default function MobileMenu() {
             {navItems.map((item, i) => (
               <li key={i} className="nav-mb-item">
                 <a
-                  href={`#${item.id}`}
+                  href={`#${item.href}`}
                   className={`collapsed mb-menu-link current ${
                     isMenuActive(item) ? "activeMenu" : ""
                   }`}
@@ -55,9 +55,9 @@ export default function MobileMenu() {
                   aria-controls={item.id}
                 >
                   <span>{item.label}</span>
-                  <span className="btn-open-sub" />
+                  {/* <span className="btn-open-sub" /> */}
                 </a>
-                <div id={item.id} className="collapse">
+                {/* <div id={item.id} className="collapse">
                   <ul className="sub-nav-menu">
                     {item.links.map((subItem, i2) => (
                       <li key={i2}>
@@ -117,7 +117,7 @@ export default function MobileMenu() {
                       </li>
                     ))}
                   </ul>
-                </div>
+                </div> */}
               </li>
             ))}
             <li className="nav-mb-item">

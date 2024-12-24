@@ -7,23 +7,130 @@ import { useContextElement } from "@/context/Context";
 
 import { allProducts } from "@/data/products";
 import { colors, sizeOptions } from "@/data/singleProductOptions";
+import { useGetAllProducts } from "@/api/products/useGetAllProducts";
+import { useAddToCart } from "@/api/cart/addToCart";
+import { useAddToWishlist } from "@/api/wishlist/addToWishlist";
+import { useAddToWishlistNew } from "@/api/wishlist/newAddToWishlist";
+import { useCheckProductInWishlist } from "@/api/wishlist/checkProduct";
+import { useGetCartData } from "@/api/cart/getCart";
+import { useNewRemoveFromWishlist } from "@/api/wishlist/newRemoveFromWishlist";
 export default function QuickAdd() {
   const {
     quickAddItem,
-    addProductToCart,
-    isAddedToCartProducts,
+    // addProductToCart,
+    // isAddedToCartProducts,
     addToCompareItem,
     isAddedtoCompareItem,
   } = useContextElement();
-  const [item, setItem] = useState(allProducts[0]);
+  const id = localStorage.getItem("id");
+  const { data } = useGetAllProducts(1);
+  const addToCart = useAddToCart();
+  const [isInWishlist, setIsInWishlist] = useState(false);
+  const [isInCart, setIsInCart] = useState(false);
+  const [quantity , setQuantity] = useState(1);
+  const { data: cartData } = useGetCartData(id);
+  const addToWishlist = useAddToWishlist();
+  // const [productId, setProductId] = useState(""); // Example: manage input for product ID
+  // const [userId, setUserId] = useState(""); // Example: manage input for user ID
+  const checkWishlist = useCheckProductInWishlist();
+  const addToWishlistMutation = useAddToWishlistNew();
+  const removeFromWishlist = useNewRemoveFromWishlist();
+  const [currentColor, setCurrentColor] = useState(colors[0]);
+  const [currentSize, setCurrentSize] = useState(sizeOptions[0]);
+  const [item, setItem] = useState({});
+
+  useEffect(() => {
+    checkWishlist.mutate(
+      { productId: quickAddItem, userId: id },
+      {
+        onSuccess: (data) => {
+          setIsInWishlist(data?.is_in_wishlist);
+          console.log("Wishlist data:", data?.is_in_wishlist);
+        },
+        onError: (error) => {
+          console.error("Error:", error.message);
+        },
+      }
+    );
+  }, [quickAddItem, addToWishlistMutation.isSuccess , removeFromWishlist.isSuccess]);
+
+  useEffect(() => {
+    if (cartData?.data) {
+      cartData?.data?.includes(quickAddItem)
+        ? setIsInCart(true)
+        : setIsInCart(false);
+    }
+  }, [cartData]);
+
+  const handleAddToWishlist = () => {
+    // Validate inputs before calling the mutation
+   
+
+    addToWishlistMutation.mutate(
+      { productId: quickAddItem, userId: id },
+      {
+        onSuccess: (data) => {
+          console.log("Wishlist data:", data);
+         
+        },
+        onError: (error) => {
+          console.error("Error:", error.message);
+          
+        },
+      }
+    );
+  };
+
+  const handleRemoveFromWishlist = () => {
+   
+
+    removeFromWishlist.mutate(
+      { productId: quickAddItem, userId: id },
+      {
+        onSuccess: (data) => {
+          console.log("Wishlist data:", data);
+         
+        },
+        onError: (error) => {
+          console.error("Error:", error.message);
+         
+        },
+      }
+    );
+  };
+
+  const handleAddToCart = () => {
+    addToCart.mutate({
+      id: quickAddItem,
+      variant: "",
+      user_id: JSON.parse(localStorage.getItem("id")),
+      quantity: quantity,
+    });
+    console.log("item is :", quickAddItem);
+  };
+
+  const handleAddToWishList = () => {
+    addToWishlist.mutate({
+      user_id: JSON.parse(localStorage.getItem("id")),
+      product_id: quickAddItem,
+    });
+  };
   useEffect(() => {
     const filtered = allProducts.filter((el) => el.id == quickAddItem);
     if (filtered) {
       setItem(filtered[0]);
     }
+    setItem(data?.data?.find((item) => item.id == quickAddItem))
+    console.log('dataa' , data?.data , quickAddItem , item)
   }, [quickAddItem]);
-  const [currentColor, setCurrentColor] = useState(colors[0]);
-  const [currentSize, setCurrentSize] = useState(sizeOptions[0]);
+
+  useEffect(()=>{
+    console.log("dataa item " , item)
+  },[item])
+  useEffect(()=>{
+    setQuantity(1)
+  },[])
+  
 
   return (
     <div className="modal fade modalDemo" id="quick_add">
@@ -41,15 +148,16 @@ export default function QuickAdd() {
                 <Image
                   alt="image"
                   style={{ objectFit: "contain" }}
-                  src={item.imgSrc}
+                  src={item?.thumbnail_image}
                   width={720}
                   height={1005}
                 />
+                <span>{item?.name}</span>
               </div>
               <div className="content">
-                <Link href={`/product-detail/${item.id}`}>{item.title}</Link>
+                <Link href={`/product-detail/${item?.id}`}>{item?.name}</Link>
                 <div className="tf-product-info-price">
-                  <div className="price">${item.price.toFixed(2)}</div>
+                  <div className="price">{item?.currency_symbol} {item?.calculable_price}</div>
                 </div>
               </div>
             </div>
@@ -113,30 +221,39 @@ export default function QuickAdd() {
             </div>
             <div className="tf-product-info-quantity mb_15">
               <div className="quantity-title fw-6">Quantity</div>
-              <Quantity />
+              <Quantity setQuantity={setQuantity}/>
             </div>
             <div className="tf-product-info-buy-button">
               <form onSubmit={(e) => e.preventDefault()} className="">
                 <a
                   className="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn"
-                  onClick={() => addProductToCart(item.id)}
+                  onClick={() => handleAddToCart(item?.id)}
                 >
                   <span>
-                    {isAddedToCartProducts(item.id)
+                    {isInCart
                       ? "Already Added - "
                       : "Add to cart - "}
                   </span>
-                  <span className="tf-qty-price">${item.price.toFixed(2)}</span>
+                  <span className="tf-qty-price">{item?.main_price}</span>
                 </a>
                 <div className="tf-product-btn-wishlist btn-icon-action">
-                  <i className="icon-heart" />
+                  <i
+                    className={`${
+                      isInWishlist ? "icon-heart-full" : "icon-heart"
+                    }`}
+                    onClick={() => {
+                      isInWishlist
+                        ? handleRemoveFromWishlist()
+                        : handleAddToWishlist();
+                    }}
+                  />
                   <i className="icon-delete" />
                 </div>
                 <a
                   href="#compare"
                   data-bs-toggle="offcanvas"
                   aria-controls="offcanvasLeft"
-                  onClick={() => addToCompareItem(item.id)}
+                  onClick={() => addToCompareItem(item?.id)}
                   className="tf-product-btn-wishlist box-icon bg_white compare btn-icon-action"
                 >
                   <span className="icon icon-compare" />

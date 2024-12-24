@@ -64,15 +64,15 @@ export default function Nav({ isArrow = true, textColor = "", Linkfs = "" }) {
       {" "}
       <li className="menu-item">
         <a
-          href="#"
+          href="/home-multi-brand"
           className={`item-link ${Linkfs} ${textColor} ${
             isMenuActive(allHomepages) ? "activeMenu" : ""
           } `}
         >
           Home
-          {isArrow ? <i className="icon icon-arrow-down" /> : ""}
+          {/* {isArrow ? <i className="icon icon-arrow-down" /> : ""} */}
         </a>
-        <div className="sub-menu mega-menu">
+        {/* <div className="sub-menu mega-menu">
           <div className="container">
             <div className="row-demo">
               {demoItems.map((item, index) => (
@@ -121,7 +121,7 @@ export default function Nav({ isArrow = true, textColor = "", Linkfs = "" }) {
               </a>
             </div>
           </div>
-        </div>
+        </div> */}
       </li>
       <li className="menu-item">
         <a

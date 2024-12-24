@@ -4,9 +4,13 @@ import { useContextElement } from "@/context/Context";
 import { useEffect, useState } from "react";
 import { ProductCardWishlist } from "../shopCards/ProductCardWishlist";
 import Link from "next/link";
+import { useGetUserWishlist } from "@/api/wishlist/getUserWishlist";
+import { useGetAllProducts } from "@/api/products/useGetAllProducts";
 
 export default function Wishlist() {
+  const { data } = useGetUserWishlist();
   const { wishList } = useContextElement();
+  const { data: products } = useGetAllProducts();
   const [wishListItems, setWishListItems] = useState([]);
   useEffect(() => {
     if (wishList) {
@@ -17,12 +21,24 @@ export default function Wishlist() {
     }
   }, [wishList]);
 
+  useEffect(() => {
+    console.log("data wish products", data?.data);
+    console.log("data products", products?.data);
+    if (data) {
+      const matchingProducts = products?.data.filter((product) =>
+        data?.data.some(
+          (wishlistItem) => wishlistItem.product.id === product.id
+        )
+      );
+      console.log("data products filtered", matchingProducts);
+    }
+  }, [data, products]);
   return (
     <section className="flat-spacing-2">
       <div className="container">
         <div className="grid-layout wrapper-shop" data-grid="grid-4">
-          {wishListItems.map((elm, i) => (
-            <ProductCardWishlist key={i} product={elm} />
+          {data?.data.map((elm, i) => (
+            <ProductCardWishlist key={i} product={elm.product} productId={elm.id} />
           ))}
         </div>
         {!wishListItems.length && (

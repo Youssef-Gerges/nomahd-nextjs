@@ -1,28 +1,77 @@
 "use client";
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useContextElement } from "@/context/Context";
 import CountdownComponent from "../common/Countdown";
-export const ProductCardWishlist = ({ product }) => {
-  const [currentImage, setCurrentImage] = useState(product.imgSrc);
+import { useNewRemoveFromWishlist } from "@/api/wishlist/newRemoveFromWishlist";
+import { useCheckProductInWishlist } from "@/api/wishlist/checkProduct";
+import { useAddToWishlist } from "@/api/wishlist/addToWishlist";
+export const ProductCardWishlist = ({ product, productId }) => {
+  const [currentImage, setCurrentImage] = useState(product.thumbnail_image);
   const { setQuickViewItem } = useContextElement();
+  const [isInWishlist, setIsInWishlist] = useState(false);
+  const removeFromWishlist = useNewRemoveFromWishlist();
+  const checkWishlist = useCheckProductInWishlist();
+  const addToWishlist = useAddToWishlist();
+  const id = localStorage.getItem("id");
   const {
     setQuickAddItem,
-    addToWishlist,
-    isAddedtoWishlist,
-    removeFromWishlist,
+    // addToWishlist,
+    // isAddedtoWishlist,
+    // removeFromWishlist,
     addToCompareItem,
     isAddedtoCompareItem,
   } = useContextElement();
 
+  const handleRemove = () => {
+    removeFromWishlist.mutate(
+      { productId: productId, userId: id },
+      {
+        onSuccess: (data) => {
+          console.log("Wishlist data:", data);
+        },
+        onError: (error) => {
+          console.error("Error:", error.message);
+        },
+      }
+    );
+  };
+
+  const handleAddToWishlist = () => {
+    addToWishlist.mutate(
+      { productId: productId, userId: id },
+      {
+        onSuccess: (data) => {
+          console.log("Wishlist data:", data);
+        },
+        onError: (error) => {
+          console.error("Error:", error.message);
+        },
+      }
+    );
+  };
+  useEffect(() => {
+    checkWishlist.mutate(
+      { productId: productId, userId: id },
+      {
+        onSuccess: (data) => {
+          setIsInWishlist(data?.is_in_wishlist);
+          console.log("Wishlist data:", data?.is_in_wishlist);
+        },
+        onError: (error) => {
+          console.error("Error:", error.message);
+        },
+      }
+    );
+  }, [productId, removeFromWishlist.isSuccess]);
   return (
     <div className="card-product fl-item" key={product.id}>
       <div className="card-product-wrapper">
-        <Link href={`/product-detail/${product.id}`} className="product-img">
+        <Link href={`/product-detail/${product.slug}`} className="product-img">
           <Image
             className="lazyload img-product"
-            data-src={product.imgSrc}
+            data-src={product.thumbnail_image}
             src={currentImage}
             alt="image-product"
             width={720}
@@ -31,9 +80,15 @@ export const ProductCardWishlist = ({ product }) => {
           <Image
             className="lazyload img-hover"
             data-src={
-              product.imgHoverSrc ? product.imgHoverSrc : product.imgSrc
+              product.imgHoverSrc
+                ? product.imgHoverSrc
+                : product.thumbnail_image
             }
-            src={product.imgHoverSrc ? product.imgHoverSrc : product.imgSrc}
+            src={
+              product.imgHoverSrc
+                ? product.imgHoverSrc
+                : product.thumbnail_image
+            }
             alt="image-product"
             width={720}
             height={1005}
@@ -41,7 +96,7 @@ export const ProductCardWishlist = ({ product }) => {
         </Link>
         <div className="list-product-btn type-wishlist">
           <a
-            onClick={() => removeFromWishlist(product.id)}
+            onClick={() => handleRemove()}
             className="box-icon bg_white wishlist"
           >
             <span className="tooltip">Remove Wishlist</span>
@@ -52,7 +107,7 @@ export const ProductCardWishlist = ({ product }) => {
         <div className="list-product-btn">
           <a
             href="#quick_add"
-            onClick={() => setQuickAddItem(product.id)}
+            onClick={() => setQuickAddItem(productId)}
             data-bs-toggle="modal"
             className="box-icon bg_white quick-add tf-btn-loading"
           >
@@ -60,18 +115,16 @@ export const ProductCardWishlist = ({ product }) => {
             <span className="tooltip">Quick Add</span>
           </a>
           <a
-            onClick={() => addToWishlist(product.id)}
+            onClick={() => {
+              isInWishlist ? handleRemove() : handleAddToWishlist();
+            }}
             className="box-icon bg_white wishlist btn-icon-action"
           >
             <span
-              className={`icon icon-heart ${
-                isAddedtoWishlist(product.id) ? "added" : ""
-              }`}
+              className={`${isInWishlist ? "icon-heart-full" : "icon-heart"}`}
             />
             <span className="tooltip">
-              {isAddedtoWishlist(product.id)
-                ? "Already Wishlisted"
-                : "Add to Wishlist"}
+              {isInWishlist ? "Already Wishlisted" : "Add to Wishlist"}
             </span>
             <span className="icon icon-delete" />
           </a>
@@ -121,10 +174,10 @@ export const ProductCardWishlist = ({ product }) => {
         )}
       </div>
       <div className="card-product-info">
-        <Link href={`/product-detail/${product.id}`} className="title link">
-          {product.title}
+        <Link href={`/product-detail/${product.slug}`} className="title link">
+          {product.name}
         </Link>
-        <span className="price">${product.price.toFixed(2)}</span>
+        {/* <span className="price">${product.price.toFixed(2)}</span> */}
         {product.colors && (
           <ul className="list-color-product">
             {product.colors.map((color) => (

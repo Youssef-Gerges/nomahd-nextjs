@@ -1,7 +1,40 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
+import { useLogin } from "@/api/auth/auth";
+import { useSendToMail } from "@/api/auth/resetPassword";
+import { useRouter } from "next/navigation";
 export default function Login() {
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    login_by: "email",
+  });
+  const [resetPassword, setResetPassword] = useState({
+    email_or_phone: "",
+    send_code_by: "email",
+  });
+  const loginMutation = useLogin();
+  const sentToMail = useSendToMail();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    loginMutation.mutate(formData, { onSuccess: () => router.push("/") });
+  };
+
+  const handleSendToMail = (e) => {
+    e.preventDefault();
+    sentToMail.mutate(resetPassword);
+  };
+  const handleMailChange = (e) => {
+    const { name, value } = e.target;
+    setResetPassword((prev) => ({ ...prev, [name]: value }));
+  };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
   return (
     <section className="flat-spacing-10">
       <div className="container">
@@ -20,9 +53,11 @@ export default function Login() {
                       placeholder=""
                       required
                       type="email"
+                      name="email_or_phone"
+                      value={resetPassword.email_or_phone}
+                      onChange={handleMailChange}
                       autoComplete="abc@xyz.com"
                       id="property3"
-                      name="email"
                     />
                     <label
                       className="tf-field-label fw-4 text_black-2"
@@ -39,6 +74,7 @@ export default function Login() {
                   <div className="">
                     <button
                       type="submit"
+                      onClick={handleSendToMail}
                       className="tf-btn w-100 radius-3 btn-fill animate-hover-btn justify-content-center"
                     >
                       Reset password
@@ -57,9 +93,11 @@ export default function Login() {
                       className="tf-field-input tf-input"
                       placeholder=""
                       type="email"
+                      name="email"
+                      onChange={handleChange}
+                      value={formData.email}
                       autoComplete="abc@xyz.com"
                       id="property3"
-                      name="email"
                     />
                     <label
                       className="tf-field-label fw-4 text_black-2"
@@ -76,6 +114,8 @@ export default function Login() {
                       type="password"
                       id="property4"
                       name="password"
+                      onChange={handleChange}
+                      value={formData.password}
                       autoComplete="current-password"
                     />
                     <label
@@ -93,6 +133,7 @@ export default function Login() {
                   <div className="">
                     <button
                       type="submit"
+                      onClick={handleLogin}
                       className="tf-btn w-100 radius-3 btn-fill animate-hover-btn justify-content-center"
                     >
                       Log in

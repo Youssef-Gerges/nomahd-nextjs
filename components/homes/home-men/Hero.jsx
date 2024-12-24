@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import LookbookComponent from "@/components/common/LookbookComponent";
 import { lookbookProducts } from "@/data/products";
-export default function Hero() {
+export default function Hero({banner}) {
   return (
     <div className="tf-slideshow slideshow-men slider-effect-fade position-relative">
       <Swiper dir="ltr" className="swiper tf-sw-slideshow">
@@ -12,9 +12,9 @@ export default function Hero() {
           <div className="wrap-slider">
             <Image
               className="lazyload"
-              data-src="/images/slider/men-slide1.jpg"
+              data-src={banner}
               alt="men-slideshow-01"
-              src="/images/slider/men-slide1.jpg"
+              src={banner}
               width={2000}
               height={929}
               priority

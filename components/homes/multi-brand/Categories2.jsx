@@ -5,7 +5,16 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Link from "next/link";
 import Image from "next/image";
+import { useGetTopCategories } from "@/api/categories/getTopCategories";
+import { useEffect } from "react";
+import { useGetHomeCategories } from "@/api/categories/getHomeCategories";
+import { useGetAllBanners } from "@/api/general/getAllBanners";
 export default function Categories2() {
+ const {data} = useGetAllBanners()
+
+ useEffect(()=>{
+  console.log("lolo" , data?.data)
+ },[data])
   return (
     <section className="flat-spacing-5 pb_0">
       <div className="container">
@@ -35,7 +44,7 @@ export default function Categories2() {
             }}
             pagination={{ clickable: true, el: ".spd299" }}
           >
-            {collections2.map((collection, index) => (
+            {data?.data?.map((collection, index) => (
               <SwiperSlide key={index}>
                 <div className="collection-item style-2 hover-img">
                   <div className="collection-inner">
@@ -45,22 +54,22 @@ export default function Categories2() {
                     >
                       <Image
                         className="lazyload"
-                        data-src={collection.imgSrc}
+                        data-src={collection.photo}
                         alt={collection.imgAlt}
-                        src={collection.imgSrc}
+                        src={collection.photo}
                         width={360}
                         height={432}
                       />
                     </Link>
-                    <div className="collection-content">
+                    {/* <div className="collection-content">
                       <Link
                         href={`/shop-collection-sub`} // Directly added href here
                         className="tf-btn collection-title hover-icon fs-15 rounded-full"
                       >
-                        <span>{collection.title}</span>
+                        <span>{collection.name}</span>
                         <i className="icon icon-arrow1-top-left" />
                       </Link>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </SwiperSlide>

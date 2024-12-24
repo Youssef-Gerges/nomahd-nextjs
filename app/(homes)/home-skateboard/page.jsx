@@ -1,5 +1,6 @@
 import Footer4 from "@/components/footers/Footer4";
 import Header1 from "@/components/headers/Header1";
+import Header7 from "@/components/headers/Header7";
 import Brands from "@/components/homes/home-1/Brands";
 import Features from "@/components/homes/home-6/Features";
 import Banner from "@/components/homes/home-skateboard/Banner";
@@ -19,7 +20,7 @@ export const metadata = {
 export default function page() {
   return (
     <>
-      <Header1 />
+      <Header7 />
 
       <Hero />
       <Marquee />

@@ -1,7 +1,50 @@
 "use client";
-import React from "react";
 import Link from "next/link";
+import { useRegister} from "@/api/auth/auth";
+import React, { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
+
 export default function Register() {
+  const registerMutation = useRegister();
+  const router = useRouter(); 
+
+    const [formData, setFormData] = useState({
+      firstName: "",
+      lastName: "",
+      email_or_phone: "",
+      password: "",
+      password_confirmation: "",
+      register_by: "email",
+    });
+
+  const handleRegister = () => {
+    // Concatenate first and last names into a single 'name' field
+    const fullName = `${formData.firstName} ${formData.lastName}`.trim();
+
+    // Only send 'name' in the request, without firstName or lastName
+    const { firstName, lastName, ...restFormData } = formData; // Exclude firstName and lastName
+    const formDataToSubmit = {
+      ...restFormData,
+      name: fullName, // Concatenated name
+    };
+
+    // registerMutation.mutate(formDataToSubmit);
+
+    registerMutation.mutate(formDataToSubmit, {
+      onSuccess: () => {
+        // Navigate to the desired route on successful registration
+        router.push("/");
+      },
+      onError: (error) => {
+        console.error("Registration failed:", error);
+      },
+    });
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
   return (
     <section className="flat-spacing-10">
       <div className="container">
@@ -29,8 +72,10 @@ export default function Register() {
                   placeholder=" "
                   type="text"
                   id="property1"
-                  name="first name"
                   required
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
                 />
                 <label
                   className="tf-field-label fw-4 text_black-2"
@@ -45,8 +90,10 @@ export default function Register() {
                   placeholder=" "
                   type="text"
                   id="property2"
-                  name="last name"
                   required
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
                 />
                 <label
                   className="tf-field-label fw-4 text_black-2"
@@ -62,8 +109,10 @@ export default function Register() {
                   type="email"
                   autoComplete="abc@xyz.com"
                   id="property3"
-                  name="email"
                   required
+                  name="email_or_phone"
+                  value={formData.email_or_phone}
+                  onChange={handleChange}
                 />
                 <label
                   className="tf-field-label fw-4 text_black-2"
@@ -77,10 +126,11 @@ export default function Register() {
                   className="tf-field-input tf-input"
                   placeholder=" "
                   type="password"
-                  id="property4"
+                  required
                   name="password"
                   autoComplete="current-password"
-                  required
+                  value={formData.password}
+                  onChange={handleChange}
                 />
                 <label
                   className="tf-field-label fw-4 text_black-2"
@@ -89,13 +139,38 @@ export default function Register() {
                   Password *
                 </label>
               </div>
-              <div className="mb_20">
-                <button
-                  type="submit"
-                  className="tf-btn w-100 radius-3 btn-fill animate-hover-btn justify-content-center"
+              <div className="tf-field style-1">
+                <input
+                  className="tf-field-input tf-input"
+                  placeholder=" "
+                  type="password"
+                  required
+                  name="password_confirmation"
+                  autoComplete="current-password"
+                  value={formData.password_confirmation}
+                  onChange={handleChange}
+                />
+                <label
+                  className="tf-field-label"
+                  htmlFor="password_confirmation"
                 >
-                  Register
-                </button>
+                  Confirm Password *
+                </label>
+                {formData.password !== formData.password_confirmation &&
+                  formData.password_confirmation !== "" && (
+                    <p style={{ color: "red" }}>Passwords do not match</p>
+                  )}
+              </div>
+              <div className="mb_20">
+              <button
+                    onClick={(e)=>handleRegister(e)}
+                    className="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center"
+                    disabled={
+                      formData.password !== formData.password_confirmation
+                    }
+                  >
+                    Register
+                  </button>
               </div>
               <div className="text-center">
                 <Link href={`/login`} className="tf-btn btn-line">

@@ -4,7 +4,17 @@ import { recentCollections } from "@/data/categories";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useGetAllBanners } from "@/api/general/getAllBanners";
+import { useGetHomeCategories } from "@/api/cart/getCart";
+import { useGetAllCategories } from "@/api/categories/getAllCategories";
+import { useGetFeaturedCategories } from "@/api/categories/getFeaturedCategories";
+import { useEffect } from "react";
 export default function BannerCollection() {
+  const {data} = useGetFeaturedCategories()
+
+  useEffect(()=>{
+   console.log("catat" , data?.data)
+  },[data])
   return (
     <section className="flat-spacing-10 pb_0">
       <div className="container">
@@ -20,7 +30,7 @@ export default function BannerCollection() {
           }}
           className="tf-sw-recent"
         >
-          {recentCollections.map((item, index) => (
+          {data?.data?.map((item, index) => (
             <SwiperSlide key={index}>
               <div className="collection-item-v4 hover-img">
                 <div className="collection-inner">
@@ -30,9 +40,9 @@ export default function BannerCollection() {
                   >
                     <Image
                       className="lazyload"
-                      data-src={item.imgSrc}
+                      data-src={item.banner}
                       alt={item.imgAlt}
-                      src={item.imgSrc}
+                      src={item.banner}
                       width={800}
                       height={746}
                     />
@@ -41,7 +51,7 @@ export default function BannerCollection() {
                     className="collection-content wow fadeInUp"
                     data-wow-delay="0s"
                   >
-                    <h5 className="heading text_white">{item.heading}</h5>
+                    <h5 className="heading text_white">{item.name}</h5>
                     <Link
                       href={`/shop-collection-sub`} // Directly added href here
                       className="tf-btn style-3 fw-6 btn-light-icon rounded-full animate-hover-btn"

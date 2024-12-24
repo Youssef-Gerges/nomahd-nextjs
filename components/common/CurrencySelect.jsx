@@ -1,36 +1,38 @@
 "use client";
 
+import { useGetAllCurrencies } from "@/api/general/getAllCurrencies";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
-const optionsData = [
-  {
-    value: "fr",
-    thumbnail: "/images/country/fr.svg",
-    text: "EUR € | France",
-  },
-  {
-    value: "de",
-    thumbnail: "/images/country/de.svg",
-    text: "EUR € | Germany",
-  },
-  {
-    value: "us",
-    thumbnail: "/images/country/us.svg",
-    text: "USD $ | United States",
-    selected: true,
-  },
-  {
-    value: "vn",
-    thumbnail: "/images/country/vn.svg",
-    text: "VND ₫ | Vietnam",
-  },
-];
+// const optionsData = [
+//   {
+//     value: "fr",
+//     thumbnail: "/images/country/fr.svg",
+//     text: "EUR € | France",
+//   },
+//   {
+//     value: "de",
+//     thumbnail: "/images/country/de.svg",
+//     text: "EUR € | Germany",
+//   },
+//   {
+//     value: "us",
+//     thumbnail: "/images/country/us.svg",
+//     text: "USD $ | United States",
+//     selected: true,
+//   },
+//   {
+//     value: "vn",
+//     thumbnail: "/images/country/vn.svg",
+//     text: "VND ₫ | Vietnam",
+//   },
+// ];
 export default function CurrencySelect({ topStart = false, light = false }) {
-  const [selected, setSelected] = useState(optionsData[2]);
+  const {data:optionsData} = useGetAllCurrencies();
+  
+  const [selected, setSelected] = useState(optionsData?.data?.is_default);
   const [isDDOpen, setIsDDOpen] = useState(false);
   const languageSelect = useRef();
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -65,15 +67,15 @@ export default function CurrencySelect({ topStart = false, light = false }) {
         <div className="filter-option">
           <div className="filter-option-inner">
             <div className="filter-option-inner-inner">
-              <Image
+              {/* <Image
                 src={selected.thumbnail}
                 width="640"
                 height="480"
                 alt="image"
-              />
-              {selected.text}
+              /> */}
+              {`${selected?.code} ${selected?.symbol} | ${selected?.name}`}
             </div>
-          </div>{" "}
+          </div>
         </div>
       </button>
       <div
@@ -98,7 +100,7 @@ export default function CurrencySelect({ topStart = false, light = false }) {
             role="presentation"
             style={{ marginTop: 0, marginBottom: 0 }}
           >
-            {optionsData.map((elm, i) => (
+            {optionsData?.data?.map((elm, i) => (
               <li onClick={() => setSelected(elm)} key={i}>
                 <a
                   className={`dropdown-item ${
@@ -106,13 +108,15 @@ export default function CurrencySelect({ topStart = false, light = false }) {
                   }`}
                 >
                   <span className="text">
-                    <Image
+                    {/* <Image
                       src={elm.thumbnail}
                       width="640"
                       height="480"
                       alt="image"
-                    />
-                    {elm.text}
+                    /> */}
+                    {/* {elm.text} */}
+              {`${elm?.code} ${elm?.symbol} | ${elm?.name}`}
+
                   </span>
                 </a>
               </li>

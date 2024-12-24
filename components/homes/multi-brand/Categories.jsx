@@ -1,8 +1,19 @@
-import React from "react";
+'use client'
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { collectionCircles } from "@/data/categories";
+import { useGetAllCategories } from "@/api/categories/getAllCategories";
+import { useGetHomeCategories } from "@/api/categories/getHomeCategories";
+import { useGetTopCategories } from "@/api/categories/getTopCategories";
+import { useGetFeaturedCategories } from "@/api/categories/getFeaturedCategories";
 export default function Categories() {
+  const {data} = useGetFeaturedCategories()
+
+  useEffect(()=>{
+
+    console.log('categories' , data?.data)
+  },[data])
   return (
     <section className="flat-spacing-20">
       <div className="container">

@@ -1,10 +1,35 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import Nav from "./Nav";
 import Image from "next/image";
 import Link from "next/link";
 import CartLength from "../common/CartLength";
 import WishlistLength from "../common/WishlistLength";
+import { useRouter } from "next/navigation";
 export default function Header1() {
+  const [hasToken, setHasToken] = useState(false);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setHasToken(!!token); // Set true if token exists, false otherwise
+  }, []);
+
+  const handleClick = (e) => {
+    if (!hasToken) {
+      // Prevent default navigation and trigger modal for login
+      e.preventDefault();
+      const loginModal = document.getElementById("login");
+      if (loginModal) {
+        const bootstrap = require("bootstrap");
+        const modal = new bootstrap.Modal(loginModal);
+        modal.show();
+      }
+    } else {
+      router.push("/my-account"); // Navigate to /my-account
+    }
+  };
   return (
     <header id="header" className="header-default header-absolute">
       <div className="px_15 lg-px_40">
@@ -68,11 +93,12 @@ export default function Header1() {
                 </a>
               </li>
               <li className="nav-account">
-                <a
+                <a href={hasToken ? "/my-account" : "#"} onClick={handleClick}>
+                  {/* <a
                   href="#login"
                   data-bs-toggle="modal"
                   className="nav-icon-item"
-                >
+                > */}
                   <i className="icon icon-account" />
                 </a>
               </li>

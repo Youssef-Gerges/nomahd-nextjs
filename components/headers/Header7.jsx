@@ -1,10 +1,47 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import Nav from "./Nav";
 import Image from "next/image";
 import Link from "next/link";
 import CartLength from "../common/CartLength";
 import WishlistLength from "../common/WishlistLength";
+import { useRouter } from "next/navigation";
+import { useGetAllCategories } from "@/api/categories/getAllCategories";
+import { useTranslation } from "next-i18next";
+
+
 export default function Header7() {
+  const [hasToken, setHasToken] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const { t } = useTranslation("common");
+
+  const router = useRouter();
+  const { data } = useGetAllCategories();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setHasToken(!!token); // Set true if token exists, false otherwise
+    
+  }, []);
+
+  useEffect(() => {
+    setCategories(data?.data);
+    console.log("categories are : ", data?.data);
+  }, [data]);
+
+  const handleClick = (e) => {
+    if (!hasToken) {
+      // Prevent default navigation and trigger modal for login
+      e.preventDefault();
+      const loginModal = document.getElementById("login");
+      if (loginModal) {
+        const bootstrap = require("bootstrap");
+        const modal = new bootstrap.Modal(loginModal);
+        modal.show();
+      }
+    } else {
+      router.push("/my-account"); // Navigate to /my-account
+    }
+  };
   return (
     <header id="header" className="header-default header-style-2">
       <div className="main-header line">
@@ -12,7 +49,14 @@ export default function Header7() {
           <div className="row wrapper-header align-items-center">
             <div className="col-xl-5 tf-md-hidden">
               <ul className="header-list-categories">
-                <li className="categories-item active">
+                {categories?.map((category) => {
+                  <li key={category?.id} className="categories-item active">
+                    <Link href={`/home-category/${category?.name}/${category?.id}`} className="text-uppercase">
+                    {category?.name}
+                  </Link>
+                  </li>;
+                })}
+                {/* <li className="categories-item active">
                   <Link href={`/home-multi-brand`} className="text-uppercase">
                     Women
                   </Link>
@@ -31,7 +75,7 @@ export default function Header7() {
                   <Link href={`/store-locations`} className="text-uppercase">
                     Find a Store
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </div>
             <div className="col-md-4 col-3 tf-lg-hidden">
@@ -78,10 +122,14 @@ export default function Header7() {
                   </a>
                 </li>
                 <li className="nav-account">
-                  <a
+                  {/* <a
                     href="#login"
                     data-bs-toggle="modal"
                     className="nav-icon-item"
+                  > */}
+                  <a
+                    href={hasToken ? "/my-account" : "#"}
+                    onClick={handleClick}
                   >
                     <i className="icon icon-account" />
                   </a>
@@ -128,26 +176,33 @@ export default function Header7() {
               </ul>
             </nav>
             <ul className="header-list-categories tf-lg-hidden">
-              <li className="categories-item active">
+              {categories?.map((category) => (
+                <li key={category?.id} className="categories-item">
+                  <Link href={`/home-category/${category?.name}/${category?.id}`} className="text-uppercase">
+                    {category?.name}
+                  </Link>
+                </li>
+              ))}
+              {/* <li className="categories-item active">
                 <Link href={`/home-multi-brand`} className="text-uppercase">
                   Women
                 </Link>
-              </li>
-              <li className="categories-item">
-                <Link href={`/home-men`} className="text-uppercase">
+              </li> */}
+              {/* <li className="categories-item">
+                <Link href={`/home-category`} className="text-uppercase">
                   Men
                 </Link>
-              </li>
-              <li className="categories-item">
+              </li> */}
+              {/* <li className="categories-item">
                 <Link href={`/home-kids`} className="text-uppercase">
                   Kids
                 </Link>
-              </li>
-              <li className="categories-item">
+              </li> */}
+              {/* <li className="categories-item">
                 <Link href={`/store-locations`} className="text-uppercase">
                   Find a Store
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

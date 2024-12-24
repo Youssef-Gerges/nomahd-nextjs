@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Image from "next/image";
 import CountdownComponent from "../common/Countdown";
@@ -15,29 +15,115 @@ import Slider1ZoomOuter from "./sliders/Slider1ZoomOuter";
 import { allProducts } from "@/data/products";
 import { useContextElement } from "@/context/Context";
 import { openCartModal } from "@/utlis/openCartModal";
+import { useAddToCart } from "@/api/cart/addToCart";
+import { useAddToWishlistNew } from "@/api/wishlist/newAddToWishlist";
+import { useGetCartData } from "@/api/cart/getCart";
+import { useNewRemoveFromWishlist } from "@/api/wishlist/newRemoveFromWishlist";
+import { useCheckProductInWishlist } from "@/api/wishlist/checkProduct";
 
-export default function DetailsOuterZoom({ product = allProducts[0] }) {
-  const [currentColor, setCurrentColor] = useState(colors[0]);
-  const [currentSize, setCurrentSize] = useState(sizeOptions[1]);
+export default function DetailsOuterZoom({ product }) {
+  const id = localStorage.getItem("id");
+  const checkWishlist = useCheckProductInWishlist();
+  const [currentColor, setCurrentColor] = useState(null);
+  const [currentSize, setCurrentSize] = useState(null);
+  const { data: cartData } = useGetCartData(id);
+  const [isInWishlist, setIsInWishlist] = useState(false);
+  const [isInCart, setIsInCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const addToCart = useAddToCart();
+  const addToWishlist = useAddToWishlistNew();
+  const removeFromWishlist = useNewRemoveFromWishlist();
 
   const handleColor = (color) => {
-    const updatedColor = colors.filter(
-      (elm) => elm.value.toLowerCase() == color.toLowerCase()
+    const updatedColor = product?.colors.filter(
+      (elm) => elm.toLowerCase() == color.toLowerCase()
     )[0];
     if (updatedColor) {
       setCurrentColor(updatedColor);
     }
   };
 
+  const handleAddToCart = (productId) => {
+    addToCart.mutate({
+      id: productId,
+      variant: "",
+      user_id: JSON.parse(id),
+      quantity: quantity,
+    });
+  };
+
+  const handleAddToWishlist = (productId) => {
+    addToWishlist.mutate(
+      { productId: productId, userId: id },
+      {
+        onSuccess: (data) => {
+          console.log("Wishlist data:", data);
+        },
+        onError: (error) => {
+          console.error("Error:", error.message);
+        },
+      }
+    );
+  };
+
+  const handleRemoveFromWishlist = (productId) => {
+    removeFromWishlist.mutate(
+      { productId: productId, userId: id },
+      {
+        onSuccess: (data) => {
+          console.log("Wishlist data:", data);
+        },
+        onError: (error) => {
+          console.error("Error:", error.message);
+        },
+      }
+    );
+  };
   const {
-    addProductToCart,
+    // addProductToCart,
     isAddedToCartProducts,
     addToCompareItem,
     isAddedtoCompareItem,
-    addToWishlist,
+    // addToWishlist,
     isAddedtoWishlist,
   } = useContextElement();
+
+  useEffect(() => {
+    checkWishlist.mutate(
+      { productId: product?.id, userId: id },
+      {
+        onSuccess: (data) => {
+          setIsInWishlist(data?.is_in_wishlist);
+          console.log("Wishlist data:", data?.is_in_wishlist);
+        },
+        onError: (error) => {
+          console.error("Error:", error.message);
+        },
+      }
+    );
+  }, [product?.id, addToWishlist.isSuccess, removeFromWishlist.isSuccess]);
+  useEffect(() => {
+    if (cartData?.data) {
+      cartData?.data?.includes(quickAddItem)
+        ? setIsInCart(true)
+        : setIsInCart(false);
+    }
+  }, [cartData]);
+
+  useEffect(() => {
+    if (product?.choice_options) {
+      const sizeOption = product.choice_options.find(
+        (option) => option.title === "size"
+      );
+      if (sizeOption?.options?.length) {
+        setCurrentSize(sizeOption.options[0]);
+      }
+    }
+
+    if (product?.colors) {
+      setCurrentColor(product.colors[0]);
+    }
+  }, [product]);
   return (
     <section
       className="flat-spacing-4 pt_0"
@@ -54,8 +140,9 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                 <div className="thumbs-slider">
                   <Slider1ZoomOuter
                     handleColor={handleColor}
-                    currentColor={currentColor.value}
-                    firstImage={product.imgSrc}
+                    currentColor={currentColor}
+                    firstImage={product?.thumbnail_image}
+                    images={product?.photos}
                   />
                 </div>
               </div>
@@ -65,9 +152,7 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                 <div className="tf-zoom-main" />
                 <div className="tf-product-info-list other-image-zoom">
                   <div className="tf-product-info-title">
-                    <h5>
-                      {product.title ? product.title : "Cotton jersey top"}
-                    </h5>
+                    <h5>{product?.name}</h5>
                   </div>
                   <div className="tf-product-info-badges">
                     <div className="badges">Best seller</div>
@@ -79,17 +164,24 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                     </div>
                   </div>
                   <div className="tf-product-info-price">
-                    <div className="price-on-sale">
-                      ${product.price.toFixed(2)}
-                    </div>
+                    {product?.has_discount ? (
+                      <>
+                        <div className="price-on-sale">
+                          {product?.currency_symbol} {product?.calculable_price}
+                        </div>
 
-                    <div className="compare-at-price">
-                      ${currentColor.oldPrice.toFixed(2)}
-                    </div>
-
-                    <div className="badges-on-sale">
-                      <span>20</span>% OFF
-                    </div>
+                        <div className="compare-at-price">
+                          {product?.stroked_price}
+                        </div>
+                        <div className="badges-on-sale">
+                          <span>{product?.discount}</span> OFF
+                        </div>
+                      </>
+                    ) : (
+                      <div className="price-on-sale text-black">
+                        {product?.currency_symbol} {product?.calculable_price}
+                      </div>
+                    )}
                   </div>
                   <div className="tf-product-info-liveview">
                     <div className="liveview-count">20</div>
@@ -113,14 +205,15 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                       <div className="variant-picker-label">
                         Color:
                         <span className="fw-6 variant-picker-label-value">
-                          {currentColor.value}
+                          {/* {currentColor} */}
+                          {product?.colors.length > 0 ?  product?.colors[0] : ''}
                         </span>
                       </div>
                       <form className="variant-picker-values">
-                        {colors.map((color) => (
-                          <React.Fragment key={color.id}>
+                        {product?.colors.map((color, index) => (
+                          <React.Fragment key={index}>
                             <input
-                              id={color.id}
+                              id={index}
                               type="radio"
                               name="color1"
                               readOnly
@@ -129,13 +222,13 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                             <label
                               onClick={() => setCurrentColor(color)}
                               className="hover-tooltip radius-60"
-                              htmlFor={color.id}
-                              data-value={color.value}
+                              htmlFor={color.index}
+                              data-value={color}
                             >
                               <span
-                                className={`btn-checkbox ${color.className}`}
+                              // className={`btn-checkbox ${color.className}`}
                               />
-                              <span className="tooltip">{color.value}</span>
+                              <span className="tooltip">{color}</span>
                             </label>
                           </React.Fragment>
                         ))}
@@ -146,7 +239,7 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                         <div className="variant-picker-label">
                           Size:
                           <span className="fw-6 variant-picker-label-value">
-                            {currentSize.value}
+                            {currentSize}
                           </span>
                         </div>
                         <a
@@ -158,25 +251,28 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                         </a>
                       </div>
                       <form className="variant-picker-values">
-                        {sizeOptions.map((size) => (
-                          <React.Fragment key={size.id}>
-                            <input
-                              type="radio"
-                              name="size1"
-                              id={size.id}
-                              readOnly
-                              checked={currentSize == size}
-                            />
-                            <label
-                              onClick={() => setCurrentSize(size)}
-                              className="style-text"
-                              htmlFor={size.id}
-                              data-value={size.value}
-                            >
-                              <p>{size.value}</p>
-                            </label>
-                          </React.Fragment>
-                        ))}
+                        {product?.choice_options.length > 0 &&
+                          product?.choice_options
+                            ?.find((option) => option.title === "size")
+                            .options?.map((size, index) => (
+                              <React.Fragment key={index}>
+                                <input
+                                  type="radio"
+                                  name="size1"
+                                  id={index}
+                                  readOnly
+                                  checked={currentSize == size}
+                                />
+                                <label
+                                  onClick={() => setCurrentSize(size)}
+                                  className="style-text"
+                                  htmlFor={index}
+                                  data-value={size}
+                                >
+                                  <p>{size}</p>
+                                </label>
+                              </React.Fragment>
+                            ))}
                       </form>
                     </div>
                   </div>
@@ -189,32 +285,41 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                       <a
                         onClick={() => {
                           openCartModal();
-                          addProductToCart(product.id, quantity ? quantity : 1);
+                          handleAddToCart(product?.id);
                         }}
                         className="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn"
                       >
                         <span>
-                          {isAddedToCartProducts(product.id)
+                          {isAddedToCartProducts(product?.id)
                             ? "Already Added"
                             : "Add to cart"}{" "}
                           -{" "}
                         </span>
                         <span className="tf-qty-price">
-                          ${(product.price * quantity).toFixed(2)}
+                          {product?.currency_symbol}{" "}
+                          {(product?.calculable_price * quantity).toFixed(2)}
                         </span>
                       </a>
                       <a
-                        onClick={() => addToWishlist(product.id)}
+                        // onClick={() => handleAddToWishlist(product?.id)}
+                        onClick={() => {
+                          isInWishlist
+                            ? handleRemoveFromWishlist(product?.id)
+                            : handleAddToWishlist(product?.id);
+                        }}
                         className="tf-product-btn-wishlist hover-tooltip box-icon bg_white wishlist btn-icon-action"
                       >
                         <span
-                          className={`icon icon-heart ${
-                            isAddedtoWishlist(product.id) ? "added" : ""
+                          className={`${
+                            isInWishlist ? "icon-heart-full" : "icon-heart"
                           }`}
+                          // className={`icon icon-heart ${
+                          //   isAddedtoWishlist(product?.id) ? "added" : ""
+                          // }`}
                         />
                         <span className="tooltip">
                           {" "}
-                          {isAddedtoWishlist(product.id)
+                          {isInWishlist
                             ? "Already Wishlisted"
                             : "Add to Wishlist"}
                         </span>
@@ -223,17 +328,17 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                       <a
                         href="#compare"
                         data-bs-toggle="offcanvas"
-                        onClick={() => addToCompareItem(product.id)}
+                        onClick={() => addToCompareItem(product?.id)}
                         aria-controls="offcanvasLeft"
                         className="tf-product-btn-wishlist hover-tooltip box-icon bg_white compare btn-icon-action"
                       >
                         <span
                           className={`icon icon-compare ${
-                            isAddedtoCompareItem(product.id) ? "added" : ""
+                            isAddedtoCompareItem(product?.id) ? "added" : ""
                           }`}
                         />
                         <span className="tooltip">
-                          {isAddedtoCompareItem(product.id)
+                          {isAddedtoCompareItem(product?.id)
                             ? "Already Compared"
                             : "Add to Compare"}
                         </span>
@@ -320,10 +425,12 @@ export default function DetailsOuterZoom({ product = allProducts[0] }) {
                           </div>
                           <p>
                             Estimate delivery times:
-                            <span className="fw-7">12-26 days</span>
-                            (International),
+                            <span className="fw-7">
+                              {product?.est_shipping_time} days
+                            </span>
+                            {/* (International),
                             <span className="fw-7">3-6 days</span> (United
-                            States).
+                            States). */}
                           </p>
                         </div>
                       </div>

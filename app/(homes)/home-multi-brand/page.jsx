@@ -22,7 +22,7 @@ export default function page() {
     <>
       <Announcment />
       <Header7 />
-      <Categories />
+      {/* <Categories /> */}
       <Hero />
       <Categories2 />
       <BannerCollection />

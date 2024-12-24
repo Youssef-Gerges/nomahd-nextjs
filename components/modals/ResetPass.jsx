@@ -1,7 +1,21 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
+import { useSendToMail } from "@/api/auth/resetPassword";
 
 export default function ResetPass() {
+  const [resetPassword, setResetPassword] = useState({
+    email_or_phone: "",
+    send_code_by: "",
+  });
+  const sentToMail = useSendToMail();
+  const handleSendToMail = (e) => {
+    e.preventDefault();
+    sentToMail.mutate(resetPassword);
+  };
+  const handleMailChange = (e) => {
+    const { name, value } = e.target;
+    setResetPassword((prev) => ({ ...prev, [name]: value }));
+  };
   return (
     <div
       className="modal modalCentered fade form-sign-in modal-part-content"
@@ -31,8 +45,10 @@ export default function ResetPass() {
                   placeholder=" "
                   type="email"
                   autoComplete="abc@xyz.com"
+                  onChange={handleMailChange}
+                  value={resetPassword.email_or_phone}
                   required
-                  name=""
+                  name="email_or_phone"
                 />
                 <label className="tf-field-label" htmlFor="">
                   Email *
@@ -51,6 +67,7 @@ export default function ResetPass() {
                 <div className="w-100">
                   <button
                     type="submit"
+                    onClick={handleSendToMail}
                     className="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center"
                   >
                     <span>Reset password</span>

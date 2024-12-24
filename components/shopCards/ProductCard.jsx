@@ -4,27 +4,89 @@ import Image from "next/image";
 import Link from "next/link";
 import { useContextElement } from "@/context/Context";
 import CountdownComponent from "../common/Countdown";
+import { useAddToCart } from "@/api/cart/addToCart";
+import { useCartProccess } from "@/api/cart/proccess";
+import { useCheckProductInWishlist } from "@/api/wishlist/checkProduct";
+import { useAddToWishlistNew } from "@/api/wishlist/newAddToWishlist";
+import { useNewRemoveFromWishlist } from "@/api/wishlist/newRemoveFromWishlist";
 export const ProductCard = ({ product }) => {
-  const [currentImage, setCurrentImage] = useState(product.imgSrc);
+  const id = localStorage.getItem('id')
+  const [currentImage, setCurrentImage] = useState(product.thumbnail_image);
+  const checkWishlist = useCheckProductInWishlist();
+  const [isAddedtoWishlist, setIsAddedtoWishlist] = useState(false);
   const { setQuickViewItem } = useContextElement();
+  const addToWishlist = useAddToWishlistNew();
+  const removeFromWishlist = useNewRemoveFromWishlist();
   const {
     setQuickAddItem,
-    addToWishlist,
-    isAddedtoWishlist,
+    // addToWishlist,
+    // isAddedtoWishlist,
     addToCompareItem,
     isAddedtoCompareItem,
   } = useContextElement();
-  useEffect(() => {
-    setCurrentImage(product.imgSrc);
-  }, [product]);
+  
+ 
 
+
+  const handleAddToWishlist = () => {
+    // Validate inputs before calling the mutation
+    console.log('ids ' , product.id , id)
+
+    addToWishlist.mutate(
+      { productId: product.id, userId: id },
+      {
+        onSuccess: (data) => {
+          console.log("Wishlist data:", data);
+          alert("Product added to wishlist successfully!");
+        },
+        onError: (error) => {
+          console.error("Error:", error.message);
+          alert("Failed to add product to wishlist");
+        },
+      }
+    );
+  };
+
+  const handleRemoveFromWishlist =()=>{
+    console.log('ids ' , product.id , id)
+
+    removeFromWishlist.mutate(
+      { productId: product.id, userId: id },
+      {
+        onSuccess: (data) => {
+          console.log("Wishlist data:", data);
+          alert("Product removed from wishlist successfully!");
+        },
+        onError: (error) => {
+          console.error("Error:", error.message);
+          alert("Failed to remove product from wishlist");
+        },
+      }
+    );
+  }
+
+  useEffect(() => {
+    setCurrentImage(product.thumbnail_image);
+    checkWishlist.mutate(
+      { productId: product.id, userId: id },
+      {
+        onSuccess: (data) => {
+          setIsAddedtoWishlist(data?.is_in_wishlist);
+          console.log("Wishlist data:", data?.is_in_wishlist);
+        },
+        onError: (error) => {
+          console.error("Error:", error.message);
+        },
+      }
+    );
+  }, [product , addToWishlist.isSuccess, removeFromWishlist.isSuccess]);
   return (
     <div className="card-product fl-item" key={product.id}>
       <div className="card-product-wrapper">
-        <Link href={`/product-detail/${product.id}`} className="product-img">
+        <Link href={`/product-detail/${product.slug}`} className="product-img">
           <Image
             className="lazyload img-product"
-            data-src={product.imgSrc}
+            data-src={product.thumbnail_image}
             src={currentImage}
             alt="image-product"
             width={720}
@@ -33,9 +95,9 @@ export const ProductCard = ({ product }) => {
           <Image
             className="lazyload img-hover"
             data-src={
-              product.imgHoverSrc ? product.imgHoverSrc : product.imgSrc
+              product.imgHoverSrc ? product.imgHoverSrc : product.thumbnail_image
             }
-            src={product.imgHoverSrc ? product.imgHoverSrc : product.imgSrc}
+            src={product.imgHoverSrc ? product.imgHoverSrc : product.thumbnail_image}
             alt="image-product"
             width={720}
             height={1005}
@@ -44,7 +106,7 @@ export const ProductCard = ({ product }) => {
         <div className="list-product-btn">
           <a
             href="#quick_add"
-            onClick={() => setQuickAddItem(product.id)}
+            onClick={() => {setQuickAddItem(product.id)}}
             data-bs-toggle="modal"
             className="box-icon bg_white quick-add tf-btn-loading"
           >
@@ -52,16 +114,16 @@ export const ProductCard = ({ product }) => {
             <span className="tooltip">Quick Add</span>
           </a>
           <a
-            onClick={() => addToWishlist(product.id)}
+            onClick={()=>{ isAddedtoWishlist ? handleRemoveFromWishlist() : handleAddToWishlist()} }
             className="box-icon bg_white wishlist btn-icon-action"
           >
             <span
               className={`icon icon-heart ${
-                isAddedtoWishlist(product.id) ? "added" : ""
+                isAddedtoWishlist ? "added" : ""
               }`}
             />
             <span className="tooltip">
-              {isAddedtoWishlist(product.id)
+              {isAddedtoWishlist
                 ? "Already Wishlisted"
                 : "Add to Wishlist"}
             </span>
@@ -113,10 +175,10 @@ export const ProductCard = ({ product }) => {
         )}
       </div>
       <div className="card-product-info">
-        <Link href={`/product-detail/${product.id}`} className="title link">
-          {product.title}
+        <Link href={`/product-detail/${product.slug}`} className="title link">
+          {product.name}
         </Link>
-        <span className="price">${product.price.toFixed(2)}</span>
+        <span className="price">{product.currency_symbol} {product.calculable_price }</span>
         {product.colors && (
           <ul className="list-color-product">
             {product.colors.map((color) => (
@@ -125,7 +187,7 @@ export const ProductCard = ({ product }) => {
                   currentImage == color.imgSrc ? "active" : ""
                 } `}
                 key={color.name}
-                onMouseOver={() => setCurrentImage(color.imgSrc)}
+                onMouseOver={() => setCurrentImage(color.thumbnail_image)}
               >
                 <span className="tooltip">{color.name}</span>
                 <span className={`swatch-value ${color.colorClass}`} />

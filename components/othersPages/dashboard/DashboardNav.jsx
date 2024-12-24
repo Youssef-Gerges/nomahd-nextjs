@@ -1,4 +1,5 @@
 "use client";
+import { useLogout } from "@/api/auth/logout";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 const accountLinks = [
@@ -11,6 +12,11 @@ const accountLinks = [
 
 export default function DashboardNav() {
   const pathname = usePathname();
+  const logout = useLogout();
+
+  const handleLogOut = ()=>{
+    logout.mutate();
+  }
   return (
     <ul className="my-account-nav">
       {accountLinks.map((link, index) => (
@@ -26,7 +32,7 @@ export default function DashboardNav() {
         </li>
       ))}
       <li>
-        <Link href={`/login`} className="my-account-nav-item">
+        <Link href={`/login`} onClick={handleLogOut} className="my-account-nav-item">
           Logout
         </Link>
       </li>

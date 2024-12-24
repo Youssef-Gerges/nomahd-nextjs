@@ -1,9 +1,36 @@
 "use client";
+import React,{useState,useEffect} from "react";
+import { useGetCartData } from "@/api/cart/getCart";
 import { useContextElement } from "@/context/Context";
 import Image from "next/image";
 import Link from "next/link";
+import { useGetHomeCategories } from "@/api/categories/getHomeCategories";
+import { useDeleteFromCart } from "@/api/cart/removeFomCart";
 export default function Cart() {
-  const { cartProducts, setCartProducts, totalPrice } = useContextElement();
+  const id = localStorage.getItem('id')
+  const cart = useGetCartData();
+  const removeFromCart = useDeleteFromCart();
+  // const {data} = useGetHomeCategories()
+  // const { 
+    // cartProducts, setCartProducts,
+    //  totalPrice } = useContextElement();
+  const [totalPrice , setTotalPrice] = useState(0);
+  const [cartProducts, setCartProducts] = useState([]);
+
+  useEffect(() => {
+    cart.mutate(
+      { user_id: id },
+      {
+        onSuccess: (data) => {
+          setCartProducts(data?.data?.data.flatMap(i =>  i.cart_items));
+          setTotalPrice(data?.data?.grand_total)
+          console.log("cart data mapped:", data?.data?.data?.flatMap(i => i.cart_items));
+          console.log("cart data 1another map : " , data?.data?.data?.flatMap(seller => seller.cart_items) );
+        },
+      }
+    );
+  }, []);
+
   const setQuantity = (id, quantity) => {
     if (quantity >= 1) {
       const item = cartProducts.filter((elm) => elm.id == id)[0];
@@ -14,9 +41,12 @@ export default function Cart() {
       setCartProducts(items);
     }
   };
-  const removeItem = (id) => {
-    setCartProducts((pre) => [...pre.filter((elm) => elm.id != id)]);
+  const removeItem = (product_id) => {
+    setCartProducts((pre) => [...pre.filter((elm) => elm.id != product_id)]);
+    removeFromCart.mutate(product_id)
   };
+
+ 
   return (
     <section className="flat-spacing-11">
       <div className="container">
@@ -71,7 +101,7 @@ export default function Cart() {
                         >
                           <Image
                             alt="img-product"
-                            src={elm.imgSrc}
+                            src={elm.product_thumbnail_image}
                             width={668}
                             height={932}
                           />
@@ -81,9 +111,10 @@ export default function Cart() {
                             href={`/product-detail/${elm.id}`}
                             className="cart-title link"
                           >
-                            {elm.title}
+                            {elm.product_name}
                           </Link>
-                          <div className="cart-meta-variant">White / M</div>
+                          <div className="cart-meta-variant"> {elm.variation ? elm.variation.replace("-", " / ") : "No variation"}</div>
+                          
                           <span
                             className="remove-cart link remove"
                             onClick={() => removeItem(elm.id)}
@@ -97,7 +128,8 @@ export default function Cart() {
                         cart-data-title="Price"
                       >
                         <div className="cart-price">
-                          ${elm.price.toFixed(2)}
+                          {/* ${elm.price.toFixed(2)} */}
+                          {elm.price}
                         </div>
                       </td>
                       <td
@@ -158,7 +190,7 @@ export default function Cart() {
                           className="cart-total"
                           style={{ minWidth: "60px" }}
                         >
-                          ${(elm.price * elm.quantity).toFixed(2)}
+                          {elm.currency_symbol} {(parseFloat(elm.price.replace(/[^\d.-]/g, "")) * elm.quantity).toFixed(2)}
                         </div>
                       </td>
                     </tr>
@@ -400,7 +432,8 @@ export default function Cart() {
                 <div className="tf-cart-totals-discounts">
                   <h3>Subtotal</h3>
                   <span className="total-value">
-                    ${totalPrice.toFixed(2)} USD
+                    {/* ${totalPrice.toFixed(2)} USD */}
+                    {totalPrice}
                   </span>
                 </div>
                 <p className="tf-cart-tax">

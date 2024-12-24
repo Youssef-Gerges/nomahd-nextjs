@@ -1,16 +1,19 @@
 "use client";
 
+import { useGetShopTopProducts } from "@/api/shop/getShopTopProducts";
 import { ProductCard } from "@/components/shopCards/ProductCard";
 import { products1 } from "@/data/products";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-
+import { useGetAllProducts } from "@/api/products/useGetAllProducts";
 export default function Products() {
+  // const {data} = useGetShopTopProducts(localStorage.getItem('id'))
+  const {data} = useGetAllProducts(1)
   return (
     <section className="flat-spacing-15 pb_0">
       <div className="container">
         <div className="flat-title wow fadeInUp" data-wow-delay="0s">
-          <span className="title">Ecomus’s Favorites</span>
+          <span className="title">Nomahd’s Favorites</span>
           <p className="sub-title">
             Beautifully Functional. Purposefully Designed. Consciously Crafted.
           </p>
@@ -39,7 +42,7 @@ export default function Products() {
               nextEl: ".snbn301",
             }}
           >
-            {products1.map((product, i) => (
+            {data?.data.map((product, i) => (
               <SwiperSlide key={i} className="swiper-slide">
                 <ProductCard product={product} />
               </SwiperSlide>

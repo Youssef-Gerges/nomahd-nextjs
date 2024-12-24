@@ -1,17 +1,31 @@
 "use client";
+import { useGetCartData } from "@/api/cart/getCart";
+import { useDeleteFromCart } from "@/api/cart/removeFomCart";
 import { useContextElement } from "@/context/Context";
 import { products1 } from "@/data/products";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import useTranslation from "next-translate/useTranslation";
+
 export default function ShopCart() {
-  const { cartProducts, totalPrice, setCartProducts, setQuickViewItem } =
-    useContextElement();
+  const id = localStorage.getItem("id");
+  const { t, lang } = useTranslation("common"); // "common" is the namespace
+
+  const cart = useGetCartData();
+  const removeFromCart = useDeleteFromCart();
+  const {
+    // totalPrice,
+    //  setCartProducts,
+    setQuickViewItem,
+  } = useContextElement();
+  const [cartProducts, setCartProducts] = useState([]);
+  const [totalPrice , setTotalPrice] = useState(0);
   const setQuantity = (id, quantity) => {
     if (quantity >= 1) {
-      const item = cartProducts.filter((elm) => elm.id == id)[0];
+      const item = cartProducts?.filter((elm) => elm.id == id)[0];
       const items = [...cartProducts];
       const itemIndex = items.indexOf(item);
       item.quantity = quantity;
@@ -19,14 +33,27 @@ export default function ShopCart() {
       setCartProducts(items);
     }
   };
-  const removeItem = (id) => {
-    setCartProducts((pre) => [...pre.filter((elm) => elm.id != id)]);
+  const removeItem = (product_id) => {
+    setCartProducts((pre) => [...pre.filter((elm) => elm.id != product_id)]);
+    removeFromCart.mutate(product_id)
   };
 
   const addNoteRef = useRef();
   const addGiftRef = useRef();
   const addShipingRef = useRef();
 
+  useEffect(() => {
+    cart.mutate(
+      { user_id: id },
+      {
+        onSuccess: (data) => {
+          setCartProducts(data?.data?.data.flatMap(i =>  i.cart_items));
+          setTotalPrice(data?.data?.grand_total)
+          console.log("cart data mapped:", data?.data?.data?.flatMap(i => i.cart_items));
+        },
+      }
+    );
+  }, []);
   return (
     <div className="modal fullRight fade modal-shopping-cart" id="shoppingCart">
       <div className="modal-dialog">
@@ -68,13 +95,13 @@ export default function ShopCart() {
               <div className="tf-mini-cart-main">
                 <div className="tf-mini-cart-sroll">
                   <div className="tf-mini-cart-items">
-                    {cartProducts.map((elm, i) => (
+                    {cartProducts && cartProducts?.map((elm, i) => (
                       <div key={i} className="tf-mini-cart-item">
                         <div className="tf-mini-cart-image">
                           <Link href={`/product-detail/${elm.id}`}>
                             <Image
                               alt="image"
-                              src={elm.imgSrc}
+                              src={elm.product_thumbnail_image}
                               width={668}
                               height={932}
                               style={{ objectFit: "cover" }}
@@ -86,11 +113,12 @@ export default function ShopCart() {
                             className="title link"
                             href={`/product-detail/${elm.id}`}
                           >
-                            {elm.title}
+                            {elm.product_name}
                           </Link>
-                          <div className="meta-variant">Light gray</div>
+                          <div className="meta-variant">{elm.variation ? elm.variation.replace("-", " / ") : "No variation"}</div>
                           <div className="price fw-6">
-                            ${elm.price?.toFixed(2)}
+                            {/* ${elm.price?.toFixed(2)} */}
+                            {elm.price}
                           </div>
                           <div className="tf-mini-cart-btns">
                             <div className="wg-quantity small">
@@ -132,7 +160,7 @@ export default function ShopCart() {
                       </div>
                     ))}
 
-                    {!cartProducts.length && (
+                    {!cartProducts?.length && (
                       <div className="container">
                         <div className="row align-items-center mt-5 mb-5">
                           <div className="col-12 fs-18">
@@ -267,7 +295,7 @@ export default function ShopCart() {
                   <div className="tf-cart-totals-discounts">
                     <div className="tf-cart-total">Subtotal</div>
                     <div className="tf-totals-total-value fw-6">
-                      ${totalPrice.toFixed(2)} USD
+                      {totalPrice}
                     </div>
                   </div>
                   <div className="tf-cart-tax">
