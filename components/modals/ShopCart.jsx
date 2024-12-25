@@ -8,13 +8,13 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import useTranslation from "next-translate/useTranslation";
+// import useTranslation from "next-translate/useTranslation";
 
 export default function ShopCart() {
-  const id = localStorage.getItem("id");
-  const { t, lang } = useTranslation("common"); // "common" is the namespace
+  const [id, setId] = useState(null);
+  // const { t, lang } = useTranslation("common"); // "common" is the namespace
 
-  const {data : cart} = useGetCartData(id);
+  const { data: cart } = useGetCartData(id);
   const removeFromCart = useDeleteFromCart();
   const {
     // totalPrice,
@@ -22,7 +22,7 @@ export default function ShopCart() {
     setQuickViewItem,
   } = useContextElement();
   const [cartProducts, setCartProducts] = useState([]);
-  const [totalPrice , setTotalPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
   const setQuantity = (id, quantity) => {
     if (quantity >= 1) {
       const item = cartProducts?.filter((elm) => elm.id == id)[0];
@@ -35,13 +35,19 @@ export default function ShopCart() {
   };
   const removeItem = (product_id) => {
     setCartProducts((pre) => [...pre.filter((elm) => elm.id != product_id)]);
-    removeFromCart.mutate(product_id)
+    removeFromCart.mutate(product_id);
   };
 
   const addNoteRef = useRef();
   const addGiftRef = useRef();
   const addShipingRef = useRef();
 
+  useEffect(() => {
+    const userId = localStorage.getItem("id");
+    if (userId) {
+      setId(userId);
+    }
+  }, []);
   // useEffect(() => {
   //   cart.mutate(
   //     { user_id: id },
@@ -95,70 +101,75 @@ export default function ShopCart() {
               <div className="tf-mini-cart-main">
                 <div className="tf-mini-cart-sroll">
                   <div className="tf-mini-cart-items">
-                    {cartProducts && cartProducts?.map((elm, i) => (
-                      <div key={i} className="tf-mini-cart-item">
-                        <div className="tf-mini-cart-image">
-                          <Link href={`/product-detail/${elm.id}`}>
-                            <Image
-                              alt="image"
-                              src={elm.product_thumbnail_image}
-                              width={668}
-                              height={932}
-                              style={{ objectFit: "cover" }}
-                            />
-                          </Link>
-                        </div>
-                        <div className="tf-mini-cart-info">
-                          <Link
-                            className="title link"
-                            href={`/product-detail/${elm.id}`}
-                          >
-                            {elm.product_name}
-                          </Link>
-                          <div className="meta-variant">{elm.variation ? elm.variation.replace("-", " / ") : "No variation"}</div>
-                          <div className="price fw-6">
-                            {/* ${elm.price?.toFixed(2)} */}
-                            {elm.price}
-                          </div>
-                          <div className="tf-mini-cart-btns">
-                            <div className="wg-quantity small">
-                              <span
-                                className="btn-quantity minus-btn"
-                                onClick={() =>
-                                  setQuantity(elm.id, elm.quantity - 1)
-                                }
-                              >
-                                -
-                              </span>
-                              <input
-                                type="text"
-                                name="number"
-                                value={elm.quantity}
-                                min={1}
-                                onChange={(e) =>
-                                  setQuantity(elm.id, e.target.value / 1)
-                                }
+                    {cartProducts &&
+                      cartProducts?.map((elm, i) => (
+                        <div key={i} className="tf-mini-cart-item">
+                          <div className="tf-mini-cart-image">
+                            <Link href={`/product-detail/${elm.id}`}>
+                              <Image
+                                alt="image"
+                                src={elm.product_thumbnail_image}
+                                width={668}
+                                height={932}
+                                style={{ objectFit: "cover" }}
                               />
-                              <span
-                                className="btn-quantity plus-btn"
-                                onClick={() =>
-                                  setQuantity(elm.id, elm.quantity + 1)
-                                }
-                              >
-                                +
-                              </span>
-                            </div>
-                            <div
-                              className="tf-mini-cart-remove"
-                              style={{ cursor: "pointer" }}
-                              onClick={() => removeItem(elm.id)}
+                            </Link>
+                          </div>
+                          <div className="tf-mini-cart-info">
+                            <Link
+                              className="title link"
+                              href={`/product-detail/${elm.id}`}
                             >
-                              Remove
+                              {elm.product_name}
+                            </Link>
+                            <div className="meta-variant">
+                              {elm.variation
+                                ? elm.variation.replace("-", " / ")
+                                : "No variation"}
+                            </div>
+                            <div className="price fw-6">
+                              {/* ${elm.price?.toFixed(2)} */}
+                              {elm.price}
+                            </div>
+                            <div className="tf-mini-cart-btns">
+                              <div className="wg-quantity small">
+                                <span
+                                  className="btn-quantity minus-btn"
+                                  onClick={() =>
+                                    setQuantity(elm.id, elm.quantity - 1)
+                                  }
+                                >
+                                  -
+                                </span>
+                                <input
+                                  type="text"
+                                  name="number"
+                                  value={elm.quantity}
+                                  min={1}
+                                  onChange={(e) =>
+                                    setQuantity(elm.id, e.target.value / 1)
+                                  }
+                                />
+                                <span
+                                  className="btn-quantity plus-btn"
+                                  onClick={() =>
+                                    setQuantity(elm.id, elm.quantity + 1)
+                                  }
+                                >
+                                  +
+                                </span>
+                              </div>
+                              <div
+                                className="tf-mini-cart-remove"
+                                style={{ cursor: "pointer" }}
+                                onClick={() => removeItem(elm.id)}
+                              >
+                                Remove
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
 
                     {!cartProducts?.length && (
                       <div className="container">

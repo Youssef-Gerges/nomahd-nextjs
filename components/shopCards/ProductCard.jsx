@@ -10,7 +10,7 @@ import { useCheckProductInWishlist } from "@/api/wishlist/checkProduct";
 import { useAddToWishlistNew } from "@/api/wishlist/newAddToWishlist";
 import { useNewRemoveFromWishlist } from "@/api/wishlist/newRemoveFromWishlist";
 export const ProductCard = ({ product }) => {
-  const id = localStorage.getItem('id')
+  const [id, setId] = useState(null);
   const [currentImage, setCurrentImage] = useState(product.thumbnail_image);
   const checkWishlist = useCheckProductInWishlist();
   const [isAddedtoWishlist, setIsAddedtoWishlist] = useState(false);
@@ -24,13 +24,9 @@ export const ProductCard = ({ product }) => {
     addToCompareItem,
     isAddedtoCompareItem,
   } = useContextElement();
-  
- 
-
 
   const handleAddToWishlist = () => {
     // Validate inputs before calling the mutation
-    console.log('ids ' , product.id , id)
 
     addToWishlist.mutate(
       { productId: product.id, userId: id },
@@ -47,9 +43,7 @@ export const ProductCard = ({ product }) => {
     );
   };
 
-  const handleRemoveFromWishlist =()=>{
-    console.log('ids ' , product.id , id)
-
+  const handleRemoveFromWishlist = () => {
     removeFromWishlist.mutate(
       { productId: product.id, userId: id },
       {
@@ -63,8 +57,14 @@ export const ProductCard = ({ product }) => {
         },
       }
     );
-  }
+  };
 
+  useEffect(() => {
+    const userId = localStorage.getItem("id");
+    if (userId) {
+      setId(userId);
+    }
+  }, []);
   useEffect(() => {
     setCurrentImage(product.thumbnail_image);
     checkWishlist.mutate(
@@ -79,7 +79,7 @@ export const ProductCard = ({ product }) => {
         },
       }
     );
-  }, [product , addToWishlist.isSuccess, removeFromWishlist.isSuccess]);
+  }, [product, addToWishlist.isSuccess, removeFromWishlist.isSuccess]);
   return (
     <div className="card-product fl-item" key={product.id}>
       <div className="card-product-wrapper">
@@ -95,9 +95,15 @@ export const ProductCard = ({ product }) => {
           <Image
             className="lazyload img-hover"
             data-src={
-              product.imgHoverSrc ? product.imgHoverSrc : product.thumbnail_image
+              product.imgHoverSrc
+                ? product.imgHoverSrc
+                : product.thumbnail_image
             }
-            src={product.imgHoverSrc ? product.imgHoverSrc : product.thumbnail_image}
+            src={
+              product.imgHoverSrc
+                ? product.imgHoverSrc
+                : product.thumbnail_image
+            }
             alt="image-product"
             width={720}
             height={1005}
@@ -106,7 +112,9 @@ export const ProductCard = ({ product }) => {
         <div className="list-product-btn">
           <a
             href="#quick_add"
-            onClick={() => {setQuickAddItem(product.id)}}
+            onClick={() => {
+              setQuickAddItem(product.id);
+            }}
             data-bs-toggle="modal"
             className="box-icon bg_white quick-add tf-btn-loading"
           >
@@ -114,18 +122,18 @@ export const ProductCard = ({ product }) => {
             <span className="tooltip">Quick Add</span>
           </a>
           <a
-            onClick={()=>{ isAddedtoWishlist ? handleRemoveFromWishlist() : handleAddToWishlist()} }
+            onClick={() => {
+              isAddedtoWishlist
+                ? handleRemoveFromWishlist()
+                : handleAddToWishlist();
+            }}
             className="box-icon bg_white wishlist btn-icon-action"
           >
             <span
-              className={`icon icon-heart ${
-                isAddedtoWishlist ? "added" : ""
-              }`}
+              className={`icon icon-heart ${isAddedtoWishlist ? "added" : ""}`}
             />
             <span className="tooltip">
-              {isAddedtoWishlist
-                ? "Already Wishlisted"
-                : "Add to Wishlist"}
+              {isAddedtoWishlist ? "Already Wishlisted" : "Add to Wishlist"}
             </span>
             <span className="icon icon-delete" />
           </a>
@@ -178,7 +186,9 @@ export const ProductCard = ({ product }) => {
         <Link href={`/product-detail/${product.slug}`} className="title link">
           {product.name}
         </Link>
-        <span className="price">{product.currency_symbol} {product.calculable_price }</span>
+        <span className="price">
+          {product.currency_symbol} {product.calculable_price}
+        </span>
         {product.colors && (
           <ul className="list-color-product">
             {product.colors.map((color) => (

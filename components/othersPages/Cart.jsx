@@ -7,7 +7,6 @@ import Link from "next/link";
 import { useGetHomeCategories } from "@/api/categories/getHomeCategories";
 import { useDeleteFromCart } from "@/api/cart/removeFomCart";
 export default function Cart() {
-  const id = localStorage.getItem('id')
   const cart = useGetCartData();
   const removeFromCart = useDeleteFromCart();
   // const {data} = useGetHomeCategories()
@@ -19,7 +18,7 @@ export default function Cart() {
 
   useEffect(() => {
     cart.mutate(
-      { user_id: id },
+      { user_id: localStorage.getItem("id") },
       {
         onSuccess: (data) => {
           setCartProducts(data?.data?.data.flatMap(i =>  i.cart_items));

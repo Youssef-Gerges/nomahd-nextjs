@@ -20,11 +20,9 @@ import { useAddToWishlistNew } from "@/api/wishlist/newAddToWishlist";
 import { useGetCartData } from "@/api/cart/getCart";
 import { useNewRemoveFromWishlist } from "@/api/wishlist/newRemoveFromWishlist";
 import { useCheckProductInWishlist } from "@/api/wishlist/checkProduct";
-import parse from "html-react-parser";
 
 export default function DetailsOuterZoom({ product }) {
-  const id = localStorage.getItem("id");
-  // const sanitizedDescription = DOMPurify.sanitize(product?.description);
+  const [id, setId] = useState(null);
   const checkWishlist = useCheckProductInWishlist();
   const [currentColor, setCurrentColor] = useState(null);
   const [currentSize, setCurrentSize] = useState(null);
@@ -131,6 +129,13 @@ export default function DetailsOuterZoom({ product }) {
       setCurrentColor(product.colors[0]);
     }
   }, [product]);
+
+  useEffect(() => {
+    const userId = localStorage.getItem("id");
+    if (userId) {
+      setId(userId);
+    }
+  }, []);
   return (
     <section
       className="flat-spacing-4 pt_0"

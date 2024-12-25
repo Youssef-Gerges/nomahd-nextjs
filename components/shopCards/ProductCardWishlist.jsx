@@ -1,5 +1,5 @@
 "use client";
-import { useState ,useEffect} from "react";
+import { useState, useEffect, use } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useContextElement } from "@/context/Context";
@@ -14,7 +14,7 @@ export const ProductCardWishlist = ({ product, productId }) => {
   const removeFromWishlist = useNewRemoveFromWishlist();
   const checkWishlist = useCheckProductInWishlist();
   const addToWishlist = useAddToWishlist();
-  const id = localStorage.getItem("id");
+  const [id , setId] = useState(null);
   const {
     setQuickAddItem,
     // addToWishlist,
@@ -51,6 +51,12 @@ export const ProductCardWishlist = ({ product, productId }) => {
       }
     );
   };
+  useEffect(() => {
+    const userId = localStorage.getItem("id");
+    if (userId) {
+      setId(userId);
+    }
+  }, []);
   useEffect(() => {
     checkWishlist.mutate(
       { productId: productId, userId: id },

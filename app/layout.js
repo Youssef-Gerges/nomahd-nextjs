@@ -218,21 +218,19 @@ import SearchModal from "@/components/modals/SearchModal";
 import ToolbarBottom from "@/components/modals/ToolbarBottom";
 import ToolbarShop from "@/components/modals/ToolbarShop";
 // import nextI18nextConfig from "../next-i18next.config"; 
-import { appWithTranslation } from "next-i18next";
-import useTranslation from "next-translate/useTranslation";
+// import { appWithTranslation } from "next-i18next";
+// import useTranslation from "next-translate/useTranslation";
 import { usePathname } from "next/navigation";
 import NewsletterModal from "@/components/modals/NewsletterModal";
 import ShareModal from "@/components/modals/ShareModal";
 import ScrollTop from "@/components/common/ScrollTop";
 import RtlToggle from "@/components/common/RtlToggle";
-import { Toaster } from "react-hot-toast";
-// import i18n from "i18next";
-import i18n from "@/i18n";
+// import { Toaster } from "react-hot-toast";
+// import i18n from "@/i18n";
 // import { useTranslation } from "react-i18next";
 function RootLayout({ children }) {
   const pathname = usePathname();
   // const { t } = useTranslation();
-  const {t, lang } = useTranslation('common');
   // const [lang, setLang] = useState("ar"); 
 
   // i18n.init({
@@ -252,19 +250,19 @@ function RootLayout({ children }) {
   //   // router.push(router.pathname, router.asPath, { locale: newLang });
   // };
 
-  const changeLanguage = async (newLang) => {
-    const dir = newLang === "ar" ? "rtl" : "ltr";
-    document.documentElement.dir = dir;
-    document.body.className = dir;
-    localStorage.setItem("language", newLang);
+  // const changeLanguage = async (newLang) => {
+  //   const dir = newLang === "ar" ? "rtl" : "ltr";
+  //   document.documentElement.dir = dir;
+  //   document.body.className = dir;
+  //   localStorage.setItem("language", newLang);
   
-    try {
-      await i18n.changeLanguage(newLang);
-      setLang(newLang);
-    } catch (error) {
-      console.error("Error changing language:", error);
-    }
-  };
+  //   try {
+  //     await i18n.changeLanguage(newLang);
+  //     setLang(newLang);
+  //   } catch (error) {
+  //     console.error("Error changing language:", error);
+  //   }
+  // };
   
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -381,12 +379,7 @@ function RootLayout({ children }) {
     wow.init();
   }, [pathname]);
 
-  useEffect(() => {
-    // const direction = lang === "ar" ? "rtl" : "ltr";
-    // document.documentElement.dir = direction;
-    // document.body.className = direction;
-    console.log("lang is " , lang)
-  }, [lang]);
+  
 
 //   useEffect(() => {
 // //     console.log("lolo i18n instance:", i18n);
@@ -465,47 +458,67 @@ function RootLayout({ children }) {
   //   initializeDirection();
   // }, []);
   
-  useEffect(() => {
-    console.log("i18n instance:", i18n);
-    console.log("Current language:", i18n.language);
+  // useEffect(() => {
+  //   console.log("i18n instance:", i18n);
+  //   console.log("Current language:", i18n.language);
   
+  //   const initializeDirection = () => {
+  //     const direction = localStorage.getItem("direction");
+  //     console.log("Retrieved direction:", direction);
+  
+  //     if (direction) {
+  //       try {
+  //         const parsedDirection = JSON.parse(direction);
+  //         console.log("Parsed direction:", parsedDirection);
+  
+  //         document.documentElement.dir = parsedDirection.dir;
+  //         document.body.classList.add(parsedDirection.dir);
+  
+  //         if (i18n.isInitialized) {
+  //           if (parsedDirection.dir === "ltr") {
+  //             i18n.changeLanguage("en"); // Switch to English
+  //           } else if (parsedDirection.dir === "rtl") {
+  //             i18n.changeLanguage("ar"); // Switch to Arabic
+  //           }
+  //         }
+  //       } catch (error) {
+  //         console.error("Error parsing direction from localStorage:", error);
+  //       }
+  //     } else {
+  //       // Default direction
+  //       document.documentElement.dir = "ltr";
+  //     }
+  
+  //     // Handle preloader (if exists)
+  //     const preloader = document.getElementById("preloader");
+  //     if (preloader) {
+  //       preloader.classList.add("disabled");
+  //     }
+  //   };
+  
+  //   initializeDirection();
+  // }, []);
+  
+  useEffect(() => {
     const initializeDirection = () => {
       const direction = localStorage.getItem("direction");
-      console.log("Retrieved direction:", direction);
-  
+
       if (direction) {
-        try {
-          const parsedDirection = JSON.parse(direction);
-          console.log("Parsed direction:", parsedDirection);
-  
-          document.documentElement.dir = parsedDirection.dir;
-          document.body.classList.add(parsedDirection.dir);
-  
-          if (i18n.isInitialized) {
-            if (parsedDirection.dir === "ltr") {
-              i18n.changeLanguage("en"); // Switch to English
-            } else if (parsedDirection.dir === "rtl") {
-              i18n.changeLanguage("ar"); // Switch to Arabic
-            }
-          }
-        } catch (error) {
-          console.error("Error parsing direction from localStorage:", error);
-        }
+        const parsedDirection = JSON.parse(direction);
+        document.documentElement.dir = parsedDirection.dir;
+        document.body.classList.add(parsedDirection.dir);
       } else {
-        // Default direction
         document.documentElement.dir = "ltr";
       }
-  
-      // Handle preloader (if exists)
+
       const preloader = document.getElementById("preloader");
       if (preloader) {
         preloader.classList.add("disabled");
       }
     };
-  
+
     initializeDirection();
-  }, []);
-  
+  }, []); 
   return (
     <html lang="en">
       <body className="preload-wrapper">
@@ -517,7 +530,7 @@ function RootLayout({ children }) {
           </div>
 
           <Context>
-            <Toaster position="bottom-left" />
+            {/* <Toaster position="bottom-left" /> */}
             <div id="wrapper">{children}</div>
             <RtlToggle />
             <HomesModal /> <QuickView />
@@ -546,4 +559,4 @@ function RootLayout({ children }) {
     </html>
   );
 }
-export default appWithTranslation(RootLayout);
+export default RootLayout;

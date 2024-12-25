@@ -29,7 +29,7 @@
 //   });
 // };
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { api } from "../api";
+import { api ,token} from "../api";
 
 export const useLogout = () => {
   const queryClient = useQueryClient();
@@ -37,7 +37,7 @@ export const useLogout = () => {
   return useMutation({
     mutationFn: async () => {
       // Retrieve the token from localStorage
-      const token = localStorage.getItem('token');
+      
       
       if (!token) {
         throw new Error('No token found');

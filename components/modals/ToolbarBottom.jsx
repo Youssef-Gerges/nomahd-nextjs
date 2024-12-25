@@ -4,14 +4,14 @@ import Link from "next/link";
 import CartLength from "../common/CartLength";
 import WishlistLength from "../common/WishlistLength";
 // import { useTranslation } from "react-i18next";
-import useTranslation from "next-translate/useTranslation";
+// import useTranslation from "next-translate/useTranslation";
 
 export default function ToolbarBottom() {
   const [hasToken, setHasToken] = useState(false);
   // const { t } = useTranslation("common");
-  const { t } = useTranslation("common"); // "common" is the namespace
+  // const { t } = useTranslation("common"); // "common" is the namespace
 
-  const direction = localStorage.getItem('direction')
+  // const direction = localStorage.getItem('direction')
 
   const router = useRouter();
   useEffect(() => {

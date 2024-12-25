@@ -23,7 +23,7 @@ import Announcment from "@/components/homes/multi-brand/Announcment";
 import Lookbook from "@/components/homes/home-1/Lookbook";
 import Marquee from "@/components/homes/home-1/Marquee";
 // import Products from "@/components/homes/home-1/Products";
-import useTranslation from "next-translate/useTranslation";
+// import useTranslation from "next-translate/useTranslation";
 export const metadata = {
   title: "Home || Nomahd ",
   description: "Nomahd",

@@ -7,13 +7,13 @@ import CartLength from "../common/CartLength";
 import WishlistLength from "../common/WishlistLength";
 import { useRouter } from "next/navigation";
 import { useGetAllCategories } from "@/api/categories/getAllCategories";
-import { useTranslation } from "next-i18next";
+// import { useTranslation } from "next-i18next";
 
 
 export default function Header7() {
   const [hasToken, setHasToken] = useState(false);
   const [categories, setCategories] = useState([]);
-  const { t } = useTranslation("common");
+  // const { t } = useTranslation("common");
 
   const router = useRouter();
   const { data } = useGetAllCategories();
@@ -99,7 +99,7 @@ export default function Header7() {
               </a>
             </div>
             <div className="col-xl-2 col-md-4 col-6 text-center">
-              <Link href={`/home-multi-brand`} className="logo-header">
+              <Link href={`/`} className="logo-header">
                 <Image
                   alt="logo"
                   className="logo"

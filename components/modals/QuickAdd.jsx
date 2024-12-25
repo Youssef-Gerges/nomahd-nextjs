@@ -23,14 +23,14 @@ export default function QuickAdd() {
     isAddedtoCompareItem,
     handleAddToWishlist,
     handleRemoveFromWishlist,
-    handleAddToCart
+    handleAddToCart,
   } = useContextElement();
-  const id = localStorage.getItem("id");
+  const [id, setId] = useState(null);
   const { data } = useGetAllProducts(1);
   const addToCart = useAddToCart();
   const [isInWishlist, setIsInWishlist] = useState(false);
   const [isInCart, setIsInCart] = useState(false);
-  const [quantity , setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(1);
   const { data: cartData } = useGetCartData(id);
   const addToWishlist = useAddToWishlist();
   // const [productId, setProductId] = useState(""); // Example: manage input for product ID
@@ -55,7 +55,11 @@ export default function QuickAdd() {
         },
       }
     );
-  }, [quickAddItem, addToWishlistMutation.isSuccess , removeFromWishlist.isSuccess]);
+  }, [
+    quickAddItem,
+    addToWishlistMutation.isSuccess,
+    removeFromWishlist.isSuccess,
+  ]);
 
   useEffect(() => {
     if (cartData?.data) {
@@ -86,17 +90,21 @@ export default function QuickAdd() {
     if (filtered) {
       setItem(filtered[0]);
     }
-    setItem(data?.data?.find((item) => item.id == quickAddItem))
-    console.log('dataa' , data?.data , quickAddItem , item)
+    setItem(data?.data?.find((item) => item.id == quickAddItem));
+    console.log("dataa", data?.data, quickAddItem, item);
   }, [quickAddItem]);
 
-  useEffect(()=>{
-    console.log("dataa item " , item)
-  },[item])
-  useEffect(()=>{
-    setQuantity(1)
-  },[])
-  
+  useEffect(() => {
+    console.log("dataa item ", item);
+  }, [item]);
+
+  useEffect(() => {
+    const userId = localStorage.getItem("id");
+    if (userId) {
+      setId(userId);
+    }
+    setQuantity(1);
+  }, []);
 
   return (
     <div className="modal fade modalDemo" id="quick_add">
@@ -123,7 +131,9 @@ export default function QuickAdd() {
               <div className="content">
                 <Link href={`/product-detail/${item?.id}`}>{item?.name}</Link>
                 <div className="tf-product-info-price">
-                  <div className="price">{item?.currency_symbol} {item?.calculable_price}</div>
+                  <div className="price">
+                    {item?.currency_symbol} {item?.calculable_price}
+                  </div>
                 </div>
               </div>
             </div>
@@ -187,18 +197,16 @@ export default function QuickAdd() {
             </div>
             <div className="tf-product-info-quantity mb_15">
               <div className="quantity-title fw-6">Quantity</div>
-              <Quantity setQuantity={setQuantity}/>
+              <Quantity setQuantity={setQuantity} />
             </div>
             <div className="tf-product-info-buy-button">
               <form onSubmit={(e) => e.preventDefault()} className="">
                 <a
                   className="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn"
-                  onClick={() => handleAddToCart(item?.id,"",quantity)}
+                  onClick={() => handleAddToCart(item?.id, "", quantity)}
                 >
                   <span>
-                    {isInCart
-                      ? "Already Added - "
-                      : "Add to cart - "}
+                    {isInCart ? "Already Added - " : "Add to cart - "}
                   </span>
                   <span className="tf-qty-price">{item?.main_price}</span>
                 </a>

@@ -14,7 +14,7 @@ export const useContextElement = () => {
 };
 
 export default function Context({ children }) {
-  const user_id = localStorage.getItem('id' || null)
+  const [userId,setUserId] = useState(null)
   const [cartProducts, setCartProducts] = useState([]);
   const addToCart = useAddToCart();
   const addToWishlist = useAddToWishlistNew()
@@ -25,7 +25,6 @@ export default function Context({ children }) {
   const [totalPrice, setTotalPrice] = useState(0);
   const {data:wishlist} = useGetUserWishlist() ;
   const removeFromWishlist = useNewRemoveFromWishlist();
-
   useEffect(() => {
     const subtotal = cartProducts.reduce((accumulator, product) => {
       return accumulator + product.quantity * product.price;
@@ -52,7 +51,7 @@ export default function Context({ children }) {
 
   const handleRemoveFromWishlist = (product_id) => {
     removeFromWishlist.mutate(
-      { productId: product_id, userId: user_id },
+      { productId: product_id, userId: userId },
       {
         onSuccess: (data) => {
           console.log("Wishlist data:", data);
@@ -68,7 +67,7 @@ export default function Context({ children }) {
 
   const handleAddToWishlist = (product_id) => {
     addToWishlist.mutate(
-      { productId: product_id, userId: user_id },
+      { productId: product_id, userId: userId },
       {
         onSuccess: (data) => {
           console.log("Wishlist data:", data);
@@ -86,7 +85,7 @@ export default function Context({ children }) {
     addToCart.mutate({
       id: item_id,
       variant: variant,
-      user_id: JSON.parse(user_id),
+      user_id: JSON.parse(userId),
       quantity: quantity,
     });
   };
@@ -135,6 +134,10 @@ export default function Context({ children }) {
     const items = JSON.parse(localStorage.getItem("cartList"));
     if (items?.length) {
       setCartProducts(items);
+    }
+    const id = localStorage.getItem("id");
+    if(id){
+      setUserId(id)
     }
   }, []);
 
