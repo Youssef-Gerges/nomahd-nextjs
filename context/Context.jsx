@@ -1,4 +1,8 @@
 "use client";
+import { useAddToCart } from "@/api/cart/addToCart";
+import { useGetUserWishlist } from "@/api/wishlist/getUserWishlist";
+import { useAddToWishlistNew } from "@/api/wishlist/newAddToWishlist";
+import { useNewRemoveFromWishlist } from "@/api/wishlist/newRemoveFromWishlist";
 import { allProducts } from "@/data/products";
 import { openCartModal } from "@/utlis/openCartModal";
 // import { openCart } from "@/utlis/toggleCart";
@@ -10,12 +14,18 @@ export const useContextElement = () => {
 };
 
 export default function Context({ children }) {
+  const user_id = localStorage.getItem('id' || null)
   const [cartProducts, setCartProducts] = useState([]);
-  const [wishList, setWishList] = useState([1, 2, 3]);
+  const addToCart = useAddToCart();
+  const addToWishlist = useAddToWishlistNew()
+  // const [wishList, setWishList] = useState([1, 2, 3]);
   const [compareItem, setCompareItem] = useState([1, 2, 3]);
   const [quickViewItem, setQuickViewItem] = useState(allProducts[0]);
   const [quickAddItem, setQuickAddItem] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
+  const {data:wishlist} = useGetUserWishlist() ;
+  const removeFromWishlist = useNewRemoveFromWishlist();
+
   useEffect(() => {
     const subtotal = cartProducts.reduce((accumulator, product) => {
       return accumulator + product.quantity * product.price;
@@ -23,6 +33,10 @@ export default function Context({ children }) {
     setTotalPrice(subtotal);
   }, [cartProducts]);
 
+
+  useEffect(()=>{
+    console.log("wishlist pro" , wishlist?.data)
+  },[wishlist])
   const addProductToCart = (id, qty) => {
     if (!cartProducts.filter((elm) => elm.id == id)[0]) {
       const item = {
@@ -35,6 +49,47 @@ export default function Context({ children }) {
       // openCart();
     }
   };
+
+  const handleRemoveFromWishlist = (product_id) => {
+    removeFromWishlist.mutate(
+      { productId: product_id, userId: user_id },
+      {
+        onSuccess: (data) => {
+          console.log("Wishlist data:", data);
+         
+        },
+        onError: (error) => {
+          console.error("Error:", error.message);
+         
+        },
+      }
+    );
+  };
+
+  const handleAddToWishlist = (product_id) => {
+    addToWishlist.mutate(
+      { productId: product_id, userId: user_id },
+      {
+        onSuccess: (data) => {
+          console.log("Wishlist data:", data);
+         
+        },
+        onError: (error) => {
+          console.error("Error:", error.message);
+          
+        },
+      }
+    );
+  };
+
+  const handleAddToCart = (item_id , variant , quantity) => {
+    addToCart.mutate({
+      id: item_id,
+      variant: variant,
+      user_id: JSON.parse(user_id),
+      quantity: quantity,
+    });
+  };
   const isAddedToCartProducts = (id) => {
     if (cartProducts.filter((elm) => elm.id == id)[0]) {
       return true;
@@ -42,18 +97,18 @@ export default function Context({ children }) {
     return false;
   };
 
-  const addToWishlist = (id) => {
-    if (!wishList.includes(id)) {
-      setWishList((pre) => [...pre, id]);
-    } else {
-      setWishList((pre) => [...pre].filter((elm) => elm != id));
-    }
-  };
-  const removeFromWishlist = (id) => {
-    if (wishList.includes(id)) {
-      setWishList((pre) => [...pre.filter((elm) => elm != id)]);
-    }
-  };
+  // const addToWishlist = (id) => {
+  //   // if (!wishList.includes(id)) {
+  //   //   setWishList((pre) => [...pre, id]);
+  //   // } else {
+  //   //   setWishList((pre) => [...pre].filter((elm) => elm != id));
+  //   // }
+  // };
+  // const removeFromWishlist = (id) => {
+  //   // if (wishList.includes(id)) {
+  //   //   setWishList((pre) => [...pre.filter((elm) => elm != id)]);
+  //   // }
+  // };
   const addToCompareItem = (id) => {
     if (!compareItem.includes(id)) {
       setCompareItem((pre) => [...pre, id]);
@@ -65,10 +120,10 @@ export default function Context({ children }) {
     }
   };
   const isAddedtoWishlist = (id) => {
-    if (wishList.includes(id)) {
-      return true;
-    }
-    return false;
+    // if (wishList.includes(id)) {
+    //   return true;
+    // }
+    // return false;
   };
   const isAddedtoCompareItem = (id) => {
     if (compareItem.includes(id)) {
@@ -86,16 +141,16 @@ export default function Context({ children }) {
   useEffect(() => {
     localStorage.setItem("cartList", JSON.stringify(cartProducts));
   }, [cartProducts]);
-  useEffect(() => {
-    const items = JSON.parse(localStorage.getItem("wishlist"));
-    if (items?.length) {
-      setWishList(items);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const items = JSON.parse(localStorage.getItem("wishlist"));
+  //   if (items?.length) {
+  //     setWishList(items);
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    localStorage.setItem("wishlist", JSON.stringify(wishList));
-  }, [wishList]);
+  // useEffect(() => {
+  //   localStorage.setItem("wishlist", JSON.stringify(wishList));
+  // }, [wishList]);
 
   const contextElement = {
     cartProducts,
@@ -103,11 +158,11 @@ export default function Context({ children }) {
     totalPrice,
     addProductToCart,
     isAddedToCartProducts,
-    removeFromWishlist,
-    addToWishlist,
+    // removeFromWishlist,
+    // addToWishlist,
     isAddedtoWishlist,
     quickViewItem,
-    wishList,
+    wishlist,
     setQuickViewItem,
     quickAddItem,
     setQuickAddItem,
@@ -116,6 +171,9 @@ export default function Context({ children }) {
     removeFromCompareItem,
     compareItem,
     setCompareItem,
+    handleAddToCart,
+    handleAddToWishlist,
+    handleRemoveFromWishlist
   };
   return (
     <dataContext.Provider value={contextElement}>

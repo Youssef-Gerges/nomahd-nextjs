@@ -14,15 +14,17 @@ export default function QuickView() {
   const {
     quickViewItem,
     addProductToCart,
+    handleAddToCart,
     isAddedToCartProducts,
     addToWishlist,
     isAddedtoWishlist,
     addToCompareItem,
     isAddedtoCompareItem,
+    handleAddToWishlist
   } = useContextElement();
   const [currentColor, setCurrentColor] = useState(colors[0]);
   const [currentSize, setCurrentSize] = useState(sizeOptions[0]);
-
+  const [quantity,setQuantity]=useState(1);
   const openModalSizeChoice = () => {
     const bootstrap = require("bootstrap"); // dynamically import bootstrap
     var myModal = new bootstrap.Modal(document.getElementById("find_size"), {
@@ -68,18 +70,18 @@ export default function QuickView() {
                   {[
                     quickViewItem.isLookBookProduct
                       ? "/images/products/orange-1.jpg"
-                      : quickViewItem.imgSrc,
+                      : quickViewItem.thumbnail_image,
                     quickViewItem.isLookBookProduct
                       ? "/images/products/pink-1.jpg"
-                      : quickViewItem.imgHoverSrc
-                      ? quickViewItem.imgHoverSrc
-                      : quickViewItem.imgSrc,
+                      : quickViewItem.thumbnail_image
+                      ? quickViewItem.thumbnail_image
+                      : quickViewItem.thumbnail_image,
                   ].map((product, index) => (
                     <SwiperSlide className="swiper-slide" key={index}>
                       <div className="item">
                         <Image
                           alt={""}
-                          src={product}
+                          src={quickViewItem.thumbnail_image}
                           width={720}
                           height={1045}
                           style={{ objectFit: "contain" }}
@@ -99,13 +101,13 @@ export default function QuickView() {
                   <h5>
                     <Link
                       className="link"
-                      href={`/product-detail/${quickViewItem.id}`}
+                      href={`/product-detail/${quickViewItem.slug}`}
                     >
-                      {quickViewItem.title}
+                      {quickViewItem.name}
                     </Link>
                   </h5>
                 </div>
-                <div className="tf-product-info-badges">
+                {/* <div className="tf-product-info-badges">
                   <div className="badges text-uppercase">Best seller</div>
                   <div className="product-status-content">
                     <i className="icon-lightning" />
@@ -113,9 +115,9 @@ export default function QuickView() {
                       Selling fast! 48 people have this in their carts.
                     </p>
                   </div>
-                </div>
+                </div> */}
                 <div className="tf-product-info-price">
-                  {/* <div className="price">${quickViewItem.price.toFixed(2)}</div> */}
+                  <div className="price">{quickViewItem.base_price}</div>
                 </div>
                 <div className="tf-product-description">
                   <p>
@@ -197,14 +199,14 @@ export default function QuickView() {
                 </div>
                 <div className="tf-product-info-quantity">
                   <div className="quantity-title fw-6">Quantity</div>
-                  <Quantity />
+                  <Quantity setQuantity={setQuantity}/>
                 </div>
                 <div className="tf-product-info-buy-button">
                   <form onSubmit={(e) => e.preventDefault()} className="">
                     <a
                       href="#"
                       className="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn"
-                      onClick={() => addProductToCart(quickViewItem.id)}
+                      onClick={() => handleAddToCart(quickViewItem.id,"",quantity)}
                     >
                       <span>
                         {isAddedToCartProducts(quickViewItem.id)
@@ -212,11 +214,11 @@ export default function QuickView() {
                           : "Add to cart - "}
                       </span>
                       <span className="tf-qty-price">
-                        {/* ${quickViewItem.price.toFixed(2)} */}
+                        {quickViewItem.base_price}
                       </span>
                     </a>
                     <a
-                      onClick={() => addToWishlist(quickViewItem.id)}
+                      onClick={() => handleAddToWishlist(quickViewItem.id)}
                       className="tf-product-btn-wishlist hover-tooltip box-icon bg_white wishlist btn-icon-action"
                     >
                       <span

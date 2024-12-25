@@ -71,7 +71,7 @@ export const ProductCardWishlist = ({ product, productId }) => {
         <Link href={`/product-detail/${product.slug}`} className="product-img">
           <Image
             className="lazyload img-product"
-            data-src={product.thumbnail_image}
+            data-src={product?.thumbnail_image}
             src={currentImage}
             alt="image-product"
             width={720}

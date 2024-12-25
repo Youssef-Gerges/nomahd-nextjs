@@ -1,13 +1,45 @@
 "use client";
-import { options } from "@/data/singleProductOptions";
+// import { options } from "@/data/singleProductOptions";
 import Image from "next/image";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Quantity from "./Quantity";
 import { products4 } from "@/data/products";
 import { useContextElement } from "@/context/Context";
 
-export default function StickyItem({ soldOut = false }) {
-  const { addProductToCart, isAddedToCartProducts } = useContextElement();
+export default function StickyItem({ product, soldOut = false }) {
+  const { isAddedToCartProducts, handleAddToCart } = useContextElement();
+  const [quantity, setQuantity] = useState(1);
+  const [variant, setVariant] = useState("");
+  const options = [];
+
+  if (product?.colors && product?.choice_options) {
+    product?.colors.forEach((color) => {
+      // Iterate through each size in choice_options
+      product?.choice_options
+        .find((item) => item.title === "size")
+        .options.forEach((size) => {
+          // Create a combined object for each color and size
+          options.push({
+            value: `${color} / ${size}`,
+            label: `${color} / ${size}`,
+          });
+        });
+    });
+  }
+
+  const handleVariantChange = (e) => {
+    const selectedValue = e.target.value;
+    console.log("valuee", e.target.value);
+    const formattedValue = selectedValue.replace(/\s+/g, ""); // Remove spaces and format
+    console.log("valuee", formattedValue);
+    setVariant(formattedValue); // Update the variant state
+  };
+
+  useEffect(() => {
+    if (options.length > 0) {
+      setVariant(options[0].value.replace(/\s+/g, "")); // Set first option as default and format
+    }
+  }, [options]);
   return (
     <div className="tf-sticky-btn-atc">
       <div className="container">
@@ -16,21 +48,21 @@ export default function StickyItem({ soldOut = false }) {
             <div className="tf-sticky-atc-img">
               <Image
                 className="lazyloaded"
-                data-src={products4[2].imgSrc}
+                data-src={product?.thumbnail_image}
                 alt="image"
-                src={products4[2].imgSrc}
+                src={product?.thumbnail_image}
                 width={770}
                 height={1075}
               />
             </div>
             <div className="tf-sticky-atc-title fw-5 d-xl-block d-none">
-              {products4[2].title}
+              {product?.name}
             </div>
           </div>
           <div className="tf-sticky-atc-infos">
             <form onSubmit={(e) => e.preventDefault()} className="">
               <div className="tf-sticky-atc-variant-price text-center">
-                <select className="tf-select">
+                <select className="tf-select" onChange={handleVariantChange}>
                   {options.map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label}
@@ -40,15 +72,17 @@ export default function StickyItem({ soldOut = false }) {
               </div>
               <div className="tf-sticky-atc-btns">
                 <div className="tf-product-info-quantity">
-                  <Quantity />
+                  <Quantity setQuantity={setQuantity} />
                 </div>
-                {soldOut ? (
+                {product?.current_stock < 1 ? (
                   <a className="tf-btn btns-sold-out cursor-not-allowed btn-fill radius-3 justify-content-center fw-6 fs-14 flex-grow-1 animate-hover-btn ">
                     <span>Sold out</span>
                   </a>
                 ) : (
                   <a
-                    onClick={() => addProductToCart(products4[2].id)}
+                    onClick={() =>
+                      handleAddToCart(product?.id, variant, quantity)
+                    }
                     className="tf-btn btn-fill radius-3 justify-content-center fw-6 fs-14 flex-grow-1 animate-hover-btn"
                   >
                     <span>

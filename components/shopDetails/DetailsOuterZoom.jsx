@@ -20,9 +20,11 @@ import { useAddToWishlistNew } from "@/api/wishlist/newAddToWishlist";
 import { useGetCartData } from "@/api/cart/getCart";
 import { useNewRemoveFromWishlist } from "@/api/wishlist/newRemoveFromWishlist";
 import { useCheckProductInWishlist } from "@/api/wishlist/checkProduct";
+import parse from "html-react-parser";
 
 export default function DetailsOuterZoom({ product }) {
   const id = localStorage.getItem("id");
+  // const sanitizedDescription = DOMPurify.sanitize(product?.description);
   const checkWishlist = useCheckProductInWishlist();
   const [currentColor, setCurrentColor] = useState(null);
   const [currentSize, setCurrentSize] = useState(null);
@@ -88,6 +90,11 @@ export default function DetailsOuterZoom({ product }) {
     isAddedtoWishlist,
   } = useContextElement();
 
+  const changeColor = (color) => {
+    setCurrentColor(color);
+    console.log("current color is :", currentColor);
+  };
+
   useEffect(() => {
     checkWishlist.mutate(
       { productId: product?.id, userId: id },
@@ -104,7 +111,7 @@ export default function DetailsOuterZoom({ product }) {
   }, [product?.id, addToWishlist.isSuccess, removeFromWishlist.isSuccess]);
   useEffect(() => {
     if (cartData?.data) {
-      cartData?.data?.includes(quickAddItem)
+      cartData?.data?.includes(product?.id)
         ? setIsInCart(true)
         : setIsInCart(false);
     }
@@ -154,7 +161,7 @@ export default function DetailsOuterZoom({ product }) {
                   <div className="tf-product-info-title">
                     <h5>{product?.name}</h5>
                   </div>
-                  <div className="tf-product-info-badges">
+                  {/* <div className="tf-product-info-badges">
                     <div className="badges">Best seller</div>
                     <div className="product-status-content">
                       <i className="icon-lightning" />
@@ -162,7 +169,7 @@ export default function DetailsOuterZoom({ product }) {
                         Selling fast! 56 people have this in their carts.
                       </p>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="tf-product-info-price">
                     {product?.has_discount ? (
                       <>
@@ -183,11 +190,11 @@ export default function DetailsOuterZoom({ product }) {
                       </div>
                     )}
                   </div>
-                  <div className="tf-product-info-liveview">
+                  {/* <div className="tf-product-info-liveview">
                     <div className="liveview-count">20</div>
                     <p className="fw-6">People are viewing this right now</p>
-                  </div>
-                  <div className="tf-product-info-countdown">
+                  </div> */}
+                  {/* <div className="tf-product-info-countdown">
                     <div className="countdown-wrap">
                       <div className="countdown-title">
                         <i className="icon-time tf-ani-tada" />
@@ -199,17 +206,16 @@ export default function DetailsOuterZoom({ product }) {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="tf-product-info-variant-picker">
                     <div className="variant-picker-item">
                       <div className="variant-picker-label">
                         Color:
                         <span className="fw-6 variant-picker-label-value">
-                          {/* {currentColor} */}
-                          {product?.colors.length > 0 ?  product?.colors[0] : ''}
+                          {currentColor}
                         </span>
                       </div>
-                      <form className="variant-picker-values">
+                      {/* <form className="variant-picker-values">
                         {product?.colors.map((color, index) => (
                           <React.Fragment key={index}>
                             <input
@@ -229,6 +235,28 @@ export default function DetailsOuterZoom({ product }) {
                               // className={`btn-checkbox ${color.className}`}
                               />
                               <span className="tooltip">{color}</span>
+                            </label>
+                          </React.Fragment>
+                        ))}
+                      </form> */}
+
+                      <form className="variant-picker-values">
+                        {product?.colors.map((color, index) => (
+                          <React.Fragment key={index}>
+                            <input
+                              id={`color-${index}`} // Ensure unique id
+                              type="radio"
+                              name="color"
+                              readOnly
+                              checked={currentColor === color} // Ensure strict equality
+                            />
+                            <label
+                              onClick={() => changeColor(color)} // Update currentColor state
+                              className="hover-tooltip radius-30"
+                              htmlFor={`color-${index}`} // Match the input id
+                              data-value={color}
+                            >
+                              {color} {/* Display color name */}
                             </label>
                           </React.Fragment>
                         ))}
@@ -473,7 +501,10 @@ export default function DetailsOuterZoom({ product }) {
           </div>
         </div>
       </div>{" "}
-      <StickyItem />
+      <StickyItem
+        currentColor={currentColor}
+        product={product ? product : null}
+      />
     </section>
   );
 }

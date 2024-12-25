@@ -4,44 +4,42 @@ import { useContextElement } from "@/context/Context";
 import { useEffect, useState } from "react";
 import { ProductCardWishlist } from "../shopCards/ProductCardWishlist";
 import Link from "next/link";
-import { useGetUserWishlist } from "@/api/wishlist/getUserWishlist";
 import { useGetAllProducts } from "@/api/products/useGetAllProducts";
 
 export default function Wishlist() {
-  const { data } = useGetUserWishlist();
-  const { wishList } = useContextElement();
+  const { wishlist } = useContextElement();
   const { data: products } = useGetAllProducts();
   const [wishListItems, setWishListItems] = useState([]);
-  useEffect(() => {
-    if (wishList) {
-      console.log(wishList);
-      setWishListItems(
-        [...allProducts].filter((el) => wishList.includes(el.id))
-      );
-    }
-  }, [wishList]);
+  // useEffect(() => {
+  //   if (wishlist) {
+  //     console.log(wishlist);
+  //     setWishListItems(
+  //       [...products].filter((el) => wishlist.includes(el.id))
+  //     );
+  //   }
+  // }, [wishlist]);
 
   useEffect(() => {
-    console.log("data wish products", data?.data);
     console.log("data products", products?.data);
-    if (data) {
+    if (wishlist) {
+      console.log("data wish products", wishlist?.data);
       const matchingProducts = products?.data.filter((product) =>
-        data?.data.some(
+        wishlist?.data.some(
           (wishlistItem) => wishlistItem.product.id === product.id
         )
       );
       console.log("data products filtered", matchingProducts);
     }
-  }, [data, products]);
+  }, [wishlist, products]);
   return (
     <section className="flat-spacing-2">
       <div className="container">
         <div className="grid-layout wrapper-shop" data-grid="grid-4">
-          {data?.data.map((elm, i) => (
+          {wishlist?.data.map((elm, i) => (
             <ProductCardWishlist key={i} product={elm.product} productId={elm.id} />
           ))}
         </div>
-        {!wishListItems.length && (
+        {!wishlist?.data?.length && (
           <>
             <div
               className="row align-items-center w-100"

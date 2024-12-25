@@ -21,6 +21,9 @@ export default function QuickAdd() {
     // isAddedToCartProducts,
     addToCompareItem,
     isAddedtoCompareItem,
+    handleAddToWishlist,
+    handleRemoveFromWishlist,
+    handleAddToCart
   } = useContextElement();
   const id = localStorage.getItem("id");
   const { data } = useGetAllProducts(1);
@@ -62,52 +65,15 @@ export default function QuickAdd() {
     }
   }, [cartData]);
 
-  const handleAddToWishlist = () => {
-    // Validate inputs before calling the mutation
-   
-
-    addToWishlistMutation.mutate(
-      { productId: quickAddItem, userId: id },
-      {
-        onSuccess: (data) => {
-          console.log("Wishlist data:", data);
-         
-        },
-        onError: (error) => {
-          console.error("Error:", error.message);
-          
-        },
-      }
-    );
-  };
-
-  const handleRemoveFromWishlist = () => {
-   
-
-    removeFromWishlist.mutate(
-      { productId: quickAddItem, userId: id },
-      {
-        onSuccess: (data) => {
-          console.log("Wishlist data:", data);
-         
-        },
-        onError: (error) => {
-          console.error("Error:", error.message);
-         
-        },
-      }
-    );
-  };
-
-  const handleAddToCart = () => {
-    addToCart.mutate({
-      id: quickAddItem,
-      variant: "",
-      user_id: JSON.parse(localStorage.getItem("id")),
-      quantity: quantity,
-    });
-    console.log("item is :", quickAddItem);
-  };
+  // const handleAddToCart = () => {
+  //   addToCart.mutate({
+  //     id: quickAddItem,
+  //     variant: "",
+  //     user_id: JSON.parse(localStorage.getItem("id")),
+  //     quantity: quantity,
+  //   });
+  //   console.log("item is :", quickAddItem);
+  // };
 
   const handleAddToWishList = () => {
     addToWishlist.mutate({
@@ -227,7 +193,7 @@ export default function QuickAdd() {
               <form onSubmit={(e) => e.preventDefault()} className="">
                 <a
                   className="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn"
-                  onClick={() => handleAddToCart(item?.id)}
+                  onClick={() => handleAddToCart(item?.id,"",quantity)}
                 >
                   <span>
                     {isInCart

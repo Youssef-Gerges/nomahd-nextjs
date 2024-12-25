@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const tabs = [
   { title: "Description", active: true },
@@ -9,9 +9,32 @@ const tabs = [
   { title: "Return Polocies", active: false },
 ];
 
-export default function ShopDetailsTab() {
+export default function ShopDetailsTab({ product }) {
   const [currentTab, setCurrentTab] = useState(1);
+  const iframeRef = useRef(null);
+  useEffect(() => {
+    const adjustIframeHeight = () => {
+      const iframe = iframeRef.current;
+      if (iframe && iframe.contentWindow) {
+        const iframeDocument = iframe.contentWindow.document;
+        const contentHeight = iframeDocument.body.scrollHeight;
+        iframe.style.height = `${1140}px`;
+      }
+    };
 
+    const iframe = iframeRef.current;
+
+    // Adjust height after iframe loads
+    if (iframe) {
+      iframe.addEventListener("load", adjustIframeHeight);
+    }
+
+    return () => {
+      if (iframe) {
+        iframe.removeEventListener("load", adjustIframeHeight);
+      }
+    };
+  }, []);
   return (
     <section
       className="flat-spacing-17 pt_0"
@@ -48,9 +71,10 @@ export default function ShopDetailsTab() {
                       wood-based fibres produced through a process that reduces
                       impact on forests, biodiversity and water supply.
                     </p>
-                    <div className="tf-product-des-demo">
+                    {/* <div className="tf-product-des-demo">
                       <div className="right">
                         <h3 className="fs-16 fw-5">Features</h3>
+                       
                         <ul>
                           <li>Front button placket</li>
                           <li>Adjustable sleeve tabs</li>
@@ -96,7 +120,26 @@ export default function ShopDetailsTab() {
                           <span>Tumble dry, medium hear.</span>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
+
+                    {/* <iframe
+                      sandbox="allow-same-origin"
+                      className="product-description"
+                      srcDoc={product?.description}
+                      style={{ width: "100%", border: "none" }}
+                    ></iframe> */}
+                    <iframe
+                      ref={iframeRef}
+                      sandbox="allow-same-origin"
+                      className="product-description"
+                      srcDoc={product?.description}
+                      style={{
+                        width: "100%",
+                        border: "none",
+                        overflow: "hidden",
+                        height:"1140px" 
+                      }}
+                    ></iframe>
                   </div>
                 </div>
                 <div
@@ -109,13 +152,16 @@ export default function ShopDetailsTab() {
                       <tr className="tf-attr-pa-color">
                         <th className="tf-attr-label">Color</th>
                         <td className="tf-attr-value">
-                          <p>White, Pink, Black</p>
+                          <p>{product?.colors?.map((color) => color).join(", ")}</p>
                         </td>
                       </tr>
                       <tr className="tf-attr-pa-size">
                         <th className="tf-attr-label">Size</th>
                         <td className="tf-attr-value">
-                          <p>S, M, L, XL</p>
+                          <p>
+                            {product?.choice_options
+                              ?.find((item) => item.title === "size").options?.map((size) => size).join(", ")}
+                          </p>
                         </td>
                       </tr>
                     </tbody>

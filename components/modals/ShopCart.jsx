@@ -14,7 +14,7 @@ export default function ShopCart() {
   const id = localStorage.getItem("id");
   const { t, lang } = useTranslation("common"); // "common" is the namespace
 
-  const cart = useGetCartData();
+  const {data : cart} = useGetCartData(id);
   const removeFromCart = useDeleteFromCart();
   const {
     // totalPrice,
@@ -42,18 +42,18 @@ export default function ShopCart() {
   const addGiftRef = useRef();
   const addShipingRef = useRef();
 
-  useEffect(() => {
-    cart.mutate(
-      { user_id: id },
-      {
-        onSuccess: (data) => {
-          setCartProducts(data?.data?.data.flatMap(i =>  i.cart_items));
-          setTotalPrice(data?.data?.grand_total)
-          console.log("cart data mapped:", data?.data?.data?.flatMap(i => i.cart_items));
-        },
-      }
-    );
-  }, []);
+  // useEffect(() => {
+  //   cart.mutate(
+  //     { user_id: id },
+  //     {
+  //       onSuccess: (data) => {
+  //         setCartProducts(data?.data?.data.flatMap(i =>  i.cart_items));
+  //         setTotalPrice(data?.data?.grand_total)
+  //         console.log("cart data mapped:", data?.data?.data?.flatMap(i => i.cart_items));
+  //       },
+  //     }
+  //   );
+  // }, []);
   return (
     <div className="modal fullRight fade modal-shopping-cart" id="shoppingCart">
       <div className="modal-dialog">

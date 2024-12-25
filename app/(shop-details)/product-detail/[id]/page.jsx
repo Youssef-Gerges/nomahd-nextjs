@@ -49,7 +49,7 @@ export default function page({ params }) {
         </div>
       </div>
       <DetailsOuterZoom product={product} />
-      <ShopDetailsTab />
+      <ShopDetailsTab product={product}/>
       <Products />
       <RecentProducts />
       <Footer1 />
