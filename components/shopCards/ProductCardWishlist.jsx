@@ -1,76 +1,27 @@
 "use client";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useContextElement } from "@/context/Context";
 import CountdownComponent from "../common/Countdown";
-import { useNewRemoveFromWishlist } from "@/api/wishlist/newRemoveFromWishlist";
-import { useCheckProductInWishlist } from "@/api/wishlist/checkProduct";
-import { useAddToWishlist } from "@/api/wishlist/addToWishlist";
 export const ProductCardWishlist = ({ product, productId }) => {
   const [currentImage, setCurrentImage] = useState(product.thumbnail_image);
   const { setQuickViewItem } = useContextElement();
   const [isInWishlist, setIsInWishlist] = useState(false);
-  const removeFromWishlist = useNewRemoveFromWishlist();
-  const checkWishlist = useCheckProductInWishlist();
-  const addToWishlist = useAddToWishlist();
-  const [id , setId] = useState(null);
   const {
     setQuickAddItem,
-    // addToWishlist,
-    // isAddedtoWishlist,
-    // removeFromWishlist,
     addToCompareItem,
     isAddedtoCompareItem,
+    handleRemoveFromWishlist,
+    handleAddToWishlist,
+    handleCheckWishlist,
+    addToWishlistSuccess,
+    removeFromWishlistSuccess,
   } = useContextElement();
 
-  const handleRemove = () => {
-    removeFromWishlist.mutate(
-      { productId: productId, userId: id },
-      {
-        onSuccess: (data) => {
-          console.log("Wishlist data:", data);
-        },
-        onError: (error) => {
-          console.error("Error:", error.message);
-        },
-      }
-    );
-  };
-
-  const handleAddToWishlist = () => {
-    addToWishlist.mutate(
-      { productId: productId, userId: id },
-      {
-        onSuccess: (data) => {
-          console.log("Wishlist data:", data);
-        },
-        onError: (error) => {
-          console.error("Error:", error.message);
-        },
-      }
-    );
-  };
   useEffect(() => {
-    const userId = localStorage.getItem("id");
-    if (userId) {
-      setId(userId);
-    }
-  }, []);
-  useEffect(() => {
-    checkWishlist.mutate(
-      { productId: productId, userId: id },
-      {
-        onSuccess: (data) => {
-          setIsInWishlist(data?.is_in_wishlist);
-          console.log("Wishlist data:", data?.is_in_wishlist);
-        },
-        onError: (error) => {
-          console.error("Error:", error.message);
-        },
-      }
-    );
-  }, [productId, removeFromWishlist.isSuccess]);
+    handleCheckWishlist(setIsInWishlist, product.id);
+  }, [productId, addToWishlistSuccess, removeFromWishlistSuccess]);
   return (
     <div className="card-product fl-item" key={product.id}>
       <div className="card-product-wrapper">
@@ -102,7 +53,7 @@ export const ProductCardWishlist = ({ product, productId }) => {
         </Link>
         <div className="list-product-btn type-wishlist">
           <a
-            onClick={() => handleRemove()}
+            onClick={() => handleRemoveFromWishlist(product.id)}
             className="box-icon bg_white wishlist"
           >
             <span className="tooltip">Remove Wishlist</span>
@@ -113,7 +64,7 @@ export const ProductCardWishlist = ({ product, productId }) => {
         <div className="list-product-btn">
           <a
             href="#quick_add"
-            onClick={() => setQuickAddItem(productId)}
+            onClick={() => setQuickAddItem(product)}
             data-bs-toggle="modal"
             className="box-icon bg_white quick-add tf-btn-loading"
           >
@@ -122,7 +73,9 @@ export const ProductCardWishlist = ({ product, productId }) => {
           </a>
           <a
             onClick={() => {
-              isInWishlist ? handleRemove() : handleAddToWishlist();
+              isInWishlist
+                ? handleRemoveFromWishlist(product.id)
+                : handleAddToWishlist(product.id);
             }}
             className="box-icon bg_white wishlist btn-icon-action"
           >
@@ -181,33 +134,37 @@ export const ProductCardWishlist = ({ product, productId }) => {
       </div>
       <div className="card-product-info">
         <Link href={`/product-detail/${product.slug}`} className="title link">
-          {product.name}
+          {product?.name?.length <= 30
+            ? product.name
+            : `${product?.name?.slice(0, 30)}...`}
         </Link>
-        {/* <span className="price">${product.price.toFixed(2)}</span> */}
-        {product.colors && (
+        <span className="price">{product.base_price}</span>
+        {/* {product.colors && (
           <ul className="list-color-product">
-            {product.colors.map((color) => (
-              <li
-                className={`list-color-item color-swatch ${
-                  currentImage == color.imgSrc ? "active" : ""
-                } `}
-                key={color.name}
-                onMouseOver={() => setCurrentImage(color.imgSrc)}
-              >
-                <span className="tooltip">{color.name}</span>
-                <span className={`swatch-value ${color.colorClass}`} />
-                <Image
-                  className="lazyload"
-                  data-src={color.imgSrc}
-                  src={color.imgSrc}
-                  alt="image-product"
-                  width={720}
-                  height={1005}
-                />
-              </li>
+            {product.colors?.map((color) => (
+              // <li
+              //   className={`list-color-item color-swatch ${
+              //     currentImage == color.imgSrc ? "active" : ""
+              //   } `}
+              //   key={color.name}
+              //   onMouseOver={() => setCurrentImage(color.imgSrc)}
+              // >
+              //   <span className="tooltip">{color.name}</span>
+              //   <span className={`swatch-value ${color.colorClass}`} />
+              //   <Image
+              //     className="lazyload"
+              //     data-src={color.imgSrc}
+              //     src={color.imgSrc}
+              //     alt="image-product"
+              //     width={720}
+              //     height={1005}
+              //   />
+              // </li>
+              <li>{color}</li>
             ))}
+
           </ul>
-        )}
+        )} */}
       </div>
     </div>
   );

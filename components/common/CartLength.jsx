@@ -24,5 +24,5 @@ export default function CartLength() {
       )
     );
   }, [cartData]);
-  return <>{cartLength}</>;
+  return <>{cartLength || 0}</>;
 }

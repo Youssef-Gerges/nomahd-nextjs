@@ -41,9 +41,9 @@ export default function page({ params }) {
       <Header7 />
       <Hero banner={banner} />
       <Countdown />
-      <Collections />
-      <Banner />
-      <Products />
+      {/* <Collections /> */}
+      {/* <Banner /> */}
+      <Products products={data?.data}/>
       <CollectionBanner />
       <Features bgColor="" />
       <Blogs />

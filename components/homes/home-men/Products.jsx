@@ -3,7 +3,7 @@ import ProductCard21 from "@/components/shopCards/ProductCard21";
 import { products40 } from "@/data/products";
 import React, { useEffect, useState } from "react";
 
-export default function Products() {
+export default function Products({ products }) {
   const [loading, setLoading] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [allproducts, setAllproducts] = useState([...products40]);
@@ -16,14 +16,28 @@ export default function Products() {
       setLoaded(true);
     }, 1000);
   };
-  const tabs = ["Best seller", "Sale", "Graphics", "Jeans"];
+  const tabs = [
+    "Best seller",
+    "Sale",
+    //   "Graphics", "Jeans"
+  ];
   const [activeTab, setActiveTab] = useState(tabs[0]);
-  const [filtered, setFiltered] = useState(allproducts);
+  const [filtered, setFiltered] = useState([]);
   useEffect(() => {
-    setFiltered(
-      [...allproducts].filter((el) => el.filterCategories.includes(activeTab))
-    );
-  }, [activeTab, allproducts]);
+    // setFiltered(
+    //   [...allproducts].filter((el) => el.filterCategories.includes(activeTab))
+    // );
+    console.log("products from dynamic link", products);
+    if (activeTab === "Best seller") {
+      setFiltered(products);
+    } else if(activeTab === "Sale"){
+      setFiltered(products?.filter((item) => item.has_discount == true));
+    }
+  }, [activeTab, products]);
+
+  useEffect(()=>{
+    console.log("filtered" , filtered)
+  },[filtered])
   return (
     <section className="flat-spacing-17">
       <div className="container">
@@ -47,7 +61,7 @@ export default function Products() {
           <div className="tab-content">
             <div className="tab-pane active show">
               <div className="grid-layout " data-grid="grid-4">
-                {filtered.map((product, index) => (
+                {filtered?.length > 0 && filtered?.map((product, index) => (
                   <ProductCard21 key={index} product={product} />
                 ))}
               </div>

@@ -20,19 +20,17 @@ import { useAddToWishlistNew } from "@/api/wishlist/newAddToWishlist";
 import { useGetCartData } from "@/api/cart/getCart";
 import { useNewRemoveFromWishlist } from "@/api/wishlist/newRemoveFromWishlist";
 import { useCheckProductInWishlist } from "@/api/wishlist/checkProduct";
+import { current } from "@reduxjs/toolkit";
 
 export default function DetailsOuterZoom({ product }) {
   const [id, setId] = useState(null);
-  const checkWishlist = useCheckProductInWishlist();
   const [currentColor, setCurrentColor] = useState(null);
   const [currentSize, setCurrentSize] = useState(null);
   const { data: cartData } = useGetCartData(id);
   const [isInWishlist, setIsInWishlist] = useState(false);
   const [isInCart, setIsInCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const addToCart = useAddToCart();
-  const addToWishlist = useAddToWishlistNew();
-  const removeFromWishlist = useNewRemoveFromWishlist();
+  const [variant, setVariant] = useState("");
 
   const handleColor = (color) => {
     const updatedColor = product?.colors.filter(
@@ -43,70 +41,27 @@ export default function DetailsOuterZoom({ product }) {
     }
   };
 
-  const handleAddToCart = (productId) => {
-    addToCart.mutate({
-      id: productId,
-      variant: "",
-      user_id: JSON.parse(id),
-      quantity: quantity,
-    });
-  };
-
-  const handleAddToWishlist = (productId) => {
-    addToWishlist.mutate(
-      { productId: productId, userId: id },
-      {
-        onSuccess: (data) => {
-          console.log("Wishlist data:", data);
-        },
-        onError: (error) => {
-          console.error("Error:", error.message);
-        },
-      }
-    );
-  };
-
-  const handleRemoveFromWishlist = (productId) => {
-    removeFromWishlist.mutate(
-      { productId: productId, userId: id },
-      {
-        onSuccess: (data) => {
-          console.log("Wishlist data:", data);
-        },
-        onError: (error) => {
-          console.error("Error:", error.message);
-        },
-      }
-    );
-  };
   const {
-    // addProductToCart,
     isAddedToCartProducts,
     addToCompareItem,
     isAddedtoCompareItem,
-    // addToWishlist,
     isAddedtoWishlist,
+    handleCheckWishlist,
+    handleAddToWishlist,
+    handleRemoveFromWishlist,
+    handleAddToCart,
+    addToWishlistSuccess,
+    removeFromWishlistSuccess,
   } = useContextElement();
 
   const changeColor = (color) => {
     setCurrentColor(color);
-    console.log("current color is :", currentColor);
   };
 
   useEffect(() => {
-    checkWishlist.mutate(
-      { productId: product?.id, userId: id },
-      {
-        onSuccess: (data) => {
-          setIsInWishlist(data?.is_in_wishlist);
-          console.log("Wishlist data:", data?.is_in_wishlist);
-        },
-        onError: (error) => {
-          console.error("Error:", error.message);
-        },
-      }
-    );
-  }, [product?.id, addToWishlist.isSuccess, removeFromWishlist.isSuccess]);
+    handleCheckWishlist(setIsInWishlist, product?.id);
+  }, [product, addToWishlistSuccess, removeFromWishlistSuccess]);
+
   useEffect(() => {
     if (cartData?.data) {
       cartData?.data?.includes(product?.id)
@@ -129,6 +84,12 @@ export default function DetailsOuterZoom({ product }) {
       setCurrentColor(product.colors[0]);
     }
   }, [product]);
+
+  useEffect(() => {
+    if (product?.colors?.length > 0 && product?.choice_options?.length > 0) {
+      setVariant(`${currentColor}/${currentSize}`); // Set first option as default and format
+    }
+  }, [currentColor, currentSize]);
 
   useEffect(() => {
     const userId = localStorage.getItem("id");
@@ -217,7 +178,7 @@ export default function DetailsOuterZoom({ product }) {
                       <div className="variant-picker-label">
                         Color:
                         <span className="fw-6 variant-picker-label-value">
-                          {currentColor}
+                          {currentColor || "One color"}
                         </span>
                       </div>
                       {/* <form className="variant-picker-values">
@@ -257,7 +218,8 @@ export default function DetailsOuterZoom({ product }) {
                             />
                             <label
                               onClick={() => changeColor(color)} // Update currentColor state
-                              className="hover-tooltip radius-30"
+                              className="hover-tooltip"
+                              style={{ width: "fit-content" }}
                               htmlFor={`color-${index}`} // Match the input id
                               data-value={color}
                             >
@@ -272,7 +234,7 @@ export default function DetailsOuterZoom({ product }) {
                         <div className="variant-picker-label">
                           Size:
                           <span className="fw-6 variant-picker-label-value">
-                            {currentSize}
+                            {currentSize || "One size"}
                           </span>
                         </div>
                         <a
@@ -318,7 +280,7 @@ export default function DetailsOuterZoom({ product }) {
                       <a
                         onClick={() => {
                           openCartModal();
-                          handleAddToCart(product?.id);
+                          handleAddToCart(product?.id, variant, quantity);
                         }}
                         className="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn"
                       >

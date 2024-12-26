@@ -9,94 +9,82 @@ import { allProducts } from "@/data/products";
 import { colors, sizeOptions } from "@/data/singleProductOptions";
 import { useGetAllProducts } from "@/api/products/useGetAllProducts";
 import { useAddToCart } from "@/api/cart/addToCart";
-import { useAddToWishlist } from "@/api/wishlist/addToWishlist";
-import { useAddToWishlistNew } from "@/api/wishlist/newAddToWishlist";
-import { useCheckProductInWishlist } from "@/api/wishlist/checkProduct";
+
 import { useGetCartData } from "@/api/cart/getCart";
-import { useNewRemoveFromWishlist } from "@/api/wishlist/newRemoveFromWishlist";
 export default function QuickAdd() {
   const {
     quickAddItem,
-    // addProductToCart,
-    // isAddedToCartProducts,
     addToCompareItem,
     isAddedtoCompareItem,
     handleAddToWishlist,
     handleRemoveFromWishlist,
     handleAddToCart,
+    handleCheckWishlist,
+    addToWishlistSuccess,
+    removeFromWishlistSuccess,
   } = useContextElement();
   const [id, setId] = useState(null);
   const { data } = useGetAllProducts(1);
-  const addToCart = useAddToCart();
   const [isInWishlist, setIsInWishlist] = useState(false);
   const [isInCart, setIsInCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const { data: cartData } = useGetCartData(id);
-  const addToWishlist = useAddToWishlist();
-  // const [productId, setProductId] = useState(""); // Example: manage input for product ID
-  // const [userId, setUserId] = useState(""); // Example: manage input for user ID
-  const checkWishlist = useCheckProductInWishlist();
-  const addToWishlistMutation = useAddToWishlistNew();
-  const removeFromWishlist = useNewRemoveFromWishlist();
-  const [currentColor, setCurrentColor] = useState(colors[0]);
-  const [currentSize, setCurrentSize] = useState(sizeOptions[0]);
+  const [currentColor, setCurrentColor] = useState(null);
+  const [currentSize, setCurrentSize] = useState(null);
   const [item, setItem] = useState({});
+  const [variant, setVariant] = useState("");
+
+  const handleColor = (color) => {
+    const updatedColor = quickAddItem?.colors.filter(
+      (elm) => elm.toLowerCase() == color.toLowerCase()
+    )[0];
+    if (updatedColor) {
+      setCurrentColor(updatedColor);
+    }
+  };
 
   useEffect(() => {
-    checkWishlist.mutate(
-      { productId: quickAddItem, userId: id },
-      {
-        onSuccess: (data) => {
-          setIsInWishlist(data?.is_in_wishlist);
-          console.log("Wishlist data:", data?.is_in_wishlist);
-        },
-        onError: (error) => {
-          console.error("Error:", error.message);
-        },
-      }
-    );
-  }, [
-    quickAddItem,
-    addToWishlistMutation.isSuccess,
-    removeFromWishlist.isSuccess,
-  ]);
+    if (
+      quickAddItem?.colors?.length > 0 &&
+      quickAddItem?.choice_options?.length > 0
+    ) {
+      setVariant(`${currentColor}/${currentSize}`); // Set first option as default and format
+    }
+  }, [currentColor, currentSize]);
+
+  useEffect(() => {
+    handleCheckWishlist(setIsInWishlist, quickAddItem.id);
+  }, [quickAddItem, addToWishlistSuccess, removeFromWishlistSuccess]);
 
   useEffect(() => {
     if (cartData?.data) {
-      cartData?.data?.includes(quickAddItem)
+      cartData?.data?.includes(quickAddItem.id)
         ? setIsInCart(true)
         : setIsInCart(false);
     }
   }, [cartData]);
 
-  // const handleAddToCart = () => {
-  //   addToCart.mutate({
-  //     id: quickAddItem,
-  //     variant: "",
-  //     user_id: JSON.parse(localStorage.getItem("id")),
-  //     quantity: quantity,
-  //   });
-  //   console.log("item is :", quickAddItem);
-  // };
-
-  const handleAddToWishList = () => {
-    addToWishlist.mutate({
-      user_id: JSON.parse(localStorage.getItem("id")),
-      product_id: quickAddItem,
-    });
-  };
   useEffect(() => {
-    const filtered = allProducts.filter((el) => el.id == quickAddItem);
+    if (quickAddItem?.choice_options) {
+      const sizeOption = quickAddItem.choice_options.find(
+        (option) => option.title === "size"
+      );
+      if (sizeOption?.options?.length) {
+        setCurrentSize(sizeOption.options[0]);
+      }
+    }
+
+    if (quickAddItem?.colors) {
+      setCurrentColor(quickAddItem.colors[0]);
+    }
+
+    const filtered = allProducts.filter((el) => el.id == quickAddItem.id);
     if (filtered) {
       setItem(filtered[0]);
     }
-    setItem(data?.data?.find((item) => item.id == quickAddItem));
-    console.log("dataa", data?.data, quickAddItem, item);
+    setItem(data?.data?.find((item) => item.id == quickAddItem.id));
+    console.log("dataa quick add", data?.data, quickAddItem);
   }, [quickAddItem]);
-
-  useEffect(() => {
-    console.log("dataa item ", item);
-  }, [item]);
 
   useEffect(() => {
     const userId = localStorage.getItem("id");
@@ -122,17 +110,19 @@ export default function QuickAdd() {
                 <Image
                   alt="image"
                   style={{ objectFit: "contain" }}
-                  src={item?.thumbnail_image}
+                  src={quickAddItem?.thumbnail_image}
                   width={720}
                   height={1005}
                 />
-                <span>{item?.name}</span>
               </div>
               <div className="content">
-                <Link href={`/product-detail/${item?.id}`}>{item?.name}</Link>
+                <Link href={`/product-detail/${quickAddItem?.slug}`}>
+                  {quickAddItem?.name}
+                </Link>
                 <div className="tf-product-info-price">
                   <div className="price">
-                    {item?.currency_symbol} {item?.calculable_price}
+                    {quickAddItem?.currency_symbol}{" "}
+                    {quickAddItem?.calculable_price}
                   </div>
                 </div>
               </div>
@@ -142,10 +132,10 @@ export default function QuickAdd() {
                 <div className="variant-picker-label">
                   Color:
                   <span className="fw-6 variant-picker-label-value">
-                    {currentColor.value}
+                    {currentColor ? currentColor : "One color"}
                   </span>
                 </div>
-                <form className="variant-picker-values">
+                {/* <form className="variant-picker-values">
                   {colors.map((color) => (
                     <React.Fragment key={color.id}>
                       <input
@@ -164,17 +154,38 @@ export default function QuickAdd() {
                       </label>
                     </React.Fragment>
                   ))}
+                </form> */}
+                <form className="variant-picker-values">
+                  {quickAddItem?.colors?.map((color, index) => (
+                    <React.Fragment key={index}>
+                      <input
+                        id={`color-${index}`} // Ensure unique id
+                        type="radio"
+                        name="color"
+                        readOnly
+                        checked={currentColor === color} // Ensure strict equality
+                      />
+                      <label
+                        onClick={() => handleColor(color)} // Update currentColor state
+                        className="hover-tooltip"
+                        style={{ width: "fit-content" }}
+                        htmlFor={`color-${index}`} // Match the input id
+                        data-value={color}
+                      >
+                        {color} {/* Display color name */}
+                      </label>
+                    </React.Fragment>
+                  ))}
                 </form>
               </div>
               <div className="variant-picker-item">
                 <div className="variant-picker-label">
-                  Size:{" "}
+                  Size:
                   <span className="fw-6 variant-picker-label-value">
-                    {" "}
-                    {currentSize.value}
+                    {currentSize ? currentSize : "One size"}
                   </span>
                 </div>
-                <form className="variant-picker-values">
+                {/* <form className="variant-picker-values">
                   {sizeOptions.map((size) => (
                     <React.Fragment key={size.id}>
                       <input
@@ -192,6 +203,30 @@ export default function QuickAdd() {
                       </label>
                     </React.Fragment>
                   ))}
+                </form> */}
+                <form className="variant-picker-values">
+                  {quickAddItem?.choice_options?.length > 0 &&
+                    quickAddItem?.choice_options
+                      ?.find((option) => option.title === "size")
+                      .options?.map((size, index) => (
+                        <React.Fragment key={index}>
+                          <input
+                            type="radio"
+                            name="size1"
+                            id={index}
+                            readOnly
+                            checked={currentSize == size}
+                          />
+                          <label
+                            onClick={() => setCurrentSize(size)}
+                            className="style-text"
+                            htmlFor={index}
+                            data-value={size}
+                          >
+                            <p>{size}</p>
+                          </label>
+                        </React.Fragment>
+                      ))}
                 </form>
               </div>
             </div>
@@ -203,12 +238,22 @@ export default function QuickAdd() {
               <form onSubmit={(e) => e.preventDefault()} className="">
                 <a
                   className="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn"
-                  onClick={() => handleAddToCart(item?.id, "", quantity)}
+                  onClick={() =>
+                    handleAddToCart(quickAddItem?.id, variant, quantity)
+                  }
                 >
                   <span>
                     {isInCart ? "Already Added - " : "Add to cart - "}
                   </span>
-                  <span className="tf-qty-price">{item?.main_price}</span>
+                  <span className="tf-qty-price">
+                    {quickAddItem?.currency_symbol
+                      ? `${
+                          (quickAddItem?.currency_symbol,
+                          " ",
+                          quickAddItem?.calculable_price)
+                        } `
+                      : quickAddItem?.base_price}
+                  </span>
                 </a>
                 <div className="tf-product-btn-wishlist btn-icon-action">
                   <i
@@ -217,8 +262,8 @@ export default function QuickAdd() {
                     }`}
                     onClick={() => {
                       isInWishlist
-                        ? handleRemoveFromWishlist()
-                        : handleAddToWishlist();
+                        ? handleRemoveFromWishlist(quickAddItem.id)
+                        : handleAddToWishlist(quickAddItem.id);
                     }}
                   />
                   <i className="icon-delete" />
@@ -227,7 +272,7 @@ export default function QuickAdd() {
                   href="#compare"
                   data-bs-toggle="offcanvas"
                   aria-controls="offcanvasLeft"
-                  onClick={() => addToCompareItem(item?.id)}
+                  onClick={() => addToCompareItem(quickAddItem?.id)}
                   className="tf-product-btn-wishlist box-icon bg_white compare btn-icon-action"
                 >
                   <span className="icon icon-compare" />

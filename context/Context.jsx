@@ -1,5 +1,6 @@
 "use client";
 import { useAddToCart } from "@/api/cart/addToCart";
+import { useCheckProductInWishlist } from "@/api/wishlist/checkProduct";
 import { useGetUserWishlist } from "@/api/wishlist/getUserWishlist";
 import { useAddToWishlistNew } from "@/api/wishlist/newAddToWishlist";
 import { useNewRemoveFromWishlist } from "@/api/wishlist/newRemoveFromWishlist";
@@ -14,16 +15,20 @@ export const useContextElement = () => {
 };
 
 export default function Context({ children }) {
-  const [userId,setUserId] = useState(null)
+  const [userId, setUserId] = useState(null);
   const [cartProducts, setCartProducts] = useState([]);
   const addToCart = useAddToCart();
-  const addToWishlist = useAddToWishlistNew()
+  const addToWishlist = useAddToWishlistNew();
   // const [wishList, setWishList] = useState([1, 2, 3]);
   const [compareItem, setCompareItem] = useState([1, 2, 3]);
   const [quickViewItem, setQuickViewItem] = useState(allProducts[0]);
   const [quickAddItem, setQuickAddItem] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
-  const {data:wishlist} = useGetUserWishlist() ;
+  const { data: wishlist } = useGetUserWishlist();
+  const checkWishlist = useCheckProductInWishlist();
+  const [addToWishlistSuccess, setAddToWishlistSucess] = useState(false);
+  const [removeFromWishlistSuccess, setRemoveFromWishlistSuccess] =
+    useState(false);
   const removeFromWishlist = useNewRemoveFromWishlist();
   useEffect(() => {
     const subtotal = cartProducts.reduce((accumulator, product) => {
@@ -32,10 +37,25 @@ export default function Context({ children }) {
     setTotalPrice(subtotal);
   }, [cartProducts]);
 
-
-  useEffect(()=>{
-    console.log("wishlist pro" , wishlist?.data)
-  },[wishlist])
+  const handleCheckWishlist = (setIsInWishlist, product_id) => {
+    if (product_id && userId) {
+      checkWishlist.mutate(
+        { productId: product_id, userId: userId },
+        {
+          onSuccess: (data) => {
+            setIsInWishlist(data?.is_in_wishlist);
+            console.log("Wishlist data:", data?.is_in_wishlist);
+          },
+          onError: (error) => {
+            console.error("Error:", error.message);
+          },
+        }
+      );
+    }
+  };
+  useEffect(() => {
+    console.log("wishlist pro", wishlist?.data);
+  }, [wishlist]);
   const addProductToCart = (id, qty) => {
     if (!cartProducts.filter((elm) => elm.id == id)[0]) {
       const item = {
@@ -54,12 +74,11 @@ export default function Context({ children }) {
       { productId: product_id, userId: userId },
       {
         onSuccess: (data) => {
+          setRemoveFromWishlistSuccess(true);
           console.log("Wishlist data:", data);
-         
         },
         onError: (error) => {
           console.error("Error:", error.message);
-         
         },
       }
     );
@@ -71,17 +90,16 @@ export default function Context({ children }) {
       {
         onSuccess: (data) => {
           console.log("Wishlist data:", data);
-         
+          setAddToWishlistSucess(true);
         },
         onError: (error) => {
           console.error("Error:", error.message);
-          
         },
       }
     );
   };
 
-  const handleAddToCart = (item_id , variant , quantity) => {
+  const handleAddToCart = (item_id, variant, quantity) => {
     addToCart.mutate({
       id: item_id,
       variant: variant,
@@ -136,8 +154,8 @@ export default function Context({ children }) {
       setCartProducts(items);
     }
     const id = localStorage.getItem("id");
-    if(id){
-      setUserId(id)
+    if (id) {
+      setUserId(id);
     }
   }, []);
 
@@ -176,7 +194,10 @@ export default function Context({ children }) {
     setCompareItem,
     handleAddToCart,
     handleAddToWishlist,
-    handleRemoveFromWishlist
+    handleRemoveFromWishlist,
+    handleCheckWishlist,
+    addToWishlistSuccess,
+    removeFromWishlistSuccess,
   };
   return (
     <dataContext.Provider value={contextElement}>

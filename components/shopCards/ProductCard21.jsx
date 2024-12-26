@@ -5,25 +5,34 @@ import Image from "next/image";
 import Link from "next/link";
 import { useContextElement } from "@/context/Context";
 export default function ProductCard21({ product }) {
-  const [currentImage, setCurrentImage] = useState(product.imgSrc);
+  const [currentImage, setCurrentImage] = useState(product.thumbnail_image);
+  const [isAddedtoWishlist, setIsAddedtoWishlist] = useState(false);
+
   const {
     setQuickViewItem,
     quickAddItem,
     addToWishlist,
-    isAddedtoWishlist,
     isAddedtoCompareItem,
+    setQuickAddItem,
+    handleAddToWishlist,
+    handleRemoveFromWishlist,
+    addToCompareItem,
+    handleCheckWishlist,
+    addToWishlistSuccess,
+    removeFromWishlistSuccess,
   } = useContextElement();
   useEffect(() => {
-    setCurrentImage(product.imgSrc);
-  }, [product]);
+    setCurrentImage(product.thumbnail_image);
+    handleCheckWishlist(setIsAddedtoWishlist, product.id);
+  }, [product, addToWishlistSuccess, removeFromWishlistSuccess]);
 
   return (
     <div className="card-product fl-item">
       <div className="card-product-wrapper">
-        <Link href={`/product-detail/${product.id}`} className="product-img">
+        <Link href={`/product-detail/${product.slug}`} className="product-img">
           <Image
             className="lazyload img-product"
-            data-src={product.imgSrc}
+            data-src={product.thumbnail_image}
             alt="image-product"
             src={currentImage}
             width={720}
@@ -31,9 +40,9 @@ export default function ProductCard21({ product }) {
           />
           <Image
             className="lazyload img-hover"
-            data-src={product.imgHoverSrc}
+            data-src={product.thumbnail_image}
             alt="image-product"
-            src={product.imgHoverSrc}
+            src={product.thumbnail_image}
             width={720}
             height={1005}
           />
@@ -41,27 +50,29 @@ export default function ProductCard21({ product }) {
         {!product.preOrder && !product.soldOut && (
           <div className="list-product-btn">
             <a
-              href={product.quickAddLink}
+              href="#quick_add"
               data-bs-toggle="modal"
-              onClick={() => quickAddItem(product.id)}
+              onClick={() => setQuickAddItem(product)}
               className="box-icon bg_white quick-add tf-btn-loading"
             >
               <span className="icon icon-bag" />
               <span className="tooltip">Quick Add</span>
             </a>
             <a
-              onClick={() => addToWishlist(product.id)}
+              onClick={() => {
+                isAddedtoWishlist
+                  ? handleRemoveFromWishlist(product.id)
+                  : handleAddToWishlist(product.id);
+              }}
               className="box-icon bg_white wishlist btn-icon-action"
             >
               <span
-                className={`icon icon-heart ${
-                  isAddedtoWishlist(product.id) ? "added" : ""
+                className={`${
+                  isAddedtoWishlist ? "icon-heart-full" : "icon-heart"
                 }`}
               />
               <span className="tooltip">
-                {isAddedtoWishlist(product.id)
-                  ? "Already Wishlisted"
-                  : "Add to Wishlist"}
+                {isAddedtoWishlist ? "Already Wishlisted" : "Add to Wishlist"}
               </span>
               <span className="icon icon-delete" />
             </a>
@@ -84,7 +95,7 @@ export default function ProductCard21({ product }) {
               </span>
             </a>
             <a
-              href={product.quickViewLink}
+              href="#quick_view"
               onClick={() => setQuickViewItem(product)}
               data-bs-toggle="modal"
               className="box-icon bg_white quickview tf-btn-loading"
@@ -113,17 +124,16 @@ export default function ProductCard21({ product }) {
         )}
       </div>
       <div className="card-product-info">
-        <Link href={`/product-detail/${product.id}`} className="title link">
-          {" "}
-          Regular Fit Oxford Shirt{" "}
+        <Link href={`/product-detail/${product.slug}`} className="title link">
+          {product?.name?.length <= 30
+            ? product.name
+            : `${product?.name?.slice(0, 30)}...`}
         </Link>
         <span className="price">
-          {product.oldPrice && (
-            <span className="old-price">{product.oldPrice}</span>
+          {product.has_discount && (
+            <span className="old-price">{product.stroked_price}</span>
           )}
-          <span className="new-price">
-            ${product.price.toFixed(2) || product.price.toFixed(2)}
-          </span>
+          <span className="new-price">{product.main_price}</span>
         </span>
         <ul className="list-color-product">
           {product.colors?.map((color, index) => (

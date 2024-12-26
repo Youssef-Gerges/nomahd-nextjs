@@ -11,16 +11,16 @@ export default function Sorting({ products = products1, setFinalSorted }) {
       setFinalSorted([...products]);
     } else if (selectedOptions.text == "Alphabetically, A-Z") {
       setFinalSorted(
-        [...products].sort((a, b) => a.title.localeCompare(b.title))
+        [...products].sort((a, b) => a.name.localeCompare(b.name))
       );
     } else if (selectedOptions.text == "Alphabetically, Z-A") {
       setFinalSorted(
-        [...products].sort((a, b) => b.title.localeCompare(a.title))
+        [...products].sort((a, b) => b.name.localeCompare(a.name))
       );
     } else if (selectedOptions.text == "Price, low to high") {
-      setFinalSorted([...products].sort((a, b) => a.price - b.price));
+      setFinalSorted([...products].sort((a, b) => a.calculable_price - b.calculable_price));
     } else if (selectedOptions.text == "Price, high to low") {
-      setFinalSorted([...products].sort((a, b) => b.price - a.price));
+      setFinalSorted([...products].sort((a, b) => b.calculable_price - a.calculable_price));
     }
   }, [products, selectedOptions]);
 

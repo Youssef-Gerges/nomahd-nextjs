@@ -18,7 +18,7 @@ export default function ShopDetailsTab({ product }) {
       if (iframe && iframe.contentWindow) {
         const iframeDocument = iframe.contentWindow.document;
         const contentHeight = iframeDocument.body.scrollHeight;
-        iframe.style.height = `${1140}px`;
+        iframe.style.height = `${contentHeight + 20 }px`;
       }
     };
 
@@ -160,7 +160,7 @@ export default function ShopDetailsTab({ product }) {
                         <td className="tf-attr-value">
                           <p>
                             {product?.choice_options
-                              ?.find((item) => item.title === "size").options?.map((size) => size).join(", ")}
+                              ?.find((item) => item.title === "size")?.options?.map((size) => size).join(", ")}
                           </p>
                         </td>
                       </tr>

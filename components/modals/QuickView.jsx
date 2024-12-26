@@ -119,13 +119,13 @@ export default function QuickView() {
                 <div className="tf-product-info-price">
                   <div className="price">{quickViewItem.base_price}</div>
                 </div>
-                <div className="tf-product-description">
+                {/* <div className="tf-product-description">
                   <p>
                     Nunc arcu faucibus a et lorem eu a mauris adipiscing conubia
                     ac aptent ligula facilisis a auctor habitant parturient a
                     a.Interdum fermentum.
                   </p>
-                </div>
+                </div> */}
                 <div className="tf-product-info-variant-picker">
                   <div className="variant-picker-item">
                     <div className="variant-picker-label">

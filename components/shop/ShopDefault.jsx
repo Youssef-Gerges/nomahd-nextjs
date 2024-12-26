@@ -6,9 +6,9 @@ import Pagination from "../common/Pagination";
 import ShopFilter from "./ShopFilter";
 import Sorting from "./Sorting";
 
-export default function ShopDefault() {
+export default function ShopDefault({products , setProducts}) {
   const [gridItems, setGridItems] = useState(4);
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
   const [finalSorted, setFinalSorted] = useState([]);
   return (
     <>

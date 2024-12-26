@@ -9,12 +9,14 @@ import { useGetTopCategories } from "@/api/categories/getTopCategories";
 import { useEffect } from "react";
 import { useGetHomeCategories } from "@/api/categories/getHomeCategories";
 import { useGetAllBanners } from "@/api/general/getAllBanners";
+import { useGetFeaturedCategories } from "@/api/categories/getFeaturedCategories";
 export default function Categories2() {
- const {data} = useGetAllBanners()
+  const { data } = useGetAllBanners();
+  const { data: featured } = useGetFeaturedCategories();
 
- useEffect(()=>{
-  console.log("lolo" , data?.data)
- },[data])
+  useEffect(() => {
+    console.log("lolo", data?.data);
+  }, [data]);
   return (
     <section className="flat-spacing-5 pb_0">
       <div className="container">
@@ -49,7 +51,7 @@ export default function Categories2() {
                 <div className="collection-item style-2 hover-img">
                   <div className="collection-inner">
                     <Link
-                      href={`/shop-collection-sub`} // Directly added href here
+                      href={`/shop-collection-sub/${collection?.slug}/${collection?.id}`} // Directly added href here
                       className="collection-image img-style"
                     >
                       <Image

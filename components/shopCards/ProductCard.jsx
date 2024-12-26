@@ -10,76 +10,26 @@ import { useCheckProductInWishlist } from "@/api/wishlist/checkProduct";
 import { useAddToWishlistNew } from "@/api/wishlist/newAddToWishlist";
 import { useNewRemoveFromWishlist } from "@/api/wishlist/newRemoveFromWishlist";
 export const ProductCard = ({ product }) => {
-  const [id, setId] = useState(null);
   const [currentImage, setCurrentImage] = useState(product.thumbnail_image);
-  const checkWishlist = useCheckProductInWishlist();
   const [isAddedtoWishlist, setIsAddedtoWishlist] = useState(false);
   const { setQuickViewItem } = useContextElement();
-  const addToWishlist = useAddToWishlistNew();
-  const removeFromWishlist = useNewRemoveFromWishlist();
+
   const {
     setQuickAddItem,
-    // addToWishlist,
-    // isAddedtoWishlist,
+    handleAddToWishlist,
+    handleRemoveFromWishlist,
     addToCompareItem,
     isAddedtoCompareItem,
+    handleCheckWishlist,
+    addToWishlistSuccess,
+    removeFromWishlistSuccess,
   } = useContextElement();
 
-  const handleAddToWishlist = () => {
-    // Validate inputs before calling the mutation
-
-    addToWishlist.mutate(
-      { productId: product.id, userId: id },
-      {
-        onSuccess: (data) => {
-          console.log("Wishlist data:", data);
-          alert("Product added to wishlist successfully!");
-        },
-        onError: (error) => {
-          console.error("Error:", error.message);
-          alert("Failed to add product to wishlist");
-        },
-      }
-    );
-  };
-
-  const handleRemoveFromWishlist = () => {
-    removeFromWishlist.mutate(
-      { productId: product.id, userId: id },
-      {
-        onSuccess: (data) => {
-          console.log("Wishlist data:", data);
-          alert("Product removed from wishlist successfully!");
-        },
-        onError: (error) => {
-          console.error("Error:", error.message);
-          alert("Failed to remove product from wishlist");
-        },
-      }
-    );
-  };
-
-  useEffect(() => {
-    const userId = localStorage.getItem("id");
-    if (userId) {
-      setId(userId);
-    }
-  }, []);
   useEffect(() => {
     setCurrentImage(product.thumbnail_image);
-    checkWishlist.mutate(
-      { productId: product.id, userId: id },
-      {
-        onSuccess: (data) => {
-          setIsAddedtoWishlist(data?.is_in_wishlist);
-          console.log("Wishlist data:", data?.is_in_wishlist);
-        },
-        onError: (error) => {
-          console.error("Error:", error.message);
-        },
-      }
-    );
-  }, [product, addToWishlist.isSuccess, removeFromWishlist.isSuccess]);
+    handleCheckWishlist(setIsAddedtoWishlist, product?.id);
+  }, [product, addToWishlistSuccess, removeFromWishlistSuccess]);
+
   return (
     <div className="card-product fl-item" key={product.id}>
       <div className="card-product-wrapper">
@@ -113,7 +63,7 @@ export const ProductCard = ({ product }) => {
           <a
             href="#quick_add"
             onClick={() => {
-              setQuickAddItem(product.id);
+              setQuickAddItem(product);
             }}
             data-bs-toggle="modal"
             className="box-icon bg_white quick-add tf-btn-loading"
@@ -124,13 +74,15 @@ export const ProductCard = ({ product }) => {
           <a
             onClick={() => {
               isAddedtoWishlist
-                ? handleRemoveFromWishlist()
-                : handleAddToWishlist();
+                ? handleRemoveFromWishlist(product.id)
+                : handleAddToWishlist(product.id);
             }}
             className="box-icon bg_white wishlist btn-icon-action"
           >
             <span
-              className={`icon icon-heart ${isAddedtoWishlist ? "added" : ""}`}
+              className={`${
+                isAddedtoWishlist ? "icon-heart-full" : "icon-heart"
+              }`}
             />
             <span className="tooltip">
               {isAddedtoWishlist ? "Already Wishlisted" : "Add to Wishlist"}
@@ -184,12 +136,14 @@ export const ProductCard = ({ product }) => {
       </div>
       <div className="card-product-info">
         <Link href={`/product-detail/${product.slug}`} className="title link">
-          {product.name}
+          {product?.name?.length <= 30
+            ? product.name
+            : `${product?.name?.slice(0, 30)}...`}
         </Link>
         <span className="price">
           {product.currency_symbol} {product.calculable_price}
         </span>
-        {product.colors && (
+        {/* {product.colors && (
           <ul className="list-color-product">
             {product.colors.map((color) => (
               <li
@@ -212,7 +166,7 @@ export const ProductCard = ({ product }) => {
               </li>
             ))}
           </ul>
-        )}
+        )} */}
       </div>
     </div>
   );
