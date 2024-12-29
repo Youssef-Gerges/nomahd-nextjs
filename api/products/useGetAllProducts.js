@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../api';
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
 
 export const useGetAllProducts = (page) => {
   return useQuery({

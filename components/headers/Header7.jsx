@@ -103,7 +103,7 @@ export default function Header7() {
                 <Image
                   alt="logo"
                   className="logo"
-                  src="/images/logo/women-logo.svg"
+                  src="https://s3.eu-central-003.backblazeb2.com/nomahds3bucket/uploads/all/64dTUxslMt59y96bJPNtio0zP5KYPcACPbGGt8uU.png"
                   width={143}
                   height={21}
                 />
@@ -165,14 +165,14 @@ export default function Header7() {
             <nav className="box-navigation text-center">
               <ul className="box-nav-ul d-flex align-items-center justify-content-center gap-30">
                 <Nav />
-                <li className="menu-item">
+                {/* <li className="menu-item">
                   <a
                     href="https://themeforest.net/item/ecomus-ultimate-html5-template/53417990?s_rank=3"
                     className="item-link"
                   >
                     Buy now
                   </a>
-                </li>
+                </li> */}
               </ul>
             </nav>
             <ul className="header-list-categories tf-lg-hidden">

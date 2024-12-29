@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { api } from '../api';
-import toast from 'react-hot-toast';
+import { api } from '@/api/api';
+// import toast from 'react-hot-toast';
 
 export const useGetFlashDealProducts = (id) => {
   return useQuery({
@@ -24,7 +24,7 @@ export const useGetFlashDealProducts = (id) => {
     },
     enabled: !!id, // Ensures the query only runs if an ID is provided
     onError: () => {
-      toast.error('Error fetching flash deals. Please try again later.');
+      console.log('Error fetching flash deals. Please try again later.');
     },
   });
 };

@@ -18,7 +18,7 @@ export default function ShopDetailsTab({ product }) {
       if (iframe && iframe.contentWindow) {
         const iframeDocument = iframe.contentWindow.document;
         const contentHeight = iframeDocument.body.scrollHeight;
-        iframe.style.height = `${contentHeight + 20 }px`;
+        iframe.style.height = `${contentHeight + 20}px`;
       }
     };
 
@@ -64,13 +64,6 @@ export default function ShopDetailsTab({ product }) {
                   } `}
                 >
                   <div className="">
-                    <p className="mb_30">
-                      Button-up shirt sleeves and a relaxed silhouette. It’s
-                      tailored with drapey, crinkle-texture fabric that’s made
-                      from LENZING™ ECOVERO™ Viscose — responsibly sourced
-                      wood-based fibres produced through a process that reduces
-                      impact on forests, biodiversity and water supply.
-                    </p>
                     {/* <div className="tf-product-des-demo">
                       <div className="right">
                         <h3 className="fs-16 fw-5">Features</h3>
@@ -122,12 +115,6 @@ export default function ShopDetailsTab({ product }) {
                       </div>
                     </div> */}
 
-                    {/* <iframe
-                      sandbox="allow-same-origin"
-                      className="product-description"
-                      srcDoc={product?.description}
-                      style={{ width: "100%", border: "none" }}
-                    ></iframe> */}
                     <iframe
                       ref={iframeRef}
                       sandbox="allow-same-origin"
@@ -137,7 +124,7 @@ export default function ShopDetailsTab({ product }) {
                         width: "100%",
                         border: "none",
                         overflow: "hidden",
-                        height:"1140px" 
+                        height: "1140px",
                       }}
                     ></iframe>
                   </div>
@@ -152,7 +139,9 @@ export default function ShopDetailsTab({ product }) {
                       <tr className="tf-attr-pa-color">
                         <th className="tf-attr-label">Color</th>
                         <td className="tf-attr-value">
-                          <p>{product?.colors?.map((color) => color).join(", ")}</p>
+                          <p>
+                            {product?.colors?.map((color) => color).join(", ")}
+                          </p>
                         </td>
                       </tr>
                       <tr className="tf-attr-pa-size">
@@ -160,7 +149,9 @@ export default function ShopDetailsTab({ product }) {
                         <td className="tf-attr-value">
                           <p>
                             {product?.choice_options
-                              ?.find((item) => item.title === "size")?.options?.map((size) => size).join(", ")}
+                              ?.find((item) => item.title === "size")
+                              ?.options?.map((size) => size)
+                              .join(", ")}
                           </p>
                         </td>
                       </tr>

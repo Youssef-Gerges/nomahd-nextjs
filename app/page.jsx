@@ -17,11 +17,10 @@ import Products from "@/components/homes/multi-brand/Products";
 import Testimonials from "@/components/homes/multi-brand/Testimonials";
 import Categories from "@/components/homes/home-1/Categories";
 import Categories2 from "@/components/homes/multi-brand/Categories2";
-import Announcment from "@/components/homes/multi-brand/Announcment";
+// import Announcment from "@/components/homes/multi-brand/Announcment";
 
 // import Hero from "@/components/homes/home-1/Hero";
-import Lookbook from "@/components/homes/home-1/Lookbook";
-import Marquee from "@/components/homes/home-1/Marquee";
+
 // import Products from "@/components/homes/home-1/Products";
 // import useTranslation from "next-translate/useTranslation";
 export const metadata = {
@@ -43,7 +42,7 @@ export default function Home() {
       <ShopGram />
       <Features />
       <Footer1 /> */}
-       <Announcment />
+      {/* <Announcment /> */}
       <Header7 />
       {/* <Categories /> */}
       <Hero />

@@ -1,8 +1,9 @@
 "use client";
 import Footer1 from "@/components/footers/Footer1";
 import Header2 from "@/components/headers/Header2";
-
 import Products from "@/components/shopDetails/Products";
+
+// import BestSellingProducts from "@/components/shopDetails/Products";
 import RecentProducts from "@/components/shopDetails/RecentProducts";
 import ShopDetailsTab from "@/components/shopDetails/ShopDetailsTab";
 import React, { useEffect, useState } from "react";
@@ -51,7 +52,7 @@ export default function page({ params }) {
       <DetailsOuterZoom product={product} />
       <ShopDetailsTab product={product}/>
       <Products />
-      <RecentProducts />
+      <RecentProducts id={product?.slug} />
       <Footer1 />
     </>
   );

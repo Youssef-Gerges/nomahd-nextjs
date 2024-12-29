@@ -1,5 +1,12 @@
 "use client";
 import { useAddToCart } from "@/api/cart/addToCart";
+import { useGetAllCategories } from "@/api/categories/getAllCategories";
+import { useGetSubCategory } from "@/api/categories/getSubCategories";
+import { useGetAllFlashDeals } from "@/api/products/flashDeal/getAllFlashDeals";
+import { useGetFlashDealProducts } from "@/api/products/flashDeal/getAllFlashDealsProducts";
+import { useGetSubCategoryProducts } from "@/api/products/getAllSubCategoryProducts";
+import { useGetBestSellingProducts } from "@/api/products/getBestSellingProducts";
+import { useGetRelatedProducts } from "@/api/products/getRelatedProducts";
 import { useCheckProductInWishlist } from "@/api/wishlist/checkProduct";
 import { useGetUserWishlist } from "@/api/wishlist/getUserWishlist";
 import { useAddToWishlistNew } from "@/api/wishlist/newAddToWishlist";
@@ -18,6 +25,8 @@ export default function Context({ children }) {
   const [userId, setUserId] = useState(null);
   const [cartProducts, setCartProducts] = useState([]);
   const addToCart = useAddToCart();
+  const [productId, setProductId] = useState(null);
+  const [categoryId, setCategoryId] = useState(null);
   const addToWishlist = useAddToWishlistNew();
   // const [wishList, setWishList] = useState([1, 2, 3]);
   const [compareItem, setCompareItem] = useState([1, 2, 3]);
@@ -27,6 +36,11 @@ export default function Context({ children }) {
   const { data: wishlist } = useGetUserWishlist();
   const checkWishlist = useCheckProductInWishlist();
   const [addToWishlistSuccess, setAddToWishlistSucess] = useState(false);
+  const { data: bestSelling } = useGetBestSellingProducts();
+  const { data: relatedProducts } = useGetRelatedProducts(productId);
+  const { data: subCategories } = useGetSubCategory(categoryId);
+  const { data: categories } = useGetAllCategories();
+  const { data: flashSale } = useGetAllFlashDeals();
   const [removeFromWishlistSuccess, setRemoveFromWishlistSuccess] =
     useState(false);
   const removeFromWishlist = useNewRemoveFromWishlist();
@@ -198,6 +212,13 @@ export default function Context({ children }) {
     handleCheckWishlist,
     addToWishlistSuccess,
     removeFromWishlistSuccess,
+    bestSelling,
+    setProductId,
+    relatedProducts,
+    categories,
+    subCategories,
+    setCategoryId,
+    flashSale,
   };
   return (
     <dataContext.Provider value={contextElement}>

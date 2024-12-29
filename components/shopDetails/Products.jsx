@@ -4,13 +4,19 @@ import { products1 } from "@/data/products";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ProductCard } from "../shopCards/ProductCard";
 import { Navigation, Pagination } from "swiper/modules";
+import { useContextElement } from "@/context/Context";
+import { useEffect } from "react";
 
 export default function Products() {
+  const { bestSelling } = useContextElement();
+  useEffect(() => {
+    console.log("best selling products :", bestSelling);
+  }, [bestSelling]);
   return (
     <section className="flat-spacing-1 pt_0">
       <div className="container">
         <div className="flat-title">
-          <span className="title">People Also Bought</span>
+          <span className="title">Best selling</span>
         </div>
         <div className="hover-sw-nav hover-sw-2">
           <Swiper
@@ -37,7 +43,7 @@ export default function Products() {
             }}
             pagination={{ clickable: true, el: ".spd307" }}
           >
-            {products1.slice(0, 8).map((product, i) => (
+            {bestSelling?.data?.slice(0, 8).map((product, i) => (
               <SwiperSlide key={i} className="swiper-slide">
                 <ProductCard product={product} />
               </SwiperSlide>

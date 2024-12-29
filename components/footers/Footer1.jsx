@@ -68,7 +68,7 @@ export default function Footer1({ bgColor = "" }) {
                     <Link href={`/`}>
                       <Image
                         alt="image"
-                        src="/images/logo/logo.svg"
+                        src="https://s3.eu-central-003.backblazeb2.com/nomahds3bucket/uploads/all/64dTUxslMt59y96bJPNtio0zP5KYPcACPbGGt8uU.png"
                         width="136"
                         height="21"
                       />

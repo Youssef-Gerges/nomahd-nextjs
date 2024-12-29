@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -16,9 +16,13 @@ import {
   productsPages,
 } from "@/data/menu";
 import { usePathname } from "next/navigation";
+import { useContextElement } from "@/context/Context";
 
 export default function Nav({ isArrow = true, textColor = "", Linkfs = "" }) {
+  const { categories, subCategories, setCategoryId } = useContextElement();
   const pathname = usePathname();
+  const [isActive, setIsActive] = useState(null);
+  const [hoveredItem, setHoveredItem] = useState(null);
   const isMenuActive = (menuItem) => {
     let active = false;
     if (menuItem.href?.includes("/")) {
@@ -26,50 +30,61 @@ export default function Nav({ isArrow = true, textColor = "", Linkfs = "" }) {
         active = true;
       }
     }
-    if (menuItem.length) {
-      active = menuItem.some(
-        (elm) => elm.href?.split("/")[1] == pathname.split("/")[1]
-      );
-    }
-    if (menuItem.length) {
-      menuItem.forEach((item) => {
-        item.links?.forEach((elm2) => {
-          if (elm2.href?.includes("/")) {
-            if (elm2.href?.split("/")[1] == pathname.split("/")[1]) {
-              active = true;
-            }
-          }
-          if (elm2.length) {
-            elm2.forEach((item2) => {
-              item2?.links?.forEach((elm3) => {
-                if (elm3.href.split("/")[1] == pathname.split("/")[1]) {
-                  active = true;
-                }
-              });
-            });
-          }
-        });
-        if (item.href?.includes("/")) {
-          if (item.href?.split("/")[1] == pathname.split("/")[1]) {
-            active = true;
-          }
-        }
-      });
-    }
+    // if (menuItem.length) {
+    //   active = menuItem.some(
+    //     (elm) => elm.href?.split("/")[1] == pathname.split("/")[1]
+    //   );
+    // }
+    // if (menuItem.length) {
+    //   menuItem.forEach((item) => {
+    //     item.links?.forEach((elm2) => {
+    //       if (elm2.href?.includes("/")) {
+    //         if (elm2.href?.split("/")[1] == pathname.split("/")[1]) {
+    //           active = true;
+    //         }
+    //       }
+    //       if (elm2.length) {
+    //         elm2.forEach((item2) => {
+    //           item2?.links?.forEach((elm3) => {
+    //             if (elm3.href.split("/")[1] == pathname.split("/")[1]) {
+    //               active = true;
+    //             }
+    //           });
+    //         });
+    //       }
+    //     });
+    //     if (item.href?.includes("/")) {
+    //       if (item.href?.split("/")[1] == pathname.split("/")[1]) {
+    //         active = true;
+    //       }
+    //     }
+    //   });
+    // }
 
     return active;
   };
+  useEffect(() => {
+    // if (setCategoryId) {
+    //   setCategoryId(setCategoryId); // Set the product ID in context
+    // }
+    if (hoveredItem) {
+      setCategoryId(hoveredItem);
+    }
+  }, [setCategoryId, hoveredItem]);
+  useEffect(() => {
+    console.log("categories data ", categories);
+  }, [categories]);
   return (
     <>
-      {" "}
       <li className="menu-item">
         <a
           href="/"
+          onClick={() => setIsActive("categories")}
           className={`item-link ${Linkfs} ${textColor} ${
-            isMenuActive(allHomepages) ? "activeMenu" : ""
+            isActive === "categories" ? "activeMenu" : ""
           } `}
         >
-          Home
+          Categories
           {/* {isArrow ? <i className="icon icon-arrow-down" /> : ""} */}
         </a>
         {/* <div className="sub-menu mega-menu">
@@ -123,266 +138,84 @@ export default function Nav({ isArrow = true, textColor = "", Linkfs = "" }) {
           </div>
         </div> */}
       </li>
-      <li className="menu-item">
-        <a
-          href="#"
-          className={`item-link ${Linkfs} ${textColor} ${
-            isMenuActive(productsPages) ? "activeMenu" : ""
-          } `}
-        >
-          Shop
-          {isArrow ? <i className="icon icon-arrow-down" /> : ""}
-        </a>
-        <div className="sub-menu mega-menu">
-          <div className="container">
-            <div className="row">
-              {productsPages.map((menu, index) => (
-                <div className="col-lg-2" key={index}>
-                  <div className="mega-menu-item">
-                    <div className="menu-heading">{menu.heading}</div>
-                    <ul className="menu-list">
-                      {menu.links.map((link, linkIndex) => (
-                        <li key={linkIndex}>
-                          <Link
-                            href={link.href}
-                            className={`menu-link-text link ${
-                              isMenuActive(link) ? "activeMenu" : ""
-                            }`}
-                          >
-                            {link.text}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              ))}
-              <div className="col-lg-3">
-                <div className="collection-item hover-img">
-                  <div className="collection-inner">
-                    <Link
-                      href={`/home-men`}
-                      className="collection-image img-style"
-                    >
-                      <Image
-                        className="lazyload"
-                        data-src="/images/collections/collection-1.jpg"
-                        alt="collection-demo-1"
-                        src="/images/collections/collection-1.jpg"
-                        width="1000"
-                        height="1215"
-                      />
-                    </Link>
-                    <div className="collection-content">
-                      <Link
-                        href={`/home-men`}
-                        className="tf-btn hover-icon btn-xl collection-title fs-16"
-                      >
-                        <span>Men</span>
-                        <i className="icon icon-arrow1-top-left" />
-                      </Link>
+
+      {categories?.data?.map((category) => {
+        return (
+          <li
+            key={category.id}
+            onMouseEnter={() => setHoveredItem(category.id)}
+            onMouseLeave={() => setHoveredItem(null)}
+            className="menu-item"
+          >
+            <a
+              onClick={() => setIsActive(category.name)}
+              href={`/home-category/${category?.name}/${category?.id}`}
+              className={`item-link ${Linkfs} ${textColor} 
+            ${isActive === category.name ? "activeMenu" : ""} 
+            `}
+            >
+              {category.name}
+            </a>
+            <div className="sub-menu mega-menu">
+              <div className="container">
+                <div className="row">
+                  {subCategories?.data?.map((menu, index) => (
+                    <div className="col-lg-2" key={index}>
+                      <div className="mega-menu-item">
+                        <div className="menu-heading">{menu.name}</div>
+                        <ul className="menu-list">
+                          {/* {menu.links.map((link, linkIndex) => (
+                            <li key={linkIndex}>
+                              <Link
+                                href={link.href}
+                                className={`menu-link-text link ${
+                                  isMenuActive(link) ? "activeMenu" : ""
+                                }`}
+                              >
+                                {link.text}
+                              </Link>
+                            </li>
+                          ))} */}
+                        </ul>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-3">
-                <div className="collection-item hover-img">
-                  <div className="collection-inner">
-                    <Link
-                      href={`/shop-women`}
-                      className="collection-image img-style"
-                    >
-                      <Image
-                        className="lazyload"
-                        data-src="/images/collections/collection-2.jpg"
-                        alt="collection-demo-1"
-                        src="/images/collections/collection-2.jpg"
-                        width="500"
-                        height="607"
-                      />
-                    </Link>
-                    <div className="collection-content">
-                      <Link
-                        href={`/shop-women`}
-                        className="tf-btn btn-xl collection-title fs-16 hover-icon"
-                      >
-                        <span>Women</span>
-                        <i className="icon icon-arrow1-top-left" />
-                      </Link>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </li>
+          </li>
+        );
+      })}
       <li className="menu-item">
         <a
-          href="#"
+          href="/flash-sale"
+          onClick={() => setIsActive("flashSale")}
           className={`item-link ${Linkfs} ${textColor}  ${
-            isMenuActive(productDetailPages) ? "activeMenu" : ""
+            isActive === "flashSale" ? "activeMenu" : ""
           }`}
         >
-          Products
-          {isArrow ? <i className="icon icon-arrow-down" /> : ""}
+          Flash Sale
         </a>
-        <div className="sub-menu mega-menu">
-          <div className="container">
-            <div className="row">
-              {productDetailPages.map((menuItem, index) => (
-                <div key={index} className="col-lg-2">
-                  <div className="mega-menu-item">
-                    <div className="menu-heading">{menuItem.heading}</div>
-                    <ul className="menu-list">
-                      {menuItem.links.map((linkItem, linkIndex) => (
-                        <li key={linkIndex}>
-                          <Link
-                            href={linkItem.href}
-                            className={`menu-link-text link position-relative  ${
-                              isMenuActive(linkItem) ? "activeMenu" : ""
-                            }`}
-                          >
-                            {linkItem.text}
-                            {linkItem.extra}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              ))}
-              <div className="col-lg-4">
-                <div className="menu-heading">Best seller</div>
-                <div className="hover-sw-nav hover-sw-2">
-                  <Swiper
-                    dir="ltr"
-                    modules={[Navigation]}
-                    navigation={{
-                      prevEl: ".snmpn1",
-                      nextEl: ".snmnn1",
-                    }}
-                    slidesPerView={2}
-                    spaceBetween={30}
-                    className="swiper tf-product-header wrap-sw-over"
-                  >
-                    {[...products1]
-                      .slice(0, 4)
-
-                      .map((elm, i) => (
-                        <SwiperSlide key={i} className="swiper-slide">
-                          <ProductCard product={elm} />
-                        </SwiperSlide>
-                      ))}
-                  </Swiper>
-                  <div className="nav-sw nav-next-slider nav-next-product-header box-icon w_46 round snmpn1">
-                    <span className="icon icon-arrow-left" />
-                  </div>
-                  <div className="nav-sw nav-prev-slider nav-prev-product-header box-icon w_46 round snmnn1">
-                    <span className="icon icon-arrow-right" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </li>
-      <li className="menu-item position-relative">
+      <li className="menu-item">
         <a
           href="#"
           className={`item-link ${Linkfs} ${textColor}  ${
             isMenuActive(pages) ? "activeMenu" : ""
           }`}
         >
-          Pages
-          <i className="icon icon-arrow-down" />
+          All Brands
         </a>
-        <div className="sub-menu submenu-default">
-          <ul className="menu-list">
-            {pages.map((item, index) => (
-              <li key={index} className={item.links ? "menu-item-2 " : ""}>
-                {item.href.includes("#") ? (
-                  <a
-                    href={item.href}
-                    className={`${item.className} ${
-                      isMenuActive(item.links) ? "activeMenu" : ""
-                    }`}
-                  >
-                    {item.text}
-                  </a>
-                ) : (
-                  <Link
-                    href={item.href}
-                    className={`${item.className}  ${
-                      isMenuActive(item) ? "activeMenu" : ""
-                    }`}
-                    style={{ position: "relative" }}
-                  >
-                    {item.text}{" "}
-                    {item.label && (
-                      <div className="demo-label">
-                        <span className="demo-new">{item.label}</span>
-                      </div>
-                    )}
-                  </Link>
-                )}
-
-                {item.links && (
-                  <div className="sub-menu submenu-default">
-                    <ul className="menu-list">
-                      {item.links.map((subItem, subIndex) => (
-                        <li key={subIndex}>
-                          <Link
-                            href={subItem.href}
-                            className={`${subItem.className} ${
-                              isMenuActive(subItem) ? "activeMenu" : ""
-                            }`}
-                          >
-                            {subItem.text}
-                            {subItem.label && (
-                              <div className="demo-label">
-                                <span className="demo-new">
-                                  {subItem.label}
-                                </span>
-                              </div>
-                            )}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
       </li>
-      <li className="menu-item position-relative">
+      <li className="menu-item">
         <a
           href="#"
           className={`item-link ${Linkfs} ${textColor}  ${
             isMenuActive(blogLinks) ? "activeMenu" : ""
           }`}
         >
-          Blog
-          {isArrow ? <i className="icon icon-arrow-down" /> : ""}
+          All Categories
         </a>
-        <div className="sub-menu links-default">
-          <ul className="menu-list">
-            {blogLinks.map((linkItem, index) => (
-              <li key={index}>
-                <Link
-                  href={linkItem.href}
-                  className={`menu-link-text link text_black-2  ${
-                    isMenuActive(linkItem) ? "activeMenu" : ""
-                  }`}
-                >
-                  {linkItem.text}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
       </li>
     </>
   );

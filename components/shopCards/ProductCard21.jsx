@@ -135,7 +135,7 @@ export default function ProductCard21({ product }) {
           )}
           <span className="new-price">{product.main_price}</span>
         </span>
-        <ul className="list-color-product">
+        {/* <ul className="list-color-product">
           {product.colors?.map((color, index) => (
             <li
               key={index}
@@ -156,7 +156,7 @@ export default function ProductCard21({ product }) {
               />
             </li>
           ))}
-        </ul>
+        </ul> */}
       </div>
     </div>
   );

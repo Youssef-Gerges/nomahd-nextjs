@@ -34,7 +34,7 @@ export default function Categories2() {
               0: { slidesPerView: 1 },
               768: { slidesPerView: 2 },
               992: { slidesPerView: 3 },
-              1200: { slidesPerView: 4 },
+              // 1200: { slidesPerView: 4 },
             }}
             loop={false}
             autoplay={{ delay: 2000, disableOnInteraction: false }}
@@ -51,7 +51,7 @@ export default function Categories2() {
                 <div className="collection-item style-2 hover-img">
                   <div className="collection-inner">
                     <Link
-                      href={`/shop-collection-sub/${collection?.slug}/${collection?.id}`} // Directly added href here
+                      href={`/home-category/${collection?.slug}/${collection?.id}`} // Directly added href here
                       className="collection-image img-style"
                     >
                       <Image

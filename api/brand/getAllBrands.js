@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../api';
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
 
 export const useGetAllBrands = () => {
   return useQuery({
@@ -19,7 +19,7 @@ export const useGetAllBrands = () => {
       return response.data;
     },
     onError: () => {
-      toast.error('Error fetching brands. Please try again later.');
+      console.log('Error fetching brands. Please try again later.');
     },
   });
 };

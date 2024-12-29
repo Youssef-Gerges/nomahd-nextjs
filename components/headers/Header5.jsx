@@ -40,7 +40,7 @@ export default function Header5({ isArrow, Linkfs = "", uppercase = false }) {
                 <Image
                   alt="logo"
                   className="logo"
-                  src="/images/logo/logo.svg"
+                  src="https://s3.eu-central-003.backblazeb2.com/nomahds3bucket/uploads/all/64dTUxslMt59y96bJPNtio0zP5KYPcACPbGGt8uU.png"
                   width={136}
                   height={21}
                 />
@@ -48,14 +48,14 @@ export default function Header5({ isArrow, Linkfs = "", uppercase = false }) {
               <nav className="box-navigation text-center">
                 <ul className="box-nav-ul d-flex align-items-center justify-content-center gap-30">
                   <Nav isArrow={isArrow} Linkfs={Linkfs} />
-                  <li className="menu-item">
+                  {/* <li className="menu-item">
                     <a
                       href="https://themeforest.net/item/ecomus-ultimate-html5-template/53417990?s_rank=3"
                       className={`item-link ${Linkfs}`}
                     >
                       Buy now
                     </a>
-                  </li>
+                  </li> */}
                 </ul>
               </nav>
             </div>

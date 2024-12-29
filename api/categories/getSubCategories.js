@@ -6,15 +6,8 @@ export const useGetSubCategory = (id) => {
   return useQuery({
     queryKey: ['sub-category', id],
     queryFn: async () => {
-      if (!id) {
-        throw new Error('An ID is required to fetch the sub-category');
-      }
 
-      const response = await api.get(`/sub-categories/${id}`, {
-        headers: {
-          'SYSTEM-KEY': 'NOMAHD-SECRIT',
-        },
-      });
+      const response = await api.get(`/sub-categories/${id}`);
 
       if (response.status !== 200) {
         throw new Error('Failed to fetch sub-category');

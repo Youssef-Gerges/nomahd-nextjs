@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,36 +7,34 @@ import { useGetAllCategories } from "@/api/categories/getAllCategories";
 import { useGetHomeCategories } from "@/api/categories/getHomeCategories";
 import { useGetTopCategories } from "@/api/categories/getTopCategories";
 import { useGetFeaturedCategories } from "@/api/categories/getFeaturedCategories";
-export default function Categories() {
-  const {data} = useGetFeaturedCategories()
-
-  useEffect(()=>{
-
-    console.log('categories' , data?.data)
-  },[data])
+export default function Categories({ category, subCategories }) {
+  useEffect(() => {
+    console.log("su-categories", subCategories);
+  }, [subCategories]);
   return (
     <section className="flat-spacing-20">
       <div className="container">
+       
         <div className="row">
           <div className="col-12">
             <div className="tf-categories-wrap">
               <div className="tf-categories-container">
-                {collectionCircles.map((item) => (
+                {subCategories?.map((item) => (
                   <div
                     key={item.id}
                     className="collection-item-circle hover-img position-relative"
                   >
                     <Link
-                      href={item.href}
+                      href={`/home-category/${category?.name}/${category?.id}/${item.id}/${item.slug}`}
                       className="collection-image img-style"
                     >
                       <Image
                         className="lazyload"
-                        data-src={item.imgSrc}
-                        alt={item.alt}
-                        src={item.imgSrc}
-                        width={item.width}
-                        height={item.height}
+                        data-src={item.icon}
+                        alt={item.name}
+                        src={item.icon}
+                        width={100}
+                        height={100}
                       />
                     </Link>
                     {item.hasSale && (
@@ -48,14 +46,17 @@ export default function Categories() {
                       </div>
                     )}
                     <div className="collection-content text-center">
-                      <Link href={item.href} className="link title fw-6">
-                        {item.title}
+                      <Link
+                        href={`/home-category/${category?.name}/${category?.id}/${item.id}/${item.slug}`}
+                        className="link title fw-6"
+                      >
+                        {item.name}
                       </Link>
                     </div>
                   </div>
                 ))}
               </div>
-              <div className="tf-shopall-wrap">
+              {/* <div className="tf-shopall-wrap">
                 <div className="collection-item-circle tf-shopall">
                   <Link
                     href={`/shop-collection-sub`}
@@ -72,7 +73,7 @@ export default function Categories() {
                     </Link>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
