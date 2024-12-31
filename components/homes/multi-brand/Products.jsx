@@ -8,12 +8,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useGetAllProducts } from "@/api/products/useGetAllProducts";
 export default function Products() {
   // const {data} = useGetShopTopProducts(localStorage.getItem('id'))
-  const {data} = useGetAllProducts(1)
+  const { data } = useGetAllProducts(1);
   return (
     <section className="flat-spacing-15 pb_0">
       <div className="container">
         <div className="flat-title wow fadeInUp" data-wow-delay="0s">
-          <span className="title">New Products</span>
+          <span className="title">Nomahd's Favorites</span>
           <p className="sub-title">
             Beautifully Functional. Purposefully Designed. Consciously Crafted.
           </p>

@@ -9,16 +9,17 @@ import { useGetHomeCategories } from "@/api/cart/getCart";
 import { useGetAllCategories } from "@/api/categories/getAllCategories";
 import { useGetFeaturedCategories } from "@/api/categories/getFeaturedCategories";
 import { useEffect } from "react";
+import { useContextElement } from "@/context/Context";
 export default function BannerCollection() {
-  const {data} = useGetFeaturedCategories()
-
-  useEffect(()=>{
-   console.log("catat" , data?.data)
-  },[data])
+  const { data } = useGetFeaturedCategories();
+  const { banners } = useContextElement();
+  useEffect(() => {
+    console.log("catat", data?.data);
+  }, [data]);
   return (
     <section className="flat-spacing-10 pb_0">
       <div className="container">
-      <div className="flat-title">
+        <div className="flat-title">
           <span className="title wow fadeInUp" data-wow-delay="0s">
             Featured categories
           </span>

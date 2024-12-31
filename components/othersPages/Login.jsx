@@ -18,9 +18,26 @@ export default function Login() {
   const loginMutation = useLogin();
   const sentToMail = useSendToMail();
 
+  // const handleLogin = (e) => {
+  //   e.preventDefault();
+  //   loginMutation.mutate(formData, { onSuccess: () => router.push("/") });
+  // };
+
   const handleLogin = (e) => {
     e.preventDefault();
-    loginMutation.mutate(formData, { onSuccess: () => router.push("/") });
+  
+    // Check if the input is an email or phone number
+    const emailOrPhone = formData.email;
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailOrPhone); // Basic email regex
+    const loginBy = isEmail ? "email" : "phone";
+  
+    // Update the login_by attribute dynamically
+    const updatedFormData = { ...formData, login_by: loginBy };
+  
+    // Trigger login mutation
+    loginMutation.mutate(updatedFormData, {
+      onSuccess: () => router.push("/"),
+    });
   };
 
   const handleSendToMail = (e) => {
@@ -59,11 +76,17 @@ export default function Login() {
                       autoComplete="abc@xyz.com"
                       id="property3"
                     />
-                    <label
+                    {/* <label
                       className="tf-field-label fw-4 text_black-2"
                       htmlFor="property3"
                     >
                       Email *
+                    </label> */}
+                    <label
+                      className="tf-field-label fw-4 text_black-2"
+                      htmlFor="property3"
+                    >
+                      Email or Phone *
                     </label>
                   </div>
                   <div className="mb_20">
@@ -99,11 +122,17 @@ export default function Login() {
                       autoComplete="abc@xyz.com"
                       id="property3"
                     />
-                    <label
+                    {/* <label
                       className="tf-field-label fw-4 text_black-2"
                       htmlFor="property3"
                     >
                       Email *
+                    </label> */}
+                     <label
+                      className="tf-field-label fw-4 text_black-2"
+                      htmlFor="property3"
+                    >
+                    Email or Phone *
                     </label>
                   </div>
                   <div className="tf-field style-1 mb_30">

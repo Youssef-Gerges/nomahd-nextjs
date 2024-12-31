@@ -1,15 +1,74 @@
 "use client";
 import { layouts } from "@/data/shop";
 import ProductGrid from "./ProductGrid";
-import { useState } from "react";
 import Pagination from "../common/Pagination";
 import ShopFilter from "./ShopFilter";
 import Sorting from "./Sorting";
-
-export default function ShopDefault({products , setProducts}) {
+import { useContextElement } from "@/context/Context";
+import React, { useEffect, useState } from "react";
+export default function ShopDefault({ data, id }) {
   const [gridItems, setGridItems] = useState(4);
-  // const [products, setProducts] = useState([]);
   const [finalSorted, setFinalSorted] = useState([]);
+  const [products, setProducts] = useState([]);
+  const {
+    categories,
+    bestSelling,
+    allProducts,
+    linkProducts,
+    setLink,
+    setPage,
+    flashSale,
+    featured,
+    link,
+    page
+  } = useContextElement();
+
+  useEffect(() => {
+    const foundLink = categories?.data.find((item) => item.id == id)?.links
+      .products;
+    const foundCategory = categories?.data.find((item) => item.id == id)?.name;
+    // setCategoryName(foundCategory);
+    console.log("foundlink", foundLink);
+    setLink(foundLink);
+  }, [categories, data]);
+
+  useEffect(() => {
+    switch (data) {
+      case "home-category":
+        if (linkProducts?.data) {
+          setProducts(linkProducts?.data);
+          console.log("jjjj lll",linkProducts)
+          // setFiltered(linkProducts?.data);
+        }
+        break;
+
+      case "all-products":
+        if (allProducts?.data) {
+          setProducts(allProducts?.data);
+        }
+        break;
+
+      case "best-selling":
+        if (bestSelling?.data) {
+          setProducts(bestSelling?.data);
+        }
+        break;
+
+      case "flash-sale-id":
+        if (flashSale?.data) {
+          const SaleProducts = flashSale?.data?.find((sale) => sale?.id == id)
+            ?.products?.data;
+          setProducts(SaleProducts);
+        }
+        break;
+
+      default:
+        // Handle cases where `data` does not match any of the above
+        setProducts(allProducts?.data);
+        break;
+    }
+  }, [data, linkProducts, allProducts, bestSelling, flashSale, link]);
+
   return (
     <>
       <section className="flat-spacing-2">
@@ -53,7 +112,7 @@ export default function ShopDefault({products , setProducts}) {
             {/* pagination */}
             {finalSorted.length ? (
               <ul className="tf-pagination-wrap tf-pagination-list tf-pagination-btn">
-                <Pagination />
+                <Pagination setPage={setPage} />
               </ul>
             ) : (
               ""

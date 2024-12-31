@@ -8,13 +8,13 @@ import Image from "next/image";
 import { useGetAllBanners } from "@/api/general/getAllBanners";
 import { useEffect } from "react";
 import { useGetAllSliders } from "@/api/general/getAllSliders";
-export default function Hero() {
-  const {data} = useGetAllBanners()
-const {data:sliders} = useGetAllSliders();
-  useEffect(()=>{
-   console.log("banners" , data?.data)
-   console.log("banners sliders" , sliders?.data)
-  },[data])
+export default function Hero({ banner }) {
+  const { data } = useGetAllBanners();
+  const { data: sliders } = useGetAllSliders();
+  useEffect(() => {
+    console.log("banners", data?.data);
+    console.log("banners sliders", sliders?.data);
+  }, [data]);
   return (
     <div className="tf-slideshow slider-women slider-effect-fade position-relative">
       <Swiper

@@ -2,6 +2,8 @@
 import { useAddToCart } from "@/api/cart/addToCart";
 import { useGetAllCategories } from "@/api/categories/getAllCategories";
 import { useGetSubCategory } from "@/api/categories/getSubCategories";
+import { useGetAllBrands } from "@/api/brand/getAllBrands";
+import { useGetAllBanners } from "@/api/general/getAllBanners";
 import { useGetAllFlashDeals } from "@/api/products/flashDeal/getAllFlashDeals";
 import { useGetFlashDealProducts } from "@/api/products/flashDeal/getAllFlashDealsProducts";
 import { useGetSubCategoryProducts } from "@/api/products/getAllSubCategoryProducts";
@@ -11,11 +13,16 @@ import { useCheckProductInWishlist } from "@/api/wishlist/checkProduct";
 import { useGetUserWishlist } from "@/api/wishlist/getUserWishlist";
 import { useAddToWishlistNew } from "@/api/wishlist/newAddToWishlist";
 import { useNewRemoveFromWishlist } from "@/api/wishlist/newRemoveFromWishlist";
-import { allProducts } from "@/data/products";
+// import { allProducts } from "@/data/products";
 import { openCartModal } from "@/utlis/openCartModal";
+import { useGetTopBrands } from "@/api/brand/getTopBrands";
 // import { openCart } from "@/utlis/toggleCart";
 import React, { useEffect } from "react";
 import { useContext, useState } from "react";
+import { useGetAllProducts } from "@/api/products/useGetAllProducts";
+import { useGetLinkCategories } from "@/api/categories/getLinkCategories";
+import { useGetFeaturedCategories } from "@/api/categories/getFeaturedCategories";
+import { useGetCartData } from "@/api/cart/getCart";
 const dataContext = React.createContext();
 export const useContextElement = () => {
   return useContext(dataContext);
@@ -23,29 +30,38 @@ export const useContextElement = () => {
 
 export default function Context({ children }) {
   const [userId, setUserId] = useState(null);
-  const [cartProducts, setCartProducts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [link, setLink] = useState(null);
+  // const [cartProducts, setCartProducts] = useState([]);
   const addToCart = useAddToCart();
   const [productId, setProductId] = useState(null);
   const [categoryId, setCategoryId] = useState(null);
   const addToWishlist = useAddToWishlistNew();
   // const [wishList, setWishList] = useState([1, 2, 3]);
   const [compareItem, setCompareItem] = useState([1, 2, 3]);
-  const [quickViewItem, setQuickViewItem] = useState(allProducts[0]);
   const [quickAddItem, setQuickAddItem] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
   const { data: wishlist } = useGetUserWishlist();
   const checkWishlist = useCheckProductInWishlist();
   const [addToWishlistSuccess, setAddToWishlistSucess] = useState(false);
+  const { data: linkProducts } = useGetLinkCategories(link);
+  const { data: allProducts } = useGetAllProducts(page);
   const { data: bestSelling } = useGetBestSellingProducts();
   const { data: relatedProducts } = useGetRelatedProducts(productId);
   const { data: subCategories } = useGetSubCategory(categoryId);
   const { data: categories } = useGetAllCategories();
   const { data: flashSale } = useGetAllFlashDeals();
+  const [quickViewItem, setQuickViewItem] = useState(null);
+  const { data: banners } = useGetAllBanners();
+  const { data: brands } = useGetAllBrands();
+  const { data: topBrands } = useGetTopBrands();
+  const { data: featured } = useGetFeaturedCategories();
+  const { data: cartProducts } = useGetCartData(userId);
   const [removeFromWishlistSuccess, setRemoveFromWishlistSuccess] =
     useState(false);
   const removeFromWishlist = useNewRemoveFromWishlist();
   useEffect(() => {
-    const subtotal = cartProducts.reduce((accumulator, product) => {
+    const subtotal = cartProducts?.data.reduce((accumulator, product) => {
       return accumulator + product.quantity * product.price;
     }, 0);
     setTotalPrice(subtotal);
@@ -67,6 +83,10 @@ export default function Context({ children }) {
       );
     }
   };
+
+  useEffect(()=>{
+    console.log("link is ", link)
+  },[link])
   useEffect(() => {
     console.log("wishlist pro", wishlist?.data);
   }, [wishlist]);
@@ -122,7 +142,7 @@ export default function Context({ children }) {
     });
   };
   const isAddedToCartProducts = (id) => {
-    if (cartProducts.filter((elm) => elm.id == id)[0]) {
+    if (cartProducts?.data?.filter((elm) => elm.id == id)[0]) {
       return true;
     }
     return false;
@@ -163,10 +183,10 @@ export default function Context({ children }) {
     return false;
   };
   useEffect(() => {
-    const items = JSON.parse(localStorage.getItem("cartList"));
-    if (items?.length) {
-      setCartProducts(items);
-    }
+    // const items = JSON.parse(localStorage.getItem("cartList"));
+    // if (items?.length) {
+    //   setCartProducts(items);
+    // }
     const id = localStorage.getItem("id");
     if (id) {
       setUserId(id);
@@ -189,7 +209,7 @@ export default function Context({ children }) {
 
   const contextElement = {
     cartProducts,
-    setCartProducts,
+    // setCartProducts,
     totalPrice,
     addProductToCart,
     isAddedToCartProducts,
@@ -219,6 +239,14 @@ export default function Context({ children }) {
     subCategories,
     setCategoryId,
     flashSale,
+    banners,
+    brands,
+    topBrands,
+    allProducts,
+    setPage,
+    linkProducts,
+    setLink,
+    featured,
   };
   return (
     <dataContext.Provider value={contextElement}>

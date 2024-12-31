@@ -51,7 +51,7 @@ export default function Header7() {
               <ul className="header-list-categories">
                 {categories?.map((category) => {
                   <li key={category?.id} className="categories-item active">
-                    <Link href={`/home-category/${category?.name}/${category?.id}`} className="text-uppercase">
+                    <Link href={`/shop-collection-sub/${category?.name}/${category?.id}`} className="text-uppercase">
                     {category?.name}
                   </Link>
                   </li>;
@@ -178,7 +178,7 @@ export default function Header7() {
             <ul className="header-list-categories tf-lg-hidden">
               {categories?.map((category) => (
                 <li key={category?.id} className="categories-item">
-                  <Link href={`/home-category/${category?.name}/${category?.id}`} className="text-uppercase">
+                  <Link href={`/shop-collection-sub/${category?.name}/${category?.id}`} className="text-uppercase">
                     {category?.name}
                   </Link>
                 </li>

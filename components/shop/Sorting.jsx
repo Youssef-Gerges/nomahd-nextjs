@@ -3,7 +3,7 @@ import { products1 } from "@/data/products";
 import { sortingOptions } from "@/data/shop";
 import React, { useEffect, useState } from "react";
 
-export default function Sorting({ products = products1, setFinalSorted }) {
+export default function Sorting({ products, setFinalSorted }) {
   const [selectedOptions, setSelectedOptions] = useState(sortingOptions[0]);
 
   useEffect(() => {

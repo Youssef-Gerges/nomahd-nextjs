@@ -18,8 +18,8 @@ export const ProductCard = ({ product }) => {
     setQuickAddItem,
     handleAddToWishlist,
     handleRemoveFromWishlist,
-    addToCompareItem,
-    isAddedtoCompareItem,
+    // addToCompareItem,
+    // isAddedtoCompareItem,
     handleCheckWishlist,
     addToWishlistSuccess,
     removeFromWishlistSuccess,
@@ -89,7 +89,7 @@ export const ProductCard = ({ product }) => {
             </span>
             <span className="icon icon-delete" />
           </a>
-          <a
+          {/* <a
             href="#compare"
             data-bs-toggle="offcanvas"
             aria-controls="offcanvasLeft"
@@ -108,7 +108,7 @@ export const ProductCard = ({ product }) => {
                 : "Add to Compare"}
             </span>
             <span className="icon icon-check" />
-          </a>
+          </a> */}
           <a
             href="#quick_view"
             onClick={() => setQuickViewItem(product)}
@@ -140,8 +140,18 @@ export const ProductCard = ({ product }) => {
             ? product.name
             : `${product?.name?.slice(0, 30)}...`}
         </Link>
-        <span className="price">
+        {/* <span className="price">
           {product.currency_symbol} {product.calculable_price}
+        </span> */}
+        <span className="price">
+          {product.has_discount ? (
+            <>
+              <span className="old-price">{product.stroked_price}</span>
+              <span className="new-price">{product.main_price}</span>
+            </>
+          ) : (
+            <span>{product.main_price}</span>
+          )}
         </span>
         {/* {product.colors && (
           <ul className="list-color-product">
@@ -167,6 +177,36 @@ export const ProductCard = ({ product }) => {
             ))}
           </ul>
         )} */}
+        {product.colors && (
+          <ul className="list-color-product">
+            {product.colors
+              .filter((color) =>
+                /^#([0-9A-F]{3}){1,2}$/i.test(color.colorClass)
+              ) // Filter valid hex colors
+              .map((color) => (
+                <li
+                  className={`list-color-item color-swatch ${
+                    currentImage === color.imgSrc ? "active" : ""
+                  }`}
+                  key={color.name}
+                  onMouseOver={() => setCurrentImage(color.thumbnail_image)}
+                >
+                  <span className="tooltip">{color.name}</span>
+                  <span
+                    className="swatch-value"
+                    style={{
+                      display: "inline-block",
+                      width: "20px",
+                      height: "20px",
+                      borderRadius: "50%",
+                      backgroundColor: color.colorClass, // Apply hex color
+                      border: "1px solid #ccc",
+                    }}
+                  />
+                </li>
+              ))}
+          </ul>
+        )}
       </div>
     </div>
   );

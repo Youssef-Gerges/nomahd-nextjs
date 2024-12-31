@@ -12,11 +12,11 @@ export default function ProductCard21({ product }) {
     setQuickViewItem,
     quickAddItem,
     addToWishlist,
-    isAddedtoCompareItem,
+    // isAddedtoCompareItem,
     setQuickAddItem,
     handleAddToWishlist,
     handleRemoveFromWishlist,
-    addToCompareItem,
+    // addToCompareItem,
     handleCheckWishlist,
     addToWishlistSuccess,
     removeFromWishlistSuccess,
@@ -76,7 +76,7 @@ export default function ProductCard21({ product }) {
               </span>
               <span className="icon icon-delete" />
             </a>
-            <a
+            {/* <a
               href={product.compareLink}
               data-bs-toggle="offcanvas"
               aria-controls="offcanvasLeft"
@@ -93,7 +93,7 @@ export default function ProductCard21({ product }) {
                   ? "Already Compared"
                   : "Add to Compare"}
               </span>
-            </a>
+            </a> */}
             <a
               href="#quick_view"
               onClick={() => setQuickViewItem(product)}
@@ -129,12 +129,45 @@ export default function ProductCard21({ product }) {
             ? product.name
             : `${product?.name?.slice(0, 30)}...`}
         </Link>
+
         <span className="price">
-          {product.has_discount && (
-            <span className="old-price">{product.stroked_price}</span>
+          {product.has_discount ? (
+            <>
+              <span className="old-price">{product.stroked_price}</span>
+              <span className="new-price">{product.main_price}</span>
+            </>
+          ) : (
+            <span>{product.main_price}</span>
           )}
-          <span className="new-price">{product.main_price}</span>
         </span>
+        {product.colors && (
+          <ul className="list-color-product">
+            {product.colors
+              .filter((color) =>
+                /^#([0-9A-F]{3}){1,2}$/i.test(color)
+              ) // Filter valid hex colors
+              .map((color , index) => (
+                <li
+                  className={`list-color-item color-swatch `}
+                  key={index}
+                >
+                  <span className="tooltip">{color}</span>
+                  <span
+                    className="swatch-value"
+                    style={{
+                      display: "inline-block",
+                      width: "20px",
+                      height: "20px",
+                      borderRadius: "50%",
+                      backgroundColor: color, // Apply hex color
+                      border: "1px solid #ccc",
+                    }}
+                  />
+                </li>
+              ))}
+          </ul>
+        )}
+
         {/* <ul className="list-color-product">
           {product.colors?.map((color, index) => (
             <li

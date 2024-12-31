@@ -6,14 +6,14 @@ import { useContextElement } from "@/context/Context";
 import Link from "next/link";
 
 export default function ProductCard10({ product }) {
-  const [currentImage, setCurrentImage] = useState(product.imgSrc);
+  const [currentImage, setCurrentImage] = useState(product.image);
   const { setQuickViewItem } = useContextElement();
   const {
     setQuickAddItem,
     addToWishlist,
     isAddedtoWishlist,
-    addToCompareItem,
-    isAddedtoCompareItem,
+    // addToCompareItem,
+    // isAddedtoCompareItem,
   } = useContextElement();
   return (
     <div className="card-product">
@@ -21,7 +21,7 @@ export default function ProductCard10({ product }) {
         <Link href={`/product-detail/${product.id}`} className="product-img">
           <Image
             className="lazyload img-product"
-            data-src={product.imgSrc}
+            data-src={product.image}
             alt="image-product"
             src={currentImage}
             width={360}
@@ -29,9 +29,9 @@ export default function ProductCard10({ product }) {
           />
           <Image
             className="lazyload img-hover"
-            data-src={product.imgHoverSrc}
+            data-src={product.image}
             alt="image-product"
-            src={product.imgHoverSrc}
+            src={product.image}
             width={360}
             height={360}
           />
@@ -62,26 +62,7 @@ export default function ProductCard10({ product }) {
             </span>
             <span className="icon icon-delete" />
           </a>
-          <a
-            href="#compare"
-            data-bs-toggle="offcanvas"
-            aria-controls="offcanvasLeft"
-            onClick={() => addToCompareItem(product.id)}
-            className="box-icon bg_white compare btn-icon-action"
-          >
-            <span
-              className={`icon icon-compare ${
-                isAddedtoCompareItem(product.id) ? "added" : ""
-              }`}
-            />
-            <span className="tooltip">
-              {" "}
-              {isAddedtoCompareItem(product.id)
-                ? "Already Compared"
-                : "Add to Compare"}
-            </span>
-            <span className="icon icon-check" />
-          </a>
+
           <a
             href="#quick_view"
             onClick={() => setQuickViewItem(product)}
@@ -95,10 +76,10 @@ export default function ProductCard10({ product }) {
       </div>
       <div className="card-product-info">
         <Link href={`/product-detail/${product.id}`} className="title link">
-          {product.title}
+          {product.name}
         </Link>
-        <span className="price">${product.price.toFixed(2)}</span>
-        {product.colors && product.colors.length > 0 && (
+        <span className="price">${product.price}</span>
+        {/* {product.colors && product.colors.length > 0 && (
           <ul className="list-color-product">
             {product.colors.map((color, index) => (
               <li
@@ -120,6 +101,37 @@ export default function ProductCard10({ product }) {
                 />
               </li>
             ))}
+          </ul>
+        )} */}
+
+        {product.colors && (
+          <ul className="list-color-product">
+            {product.colors
+              .filter((color) =>
+                /^#([0-9A-F]{3}){1,2}$/i.test(color.colorClass)
+              ) // Filter valid hex colors
+              .map((color) => (
+                <li
+                  className={`list-color-item color-swatch ${
+                    currentImage === color.imgSrc ? "active" : ""
+                  }`}
+                  key={color.name}
+                  onMouseOver={() => setCurrentImage(color.thumbnail_image)}
+                >
+                  <span className="tooltip">{color.name}</span>
+                  <span
+                    className="swatch-value"
+                    style={{
+                      display: "inline-block",
+                      width: "20px",
+                      height: "20px",
+                      borderRadius: "50%",
+                      backgroundColor: color.colorClass, // Apply hex color
+                      border: "1px solid #ccc",
+                    }}
+                  />
+                </li>
+              ))}
           </ul>
         )}
       </div>

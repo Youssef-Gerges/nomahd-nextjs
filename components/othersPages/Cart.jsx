@@ -8,32 +8,33 @@ import { useGetHomeCategories } from "@/api/categories/getHomeCategories";
 import { useDeleteFromCart } from "@/api/cart/removeFomCart";
 export default function Cart() {
   const cart = useGetCartData();
+  const {cartProducts} = useContextElement();
   const removeFromCart = useDeleteFromCart();
   // const {data} = useGetHomeCategories()
   // const { 
     // cartProducts, setCartProducts,
     //  totalPrice } = useContextElement();
   const [totalPrice , setTotalPrice] = useState(0);
-  const [cartProducts, setCartProducts] = useState([]);
+  const [cartProductsData, setCartProducts] = useState((cartProducts?.data?.data.flatMap(i =>  i.cart_items)) || []);
 
-  useEffect(() => {
-    cart.mutate(
-      { user_id: localStorage.getItem("id") },
-      {
-        onSuccess: (data) => {
-          setCartProducts(data?.data?.data.flatMap(i =>  i.cart_items));
-          setTotalPrice(data?.data?.grand_total)
-          console.log("cart data mapped:", data?.data?.data?.flatMap(i => i.cart_items));
-          console.log("cart data 1another map : " , data?.data?.data?.flatMap(seller => seller.cart_items) );
-        },
-      }
-    );
-  }, []);
+  // useEffect(() => {
+  //   cart.mutate(
+  //     { user_id: localStorage.getItem("id") },
+  //     {
+  //       onSuccess: (data) => {
+  //         setCartProducts(data?.data?.data.flatMap(i =>  i.cart_items));
+  //         setTotalPrice(data?.data?.grand_total)
+  //         console.log("cart data mapped:", data?.data?.data?.flatMap(i => i.cart_items));
+  //         console.log("cart data 1another map : " , data?.data?.data?.flatMap(seller => seller.cart_items) );
+  //       },
+  //     }
+  //   );
+  // }, []);
 
   const setQuantity = (id, quantity) => {
     if (quantity >= 1) {
-      const item = cartProducts.filter((elm) => elm.id == id)[0];
-      const items = [...cartProducts];
+      const item = cartProductsData.filter((elm) => elm.id == id)[0];
+      const items = [...cartProductsData];
       const itemIndex = items.indexOf(item);
       item.quantity = quantity;
       items[itemIndex] = item;
@@ -91,7 +92,7 @@ export default function Cart() {
                   </tr>
                 </thead>
                 <tbody>
-                  {cartProducts.map((elm, i) => (
+                  {cartProductsData.map((elm, i) => (
                     <tr key={i} className="tf-cart-item file-delete">
                       <td className="tf-cart-item_product">
                         <Link
@@ -196,7 +197,7 @@ export default function Cart() {
                   ))}
                 </tbody>
               </table>
-              {!cartProducts.length && (
+              {!cartProductsData?.length && (
                 <>
                   <div className="row align-items-center mb-5">
                     <div className="col-6 fs-18">Your shop cart is empty</div>

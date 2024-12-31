@@ -11,13 +11,14 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 export default function page({ params }) {
-  const { categories, subCategories, setCategoryId } = useContextElement();
-  const [link, setLink] = useState(null);
+  const { categories, subCategories, setCategoryId, linkProducts, setLink } =
+    useContextElement();
+  // const [link, setLink] = useState(null);
   const [banner, setBanner] = useState("");
   const [categoryName, setCategoryName] = useState(null);
   const [foundCategory, setFoundCategory] = useState(null);
-  const { data } = useGetLinkCategories(link);
-  const { category, id, subId ,subSlg} = params;
+  // const { data } = useGetLinkCategories(link);
+  const { category, id, subId, subSlg } = params;
   useEffect(() => {
     const name = categories?.data.find((item) => item.id == id)?.name;
     setCategoryName(name);
@@ -32,7 +33,7 @@ export default function page({ params }) {
     setLink(foundLink);
     const cat = subCategories?.data.find((item) => item.id == subId);
     setFoundCategory(cat);
-    console.log("catt sub id", cat, subCategories?.data , subId);
+    console.log("catt sub id", cat, subCategories?.data, subId);
   }, [subCategories]);
   return (
     <>
@@ -67,7 +68,7 @@ export default function page({ params }) {
       {/* <Countdown /> */}
       {/* <Collections /> */}
       {/* <Banner /> */}
-      <Products products={data?.data} />
+      <Products data={"home-category"} link={setLink} />
       {/* <CollectionBanner /> */}
       {/* <Features bgColor="" /> */}
       {/* <Blogs /> */}

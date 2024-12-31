@@ -181,6 +181,8 @@ html[dir="rtl"] {
     text-align: start;
   }
   .swiper-wrapper {
+    height: auto;
+    align-items: center !important;
     direction: ltr;
   }
 }

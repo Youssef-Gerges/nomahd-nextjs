@@ -550,7 +550,7 @@ function RootLayout({ children }) {
             <SearchModal />
             <ToolbarBottom />
             <ToolbarShop />
-            <NewsletterModal />
+            {/* <NewsletterModal /> */}
             <ShareModal />
           </Context>
           <ScrollTop />

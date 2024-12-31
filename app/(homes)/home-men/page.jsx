@@ -27,7 +27,7 @@ export default function page() {
       <Countdown />
       <Collections />
       <Banner />
-      <Products />
+      {/* <Products /> */}
       <CollectionBanner />
       <Features bgColor="" />
       <Blogs />

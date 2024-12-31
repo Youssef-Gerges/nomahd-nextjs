@@ -43,8 +43,8 @@ export default function DetailsOuterZoom({ product }) {
 
   const {
     isAddedToCartProducts,
-    addToCompareItem,
-    isAddedtoCompareItem,
+    // addToCompareItem,
+    // isAddedtoCompareItem,
     isAddedtoWishlist,
     handleCheckWishlist,
     handleAddToWishlist,
@@ -87,7 +87,7 @@ export default function DetailsOuterZoom({ product }) {
 
   useEffect(() => {
     if (product?.colors?.length > 0 && product?.choice_options?.length > 0) {
-      setVariant(`${currentColor}/${currentSize}`); // Set first option as default and format
+      setVariant(`${currentColor.replace(/\s+/g, "")}/${currentSize}`); // Set first option as default and format
     }
   }, [currentColor, currentSize]);
 
@@ -174,11 +174,47 @@ export default function DetailsOuterZoom({ product }) {
                     </div>
                   </div> */}
                   <div className="tf-product-info-variant-picker">
-                    <div className="variant-picker-item">
-                      <div className="variant-picker-label">
+                    <div
+                      className="variant-picker-item"
+                      style={{ borderRadius: "50%" }}
+                    >
+                      {/* <div className="variant-picker-label">
                         Color:
                         <span className="fw-6 variant-picker-label-value">
                           {currentColor || "One color"}
+                        </span>
+                      </div> */}
+                      <div className="flex variant-picker-label items-center gap-2">
+                        Color:
+                        <span
+                          className="fw-6 variant-picker-label-value"
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "8px",
+                          }}
+                        >
+                          {currentColor ? (
+                            // Check if currentColor is a hex code
+                            /^#([0-9A-F]{3}){1,2}$/i.test(currentColor) ? (
+                              <span
+                                style={{
+                                  width: "16px",
+                                  height: "16px",
+                                  borderRadius: "50%",
+                                  backgroundColor: currentColor,
+                                  border: "1px solid #ccc",
+                                  display: "inline-block",
+                                }}
+                              />
+                            ) : (
+                              // Display the color name for strings
+                              <span>{currentColor}</span>
+                            )
+                          ) : (
+                            // Default text when no color is selected
+                            "One color"
+                          )}
                         </span>
                       </div>
                       {/* <form className="variant-picker-values">
@@ -206,7 +242,7 @@ export default function DetailsOuterZoom({ product }) {
                         ))}
                       </form> */}
 
-                      <form className="variant-picker-values">
+                      {/* <form className="variant-picker-values">
                         {product?.colors.map((color, index) => (
                           <React.Fragment key={index}>
                             <input
@@ -223,10 +259,59 @@ export default function DetailsOuterZoom({ product }) {
                               htmlFor={`color-${index}`} // Match the input id
                               data-value={color}
                             >
-                              {color} {/* Display color name */}
+                              {color} 
                             </label>
                           </React.Fragment>
                         ))}
+                      </form> */}
+                      <form className="variant-picker-values">
+                        {product?.colors?.map((color, index) => {
+                          // Check if the color is a hex code
+                          const isHex = /^#([0-9A-F]{3}){1,2}$/i.test(color);
+
+                          return (
+                            <React.Fragment key={index}>
+                              <input
+                                id={`color-${index}`} // Ensure unique id
+                                type="radio"
+                                name="color"
+                                readOnly
+                                checked={currentColor === color} // Ensure strict equality
+                              />
+                              <label
+                                onClick={() => handleColor(color)} // Update currentColor state
+                                className="hover-tooltip"
+                                style={{
+                                  width: "fit-content",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  cursor: "pointer",
+                                }}
+                                htmlFor={`color-${index}`} // Match the input id
+                              >
+                                {isHex ? (
+                                  // Render a colored circle for hex codes
+                                  <span
+                                  className={`btn-checkbox bg-${currentColor}`}
+
+                                    style={{
+                                      width: "20px",
+                                      height: "20px",
+                                      borderRadius: "50%",
+                                      backgroundColor: color,
+                                      // border: "1px solid #FFFF",
+                                      // marginRight: "8px",
+                                    }}
+                                  />
+                                ) : (
+                                  // Render the color name for strings
+                                  <span>{color}</span>
+                                )}
+                                <span className="tooltip">{color}</span>
+                              </label>
+                            </React.Fragment>
+                          );
+                        })}
                       </form>
                     </div>
                     <div className="variant-picker-item">
@@ -320,7 +405,7 @@ export default function DetailsOuterZoom({ product }) {
                         </span>
                         <span className="icon icon-delete" />
                       </a>
-                      <a
+                      {/* <a
                         href="#compare"
                         data-bs-toggle="offcanvas"
                         onClick={() => addToCompareItem(product?.id)}
@@ -338,7 +423,7 @@ export default function DetailsOuterZoom({ product }) {
                             : "Add to Compare"}
                         </span>
                         <span className="icon icon-check" />
-                      </a>
+                      </a> */}
                       <div className="w-100">
                         <a href="#" className="btns-full">
                           Buy with

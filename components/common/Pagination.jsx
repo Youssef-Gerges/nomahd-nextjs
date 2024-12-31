@@ -1,13 +1,14 @@
 "use client";
 import React, { useState } from "react";
 
-export default function Pagination() {
+export default function Pagination({setPage}) {
   // State to track the active page
   const [activePage, setActivePage] = useState(1);
 
   // Function to handle page click
   const handlePageClick = (pageNumber) => {
     setActivePage(pageNumber);
+    setPage(pageNumber)
   };
 
   return (

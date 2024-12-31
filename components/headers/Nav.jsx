@@ -76,7 +76,7 @@ export default function Nav({ isArrow = true, textColor = "", Linkfs = "" }) {
   }, [categories]);
   return (
     <>
-      <li className="menu-item">
+      {/* <li className="menu-item">
         <a
           href="/"
           onClick={() => setIsActive("categories")}
@@ -85,8 +85,8 @@ export default function Nav({ isArrow = true, textColor = "", Linkfs = "" }) {
           } `}
         >
           Categories
-          {/* {isArrow ? <i className="icon icon-arrow-down" /> : ""} */}
         </a>
+      </li> */}
         {/* <div className="sub-menu mega-menu">
           <div className="container">
             <div className="row-demo">
@@ -137,7 +137,6 @@ export default function Nav({ isArrow = true, textColor = "", Linkfs = "" }) {
             </div>
           </div>
         </div> */}
-      </li>
 
       {categories?.data?.map((category) => {
         return (
@@ -149,7 +148,7 @@ export default function Nav({ isArrow = true, textColor = "", Linkfs = "" }) {
           >
             <a
               onClick={() => setIsActive(category.name)}
-              href={`/home-category/${category?.name}/${category?.id}`}
+              href={`/shop-collection-sub/${category?.name}/${category?.id}`}
               className={`item-link ${Linkfs} ${textColor} 
             ${isActive === category.name ? "activeMenu" : ""} 
             `}
@@ -186,7 +185,7 @@ export default function Nav({ isArrow = true, textColor = "", Linkfs = "" }) {
           </li>
         );
       })}
-      <li className="menu-item">
+      {/* <li className="menu-item">
         <a
           href="/flash-sale"
           onClick={() => setIsActive("flashSale")}
@@ -216,7 +215,7 @@ export default function Nav({ isArrow = true, textColor = "", Linkfs = "" }) {
         >
           All Categories
         </a>
-      </li>
+      </li> */}
     </>
   );
 }

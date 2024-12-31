@@ -78,9 +78,12 @@ export const registerUser = async (userData) => {
       onSuccess: (data) => {
         const { access_token } = data.data;
         const {id} = data.data.user;
+        const {name} = data.data.user;
         if (typeof window !== 'undefined') {
           localStorage.setItem('token', access_token);
           localStorage.setItem('id' , id)
+          logcalStorage.setItem('name', name)
+
         }
   
         console.log('Registration successful');
@@ -125,10 +128,11 @@ export const registerUser = async (userData) => {
       onSuccess: (data) => {
         const { access_token } = data.data;
         const {id} = data.data.user;
-
+        const {name} = data.data.user
         if (typeof window !== 'undefined') {
           localStorage.setItem('token', access_token);
-          localStorage.setItem('id' , id)
+          localStorage.setItem('id' , id);
+          logcalStorage.setItem('name', name)
         }
         // api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   

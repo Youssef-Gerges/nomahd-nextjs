@@ -6,11 +6,7 @@ export const useGetAllProducts = (page) => {
   return useQuery({
     queryKey: ['all-products', page], 
     queryFn: async () => {
-      const response = await api.get(`/products?page=${page}`, {
-        headers: {
-          // 'SYSTEM-KEY': 'NOMAHD-SECRIT',
-        },
-      });
+      const response = await api.get(`/products?page=${page}`);
 
       if (response.status !== 200) {
         throw new Error('Failed to fetch products');

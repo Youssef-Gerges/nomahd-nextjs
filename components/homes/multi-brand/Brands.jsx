@@ -1,10 +1,15 @@
 "use client";
 import { brandData } from "@/data/brands";
-import React from "react";
+import React, { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import { Autoplay, Pagination } from "swiper/modules";
+import { useContextElement } from "@/context/Context";
 export default function Brands() {
+  const { brands, topBrands } = useContextElement();
+  useEffect(() => {
+    console.log("brands", topBrands);
+  }, [topBrands]);
   return (
     <section className="flat-spacing-1 wow fadeIn">
       <div className="container-full">
@@ -33,16 +38,16 @@ export default function Brands() {
             modules={[Pagination, Autoplay]}
             pagination={{ clickable: true, el: ".spd298" }}
           >
-            {brandData.map((brand, index) => (
+            {brands?.data?.map((brand, index) => (
               <SwiperSlide key={index}>
                 <div className="brand-item-v2">
                   <Image
                     className="lazyload"
-                    data-src={brand.src}
-                    alt={brand.alt}
-                    src={brand.src}
-                    width={brand.width}
-                    height={brand.height}
+                    data-src={brand.logo}
+                    alt={brand.logo}
+                    src={brand.logo}
+                    width={100}
+                    height={100}
                   />
                 </div>
               </SwiperSlide>

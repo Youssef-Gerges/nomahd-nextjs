@@ -1,15 +1,14 @@
 import Footer1 from "@/components/footers/Footer1";
 import Header7 from "@/components/headers/Header7";
 import Announcment from "@/components/homes/multi-brand/Announcment";
-import Categories from "@/components/homes/multi-brand/Categories";
 import Link from "next/link";
-import Image from "next/image";
-import FlashSale from "@/components/homes/multi-brand/FlashSale";
+import Products from "@/components/homes/home-men/Products";
 export const metadata = {
   title: "FLASH SALE || Nomahd - Ultimate Nextjs Ecommerce Template",
   description: "Nomahd - Ultimate Nextjs Ecommerce Template",
 };
-export default function page() {
+export default function page({ params }) {
+  const { id } = params;
   return (
     <>
       <Announcment />
@@ -22,13 +21,15 @@ export default function page() {
                 Home
               </Link>
               <i className="icon icon-arrow-right" />
-              <span className="text">Flash Deals</span>
+              <Link href={`/flash-sale`} className="text">
+                Flash Sale
+              </Link>
             </div>
           </div>
         </div>
       </div>
 
-      <FlashSale />
+      <Products data={"flash-sale-id"} id={id} />
 
       <Footer1 bgColor="background-gray" />
     </>

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { api, token } from '../api';
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
 
 export const useUpdateProfile = () => {
   const queryClient = useQueryClient();
@@ -12,7 +12,6 @@ export const useUpdateProfile = () => {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
-            'SYSTEM-KEY': 'NOMAHD-SECRIT',
           },
         });
         return response.data; 
@@ -22,10 +21,10 @@ export const useUpdateProfile = () => {
       }
     },
     onError: (error) => {
-      toast.error(error.message || 'Failed to update profile. Please try again.');
+      console.log(error.message || 'Failed to update profile. Please try again.');
     },
     onSuccess: () => {
-      toast.success('profile updated successfully!');
+      console.log('profile updated successfully!');
       queryClient.invalidateQueries(['profile']); 
     },
   });

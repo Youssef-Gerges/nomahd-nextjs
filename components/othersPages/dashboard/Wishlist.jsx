@@ -8,23 +8,24 @@ import { useEffect, useState } from "react";
 
 export default function Wishlist() {
   const { wishList } = useContextElement();
-  const [wishListItems, setWishListItems] = useState([]);
-  useEffect(() => {
-    if (wishList) {
-      setWishListItems(
-        [...allProducts].filter((el) => wishList.includes(el.id))
-      );
-    }
-  }, [wishList]);
+  // const [wishListItems, setWishListItems] = useState([]);
+  // useEffect(() => {
+  //   if (wishList) {
+  //     setWishListItems(
+  //       // [...allProducts].filter((el) => wishList.includes(el.id))
+  //       wishList?.data
+  //     );
+  //   }
+  // }, [wishList]);
   return (
     <div className="my-account-content account-wishlist">
       <div className="grid-layout wrapper-shop" data-grid="grid-3">
         {/* card product 1 */}
-        {wishListItems.slice(0, 3).map((elm, i) => (
+        {wishList?.data?.slice(0, 3).map((elm, i) => (
           <ProductCardWishlist product={elm} key={i} />
         ))}
       </div>
-      {!wishListItems.length && (
+      {!wishList?.data?.length && (
         <>
           <div
             className="row align-items-center w-100"

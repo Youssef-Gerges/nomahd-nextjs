@@ -8,16 +8,16 @@ import Topbar1 from "@/components/headers/Topbar1";
 import Header7 from "@/components/headers/Header7";
 import BannerCollection from "@/components/homes/multi-brand/BannerCollection";
 import Brands from "@/components/homes/multi-brand/Brands";
-// import Categories from "@/components/homes/multi-brand/Categories";
+import Categories from "@/components/homes/multi-brand/Categories";
 // import Categories2 from "@/components/homes/multi-brand/Categories2";
 import Collection from "@/components/homes/multi-brand/Collection";
 
 import Hero from "@/components/homes/multi-brand/Hero";
 import Products from "@/components/homes/multi-brand/Products";
 import Testimonials from "@/components/homes/multi-brand/Testimonials";
-import Categories from "@/components/homes/home-1/Categories";
+// import Categories from "@/components/homes/home-1/Categories";
 import Categories2 from "@/components/homes/multi-brand/Categories2";
-// import Announcment from "@/components/homes/multi-brand/Announcment";
+import Announcment from "@/components/homes/multi-brand/Announcment";
 
 // import Hero from "@/components/homes/home-1/Hero";
 
@@ -42,9 +42,9 @@ export default function Home() {
       <ShopGram />
       <Features />
       <Footer1 /> */}
-      {/* <Announcment /> */}
+      <Announcment />
       <Header7 />
-      {/* <Categories /> */}
+      <Categories isHomeCategories={true}/>
       <Hero />
       <Categories2 />
       <BannerCollection />

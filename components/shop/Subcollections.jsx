@@ -1,11 +1,72 @@
 "use client";
 
-import { collectionSlides2 } from "@/data/categories";
+// import { collectionSlides2 } from "@/data/categories";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Link from "next/link";
 import Image from "next/image";
 import { Navigation, Pagination } from "swiper/modules";
-export default function Subcollections() {
+import { useContextElement } from "@/context/Context";
+import React, { useState, useEffect } from "react";
+export default function Subcollections({ data, id }) {
+  const {
+    link,
+    linkProducts,
+    setLink,
+    categories,
+    allProducts,
+    subCategories,
+    setCategoryId,
+  } = useContextElement();
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    // const foundLink = categories?.data.find((item) => item.id == id)?.links
+    //   .sub_categories;
+    // // const foundCategory = categories?.data.find((item) => item.id == id)?.name;
+    // // setCategoryName(foundCategory);
+    // setLink(foundLink);
+    setCategoryId(id);
+    console.log("jjjj", subCategories);
+  }, [id, subCategories]);
+
+  useEffect(() => {
+    switch (data) {
+      case "home-category":
+        if (subCategories?.data) {
+          setProducts(subCategories?.data);
+          // setFiltered(linkProducts?.data);
+        }
+        break;
+
+      case "all-products":
+        if (allProducts?.data) {
+          setProducts(allProducts?.data);
+        }
+        break;
+
+      // case "best-selling":
+      //   if (bestSelling?.data) {
+      //     setProducts(bestSelling?.data);
+      //   }
+      //   break;
+
+      // case "flash-sale-id":
+      //   if (flashSale?.data) {
+      //     const SaleProducts = flashSale?.data?.find((sale) => sale?.id == id)
+      //       ?.products?.data;
+      //     setProducts(SaleProducts);
+      //   }
+      //   break;
+
+      default:
+        // Handle cases where `data` does not match any of the above
+        setProducts(allProducts?.data);
+        break;
+    }
+  }, [data, subCategories, allProducts]);
+
+  useEffect(() => {
+    console.log("jjjj", products);
+  }, [products]);
   return (
     <section className="flat-spacing-3 pb_0">
       <div className="container">
@@ -29,29 +90,29 @@ export default function Subcollections() {
             }}
             pagination={{ clickable: true, el: ".spd306" }}
           >
-            {collectionSlides2.map((slide, index) => (
+            {products?.map((slide, index) => (
               <SwiperSlide key={index}>
                 <div className="collection-item style-2 hover-img">
                   <div className="collection-inner">
                     <Link
-                      href={`/shop-default`}
+                      href={`/shop-collection-sub/${slide.name}/${slide.id}`}
                       className="collection-image img-style"
                     >
                       <Image
                         className="lazyload"
-                        data-src={slide.imgSrc}
+                        data-src={slide.icon}
                         alt={slide.alt}
-                        src={slide.imgSrc}
+                        src={slide.icon}
                         width={600}
                         height={721}
                       />
                     </Link>
                     <div className="collection-content">
                       <Link
-                        href={`/shop-default`}
+                        href={`/shop-collection-sub/${slide.name}/${slide.id}`}
                         className="tf-btn collection-title hover-icon fs-15"
                       >
-                        <span>{slide.title}</span>
+                        <span>{slide.name}</span>
                         <i className="icon icon-arrow1-top-left" />
                       </Link>
                     </div>

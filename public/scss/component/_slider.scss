@@ -302,6 +302,7 @@
 .autoplay-linear {
   .swiper-wrapper {
     transition-timing-function: linear;
+    align-items: center !important;
   }
 }
 .slideshow-men {

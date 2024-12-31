@@ -18,13 +18,13 @@ export default function QuickView() {
     isAddedToCartProducts,
     addToWishlist,
     isAddedtoWishlist,
-    addToCompareItem,
-    isAddedtoCompareItem,
-    handleAddToWishlist
+    // addToCompareItem,
+    // isAddedtoCompareItem,
+    handleAddToWishlist,
   } = useContextElement();
   const [currentColor, setCurrentColor] = useState(colors[0]);
   const [currentSize, setCurrentSize] = useState(sizeOptions[0]);
-  const [quantity,setQuantity]=useState(1);
+  const [quantity, setQuantity] = useState(1);
   const openModalSizeChoice = () => {
     const bootstrap = require("bootstrap"); // dynamically import bootstrap
     var myModal = new bootstrap.Modal(document.getElementById("find_size"), {
@@ -101,9 +101,9 @@ export default function QuickView() {
                   <h5>
                     <Link
                       className="link"
-                      href={`/product-detail/${quickViewItem.slug}`}
+                      href={`/product-detail/${quickViewItem?.slug}`}
                     >
-                      {quickViewItem.name}
+                      {quickViewItem?.name}
                     </Link>
                   </h5>
                 </div>
@@ -117,7 +117,7 @@ export default function QuickView() {
                   </div>
                 </div> */}
                 <div className="tf-product-info-price">
-                  <div className="price">{quickViewItem.base_price}</div>
+                  <div className="price">{quickViewItem?.base_price}</div>
                 </div>
                 {/* <div className="tf-product-description">
                   <p>
@@ -199,60 +199,62 @@ export default function QuickView() {
                 </div>
                 <div className="tf-product-info-quantity">
                   <div className="quantity-title fw-6">Quantity</div>
-                  <Quantity setQuantity={setQuantity}/>
+                  <Quantity setQuantity={setQuantity} />
                 </div>
                 <div className="tf-product-info-buy-button">
                   <form onSubmit={(e) => e.preventDefault()} className="">
                     <a
                       href="#"
                       className="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn"
-                      onClick={() => handleAddToCart(quickViewItem.id,"",quantity)}
+                      onClick={() =>
+                        handleAddToCart(quickViewItem.id, "", quantity)
+                      }
                     >
                       <span>
-                        {isAddedToCartProducts(quickViewItem.id)
+                        {isAddedToCartProducts(quickViewItem?.id)
                           ? "Already Added - "
                           : "Add to cart - "}
                       </span>
                       <span className="tf-qty-price">
-                        {quickViewItem.base_price}
+                        {quickViewItem?.base_price}
                       </span>
                     </a>
                     <a
-                      onClick={() => handleAddToWishlist(quickViewItem.id)}
+                      onClick={() => handleAddToWishlist(quickViewItem?.id)}
                       className="tf-product-btn-wishlist hover-tooltip box-icon bg_white wishlist btn-icon-action"
                     >
                       <span
                         className={`icon icon-heart ${
-                          isAddedtoWishlist(quickViewItem.id) ? "added" : ""
+                          isAddedtoWishlist(quickViewItem?.id) ? "added" : ""
                         }`}
                       />
                       <span className="tooltip">
-                        {isAddedtoWishlist(quickViewItem.id)
+                        {isAddedtoWishlist(quickViewItem?.id)
                           ? "Already Wishlisted"
                           : "Add to Wishlist"}
                       </span>
                       <span className="icon icon-delete" />
                     </a>
-                    <a
+                    {/* <a
                       href="#compare"
                       data-bs-toggle="offcanvas"
                       aria-controls="offcanvasLeft"
-                      onClick={() => addToCompareItem(quickViewItem.id)}
+                      onClick={() => addToCompareItem(quickViewItem?.id)}
                       className="tf-product-btn-wishlist hover-tooltip box-icon bg_white compare btn-icon-action"
                     >
                       <span
                         className={`icon icon-compare ${
-                          isAddedtoCompareItem(quickViewItem.id) ? "added" : ""
+                          isAddedtoCompareItem(quickViewItem?.id) ? "added" : ""
                         }`}
                       />
                       <span className="tooltip">
                         {" "}
-                        {isAddedtoCompareItem(quickViewItem.id)
+                        {isAddedtoCompareItem(quickViewItem?.id)
                           ? "Already Compared"
                           : "Add to Compare"}
                       </span>
                       <span className="icon icon-check" />
-                    </a>
+                    </a> */}
                     <div className="w-100">
                       <a href="#" className="btns-full">
                         Buy with
@@ -271,7 +273,7 @@ export default function QuickView() {
                 </div>
                 <div>
                   <Link
-                    href={`/product-detail/${quickViewItem.id}`}
+                    href={`/product-detail/${quickViewItem?.id}`}
                     className="tf-btn fw-6 btn-line"
                   >
                     View full details
