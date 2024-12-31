@@ -3,10 +3,10 @@ import { useContextElement } from "@/context/Context";
 import Image from "next/image";
 import Link from "next/link";
 export default function Checkout() {
-  const { cartProducts, setCartProducts, totalPrice } = useContextElement();
+  // const { cartProducts, setCartProducts, totalPrice } = useContextElement();
   return (
     <section className="flat-spacing-11">
-      <div className="container">
+      {/* <div className="container">
         <div className="tf-page-cart-wrap layout-2">
           <div className="tf-page-cart-item">
             <h5 className="fw-5 mb_20">Billing details</h5>
@@ -323,7 +323,7 @@ export default function Checkout() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }
