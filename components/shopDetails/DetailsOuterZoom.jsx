@@ -20,7 +20,6 @@ import { useAddToWishlistNew } from "@/api/wishlist/newAddToWishlist";
 import { useGetCartData } from "@/api/cart/getCart";
 import { useNewRemoveFromWishlist } from "@/api/wishlist/newRemoveFromWishlist";
 import { useCheckProductInWishlist } from "@/api/wishlist/checkProduct";
-import { current } from "@reduxjs/toolkit";
 
 export default function DetailsOuterZoom({ product }) {
   const [id, setId] = useState(null);
