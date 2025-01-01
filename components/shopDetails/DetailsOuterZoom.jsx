@@ -71,7 +71,7 @@ export default function DetailsOuterZoom({ product }) {
 
   useEffect(() => {
     if (product?.choice_options) {
-      const sizeOption = product.choice_options.find(
+      const sizeOption = product.choice_options?.find(
         (option) => option.title === "size"
       );
       if (sizeOption?.options?.length) {
@@ -332,8 +332,7 @@ export default function DetailsOuterZoom({ product }) {
                       <form className="variant-picker-values">
                         {product?.choice_options.length > 0 &&
                           product?.choice_options
-                            ?.find((option) => option.title === "size")
-                            .options?.map((size, index) => (
+                            ?.options?.map((size, index) => (
                               <React.Fragment key={index}>
                                 <input
                                   type="radio"

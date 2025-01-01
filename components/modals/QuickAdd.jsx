@@ -49,7 +49,7 @@ export default function QuickAdd() {
       quickAddItem?.choice_options?.length > 0
     ) {
       setVariant(
-        `${currentColor.replace(/\s+/g, "")}/${currentSize.replace(/\s+/g, "")}`
+        `${currentColor.replace(/\s+/g, "")}/${currentSize?.replace(/\s+/g, "")}`
       ); // Set first option as default and format
     }
   }, [currentColor, currentSize]);
@@ -68,9 +68,7 @@ export default function QuickAdd() {
 
   useEffect(() => {
     if (quickAddItem?.choice_options) {
-      const sizeOption = quickAddItem.choice_options.find(
-        (option) => option.title === "size"
-      );
+      const sizeOption = quickAddItem.choice_options
       if (sizeOption?.options?.length) {
         setCurrentSize(sizeOption.options[0]);
       }
@@ -290,9 +288,7 @@ export default function QuickAdd() {
                 </form> */}
                 <form className="variant-picker-values">
                   {quickAddItem?.choice_options?.length > 0 &&
-                    quickAddItem?.choice_options
-                      ?.find((option) => option.title === "size")
-                      .options?.map((size, index) => (
+                    quickAddItem?.choice_options?.options?.map((size, index) => (
                         <React.Fragment key={index}>
                           <input
                             type="radio"
