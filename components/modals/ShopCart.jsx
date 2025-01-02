@@ -13,8 +13,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 export default function ShopCart() {
   const [id, setId] = useState(null);
   // const { t, lang } = useTranslation("common"); // "common" is the namespace
-
-  const { data: cart } = useGetCartData(id);
+  const {cartData} = useContextElement();
+  // const { data: cart } = useGetCartData(id);
   const removeFromCart = useDeleteFromCart();
   const {
     // totalPrice,
@@ -43,11 +43,8 @@ export default function ShopCart() {
   const addShipingRef = useRef();
 
   useEffect(() => {
-    const userId = localStorage.getItem("id");
-    if (userId) {
-      setId(userId);
-    }
-  }, []);
+    setCartProducts(cartData?.data)
+  }, [cartData]);
   // useEffect(() => {
   //   cart.mutate(
   //     { user_id: id },

@@ -1,38 +1,41 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import LanguageSelect from "../common/LanguageSelect";
 import CurrencySelect from "../common/CurrencySelect";
 import { navItems } from "@/data/menu";
 import { usePathname } from "next/navigation";
+import { useContextElement } from "@/context/Context";
 export default function MobileMenu() {
   const pathname = usePathname();
-  const isMenuActive = (menuItem) => {
-    let active = false;
-    if (menuItem.href?.includes("/")) {
-      if (menuItem.href?.split("/")[1] == pathname.split("/")[1]) {
-        active = true;
-      }
-    }
-    if (menuItem.links) {
-      menuItem.links?.forEach((elm2) => {
-        if (elm2.href?.includes("/")) {
-          if (elm2.href?.split("/")[1] == pathname.split("/")[1]) {
-            active = true;
-          }
-        }
-        if (elm2.links) {
-          elm2.links.forEach((elm3) => {
-            if (elm3.href.split("/")[1] == pathname.split("/")[1]) {
-              active = true;
-            }
-          });
-        }
-      });
-    }
+  const { categories, subCategories, setCategoryId } = useContextElement();
+  const [isMenuActive, setIsMenuActive] = useState(null);
+  // const isMenuActive = (menuItem) => {
+  //   let active = false;
+  //   if (menuItem.href?.includes("/")) {
+  //     if (menuItem.href?.split("/")[1] == pathname.split("/")[1]) {
+  //       active = true;
+  //     }
+  //   }
+  //   if (menuItem.links) {
+  //     menuItem.links?.forEach((elm2) => {
+  //       if (elm2.href?.includes("/")) {
+  //         if (elm2.href?.split("/")[1] == pathname.split("/")[1]) {
+  //           active = true;
+  //         }
+  //       }
+  //       if (elm2.links) {
+  //         elm2.links.forEach((elm3) => {
+  //           if (elm3.href.split("/")[1] == pathname.split("/")[1]) {
+  //             active = true;
+  //           }
+  //         });
+  //       }
+  //     });
+  //   }
 
-    return active;
-  };
+  //   return active;
+  // };
   return (
     <div className="offcanvas offcanvas-start canvas-mb" id="mobileMenu">
       <span
@@ -43,20 +46,22 @@ export default function MobileMenu() {
       <div className="mb-canvas-content">
         <div className="mb-body">
           <ul className="nav-ul-mb" id="wrapper-menu-navigation">
-            {navItems.map((item, i) => (
+            {categories?.data?.map((item, i) => (
               <li key={i} className="nav-mb-item">
-                <a
-                  href={`#${item.href}`}
+                <Link
+                  // href={`#${item.href}`}
+                  onClick={() => setIsMenuActive(item?.id)}
+                  href={`/shop-collection-sub/${item?.name}/${item?.id}`}
                   className={`collapsed mb-menu-link current ${
-                    isMenuActive(item) ? "activeMenu" : ""
+                    isMenuActive === item?.id ? "activeMenu" : ""
                   }`}
                   data-bs-toggle="collapse"
                   aria-expanded="true"
                   aria-controls={item.id}
                 >
-                  <span>{item.label}</span>
+                  <span>{item.name}</span>
                   {/* <span className="btn-open-sub" /> */}
-                </a>
+                </Link>
                 {/* <div id={item.id} className="collapse">
                   <ul className="sub-nav-menu">
                     {item.links.map((subItem, i2) => (

@@ -19,8 +19,8 @@ export default function Subcollections({ data, id }) {
   } = useContextElement();
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    // const foundLink = categories?.data.find((item) => item.id == id)?.links
-    //   .sub_categories;
+    const foundLink = subCategories?.data.find((item) => item.id == id)?.links
+      .products;
     // // const foundCategory = categories?.data.find((item) => item.id == id)?.name;
     // // setCategoryName(foundCategory);
     // setLink(foundLink);
@@ -33,13 +33,14 @@ export default function Subcollections({ data, id }) {
       case "home-category":
         if (subCategories?.data) {
           setProducts(subCategories?.data);
+          console.log("nardiene",subCategories?.data)
           // setFiltered(linkProducts?.data);
         }
         break;
 
       case "all-products":
-        if (allProducts?.data) {
-          setProducts(allProducts?.data);
+        if (categories?.data) {
+          setProducts(categories?.data);
         }
         break;
 
@@ -59,13 +60,13 @@ export default function Subcollections({ data, id }) {
 
       default:
         // Handle cases where `data` does not match any of the above
-        setProducts(allProducts?.data);
+        setProducts([]);
         break;
     }
-  }, [data, subCategories, allProducts]);
+  }, [data, subCategories, categories]);
 
   useEffect(() => {
-    console.log("jjjj", products);
+    console.log("nardiene jjjj", products);
   }, [products]);
   return (
     <section className="flat-spacing-3 pb_0">
@@ -95,7 +96,7 @@ export default function Subcollections({ data, id }) {
                 <div className="collection-item style-2 hover-img">
                   <div className="collection-inner">
                     <Link
-                      href={`/shop-collection-sub/${slide.name}/${slide.id}`}
+                      href={`/shop-collection-sub/${slide.name}/${slide.id}/sub`}
                       className="collection-image img-style"
                     >
                       <Image
@@ -109,7 +110,7 @@ export default function Subcollections({ data, id }) {
                     </Link>
                     <div className="collection-content">
                       <Link
-                        href={`/shop-collection-sub/${slide.name}/${slide.id}`}
+                        href={`/shop-collection-sub/${slide.name}/${slide.id}/sub`}
                         className="tf-btn collection-title hover-icon fs-15"
                       >
                         <span>{slide.name}</span>

@@ -107,26 +107,16 @@ export default function ProductCard10({ product }) {
         {product.colors && (
           <ul className="list-color-product">
             {product.colors
-              .filter((color) =>
-                /^#([0-9A-F]{3}){1,2}$/i.test(color.colorClass)
-              ) // Filter valid hex colors
+              .filter((color) => /^#([0-9A-F]{3}){1,2}$/i.test(color)) // Filter valid hex colors
               .map((color) => (
-                <li
-                  className={`list-color-item color-swatch ${
-                    currentImage === color.imgSrc ? "active" : ""
-                  }`}
-                  key={color.name}
-                  onMouseOver={() => setCurrentImage(color.thumbnail_image)}
-                >
-                  <span className="tooltip">{color.name}</span>
+                <li className={`list-color-item color-swatch`} key={color}>
+                  <span className="tooltip">{color}</span>
                   <span
                     className="swatch-value"
                     style={{
                       display: "inline-block",
-                      width: "20px",
-                      height: "20px",
                       borderRadius: "50%",
-                      backgroundColor: color.colorClass, // Apply hex color
+                      backgroundColor: color, // Apply hex color
                       border: "1px solid #ccc",
                     }}
                   />

@@ -143,21 +143,14 @@ export default function ProductCard21({ product }) {
         {product.colors && (
           <ul className="list-color-product">
             {product.colors
-              .filter((color) =>
-                /^#([0-9A-F]{3}){1,2}$/i.test(color)
-              ) // Filter valid hex colors
-              .map((color , index) => (
-                <li
-                  className={`list-color-item color-swatch `}
-                  key={index}
-                >
+              .filter((color) => /^#([0-9A-F]{3}){1,2}$/i.test(color)) // Filter valid hex colors
+              .map((color) => (
+                <li className={`list-color-item color-swatch`} key={color}>
                   <span className="tooltip">{color}</span>
                   <span
                     className="swatch-value"
                     style={{
                       display: "inline-block",
-                      width: "20px",
-                      height: "20px",
                       borderRadius: "50%",
                       backgroundColor: color, // Apply hex color
                       border: "1px solid #ccc",

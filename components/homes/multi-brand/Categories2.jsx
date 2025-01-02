@@ -51,7 +51,7 @@ export default function Categories2() {
                 <div className="collection-item style-2 hover-img">
                   <div className="collection-inner">
                     <Link
-                      href={`/home-category/${collection?.slug}/${collection?.id}`} // Directly added href here
+                      href={`/shop-collection-sub/${collection?.slug}/${collection?.id}`} // Directly added href here
                       className="collection-image img-style"
                     >
                       <Image

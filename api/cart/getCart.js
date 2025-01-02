@@ -2,27 +2,30 @@ import { useQuery ,useQueryClient,useMutation} from "@tanstack/react-query";
 import { api ,token } from '../api';
 import toast from 'react-hot-toast';
 
-export const useGetCartData = (id) => {
-  return useQuery({
-    queryKey: ['cart'],
-    queryFn: async () => {
-      const response = await api.get(`/carts/${id}`,{
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'content-type' : 'Application/json'
-        },
-      });
-
-      if (!response || response.status !== 200) {
-        throw new Error('Failed to fetch cart data');
+export const useGetCartData = () => {
+  const id = localStorage.getItem('id')
+  if (id) {
+    return useQuery({
+      queryKey: ['cart'],
+      queryFn: async () => {
+        const response = await api.get(`/carts/${id}`,{
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'content-type' : 'Application/json'
+          },
+        });
+  
+        if (!response || response.status !== 200) {
+          throw new Error('Failed to fetch cart data');
+        }
+  
+        return response.data;
+      },
+      onError: () => {
+        toast.error('Unable to fetch cart data. Please try again later.');
       }
-
-      return response.data;
-    },
-    onError: () => {
-      toast.error('Unable to fetch cart data. Please try again later.');
-    }
-  });
+    });
+  }
 };
 
 // export const useGetCartData = () => {

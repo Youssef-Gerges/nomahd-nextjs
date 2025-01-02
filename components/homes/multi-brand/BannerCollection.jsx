@@ -41,7 +41,7 @@ export default function BannerCollection() {
               <div className="collection-item-v4 hover-img">
                 <div className="collection-inner">
                   <Link
-                    href={`/home-category/${item.slug}/${item.id}`} // Directly added href here
+                    href={`/shop-collection-sub/${item.slug}/${item.id}`} // Directly added href here
                     className="collection-image img-style radius-10"
                   >
                     <Image
@@ -59,7 +59,7 @@ export default function BannerCollection() {
                   >
                     <h5 className="heading text_white">{item.name}</h5>
                     <Link
-                      href={`/home-category/${item.name}/${item.id}`} // Directly added href here
+                      href={`/shop-collection-sub/${item.name}/${item.id}`} // Directly added href here
                       className="tf-btn style-3 fw-6 btn-light-icon rounded-full animate-hover-btn"
                     >
                       <span>Shop now</span>

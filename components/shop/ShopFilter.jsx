@@ -34,7 +34,9 @@ const sizes = ["S", "M", "L", "XL"];
 import Slider from "rc-slider";
 import { products1 } from "@/data/products";
 import Link from "next/link";
+import { useContextElement } from "@/context/Context";
 export default function ShopFilter({ setProducts, products = products1 }) {
+const { subCategories } = useContextElement();
   const [price, setPrice] = useState([10, 20]);
   const handlePrice = (value) => {
     setPrice(value);
@@ -180,17 +182,17 @@ export default function ShopFilter({ setProducts, products = products1 }) {
             </div>
             <div id="categories" className="collapse show">
               <ul className="list-categoris current-scrollbar mb_36">
-                {categories.map((category) => (
+                {subCategories?.data?.map((category) => (
                   <li key={category.id} className={`cate-item`}>
-                    {category.link ? (
-                      <Link href={category.link}>
+                    {/* {category.link ? ( */}
+                      <Link href={`/shop-collection-sub/${category.name}/${category.id}/sub`}>
                         <span>{category.name}</span>
                       </Link>
-                    ) : (
+                    {/* ) : (
                       <a href="#">
                         <span>{category.name}</span>
                       </a>
-                    )}
+                    )} */}
                   </li>
                 ))}
               </ul>
@@ -234,7 +236,7 @@ export default function ShopFilter({ setProducts, products = products1 }) {
                           {
                             products.filter(
                               (elm) =>
-                                elm.isAvailable == availability.isAvailable
+                                elm.current_stock == availability.isAvailable
                             ).length
                           }
                           )

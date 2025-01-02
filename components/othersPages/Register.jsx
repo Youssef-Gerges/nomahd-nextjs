@@ -194,10 +194,9 @@ import { useRouter } from "next/navigation";
 export default function Register() {
   const registerMutation = useRegister();
   const router = useRouter();
-
+  const [errorMessage, setErrorMessage] = useState(null); // Error message state
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
     email_or_phone: "",
     password: "",
     password_confirmation: "",
@@ -215,21 +214,62 @@ export default function Register() {
       name: fullName, // Concatenated name
     };
 
-    registerMutation.mutate(formDataToSubmit, {
+    const emailOrPhone = formData.email;
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailOrPhone);
+    const registerBy = isEmail ? "email" : "phone";
+    const updatedFormData = {
+      ...formDataToSubmit,
+      register_by: registerBy,
+    };
+    console.log("formdataaa", updatedFormData);
+    registerMutation.mutate(updatedFormData, {
       onSuccess: () => {
         router.push("/");
       },
       onError: (error) => {
-        
-        console.error("Registration failed:", error);
+        // Extract and set error message
+        setErrorMessage(
+          error.response?.data?.message || "An unexpected error occurred"
+        );
       },
     });
   };
 
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+
+  //   // Detect if the input is an email or phone
+  //   if (name === "email_or_phone") {
+  //     const isPhone = /^[0-9]{10,15}$/.test(value); // Adjust regex based on your phone validation logic
+  //     setFormData((prev) => ({
+  //       ...prev,
+  //       [name]: value,
+  //       register_by: isPhone ? "phone" : "email",
+  //     }));
+  //   } else {
+  //     setFormData((prev) => ({ ...prev, [name]: value }));
+  //   }
+  // };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Detect if the input is an email or phone
+    // Dynamically update `name` when `firstName` or `lastName` changes
+    if (name === "firstName" || name === "lastName") {
+      const updatedFormData = {
+        ...formData,
+        [name]: value,
+        name:
+          name === "firstName"
+            ? `${value} ${formData.lastName || ""}`.trim()
+            : `${formData.firstName || ""} ${value}`.trim(),
+      };
+      setFormData(updatedFormData);
+      //  Detect if the input is an email or phone
+    } else {
+      // For other fields, update normally
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
     if (name === "email_or_phone") {
       const isPhone = /^[0-9]{10,15}$/.test(value); // Adjust regex based on your phone validation logic
       setFormData((prev) => ({
@@ -355,16 +395,21 @@ export default function Register() {
                   formData.password_confirmation !== "" && (
                     <p style={{ color: "red" }}>Passwords do not match</p>
                   )}
+
+                {errorMessage && (
+                  <p className="text-danger mb_20">{errorMessage}</p>
+                )}
               </div>
               <div className="mb_20">
                 <button
                   onClick={handleRegister}
                   className="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center"
                   disabled={
-                    formData.password !== formData.password_confirmation
+                    formData.password !== formData.password_confirmation ||
+                    registerMutation.isLoading
                   }
                 >
-                  Register
+                  {registerMutation.isLoading ? "Registering..." : "Register"}
                 </button>
               </div>
               <div className="text-center">

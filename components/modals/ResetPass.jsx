@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useSendToMail } from "@/api/auth/resetPassword";
 
 export default function ResetPass() {
+  const [errorMessage, setErrorMessage] = useState(null); // Error message state
+  const [success, setSuccess] = useState(null);
   const [resetPassword, setResetPassword] = useState({
     email_or_phone: "",
     send_code_by: "",
@@ -10,7 +12,22 @@ export default function ResetPass() {
   const sentToMail = useSendToMail();
   const handleSendToMail = (e) => {
     e.preventDefault();
-    sentToMail.mutate(resetPassword);
+    const emailOrPhone = resetPassword.email_or_phone;
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailOrPhone);
+    const loginBy = isEmail ? "email" : "phone";
+    const updatedFormData = { ...resetPassword, send_code_by: loginBy };
+    sentToMail.mutate(updatedFormData, {
+      onSuccess: (response) => {
+        setSuccess(
+          response.response?.data?.message || "Code sent successfully"
+        );
+      },
+      onError: (error) => {
+        setErrorMessage(
+          error.response?.data?.message || "An unexpected error occurred"
+        );
+      },
+    });
   };
   const handleMailChange = (e) => {
     const { name, value } = e.target;
@@ -54,6 +71,10 @@ export default function ResetPass() {
                   Email *
                 </label>
               </div>
+              {errorMessage && (
+                    <p className="text-danger mb_20">{errorMessage}</p>
+                  )}
+                  {success && <p className="text-success mb_20">{success}</p>}
               <div>
                 <a
                   href="#login"

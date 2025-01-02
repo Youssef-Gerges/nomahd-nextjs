@@ -13,7 +13,7 @@ export default function ProductGrid({ gridItems = 4, allproducts = 0 }) {
           marginBottom: "24px",
         }}
       >
-        {allproducts.length} product(s) found
+        {allproducts.length || "No "} product(s) found
       </div>
       <div className="grid-layout wrapper-shop" data-grid={`grid-${gridItems}`}>
         {/* card product 1 */}

@@ -6,12 +6,12 @@ import { useContextElement } from "@/context/Context";
 import CountdownComponent from "../common/Countdown";
 export const ProductCardWishlist = ({ product, productId }) => {
   const [currentImage, setCurrentImage] = useState(product.thumbnail_image);
-  const { setQuickViewItem } = useContextElement();
   const [isInWishlist, setIsInWishlist] = useState(false);
   const {
     setQuickAddItem,
-    addToCompareItem,
-    isAddedtoCompareItem,
+    // addToCompareItem,
+    // isAddedtoCompareItem,
+    setQuickViewItem,
     handleRemoveFromWishlist,
     handleAddToWishlist,
     handleCheckWishlist,
@@ -87,7 +87,7 @@ export const ProductCardWishlist = ({ product, productId }) => {
             </span>
             <span className="icon icon-delete" />
           </a>
-          <a
+          {/* <a
             href="#compare"
             data-bs-toggle="offcanvas"
             aria-controls="offcanvasLeft"
@@ -106,7 +106,7 @@ export const ProductCardWishlist = ({ product, productId }) => {
                 : "Add to Compare"}
             </span>
             <span className="icon icon-check" />
-          </a>
+          </a> */}
           <a
             href="#quick_view"
             onClick={() => setQuickViewItem(product)}
@@ -139,32 +139,26 @@ export const ProductCardWishlist = ({ product, productId }) => {
             : `${product?.name?.slice(0, 30)}...`}
         </Link>
         <span className="price">{product.base_price}</span>
-        {/* {product.colors && (
+        {product.colors && (
           <ul className="list-color-product">
-            {product.colors?.map((color) => (
-              // <li
-              //   className={`list-color-item color-swatch ${
-              //     currentImage == color.imgSrc ? "active" : ""
-              //   } `}
-              //   key={color.name}
-              //   onMouseOver={() => setCurrentImage(color.imgSrc)}
-              // >
-              //   <span className="tooltip">{color.name}</span>
-              //   <span className={`swatch-value ${color.colorClass}`} />
-              //   <Image
-              //     className="lazyload"
-              //     data-src={color.imgSrc}
-              //     src={color.imgSrc}
-              //     alt="image-product"
-              //     width={720}
-              //     height={1005}
-              //   />
-              // </li>
-              <li>{color}</li>
-            ))}
-
+            {product.colors
+              .filter((color) => /^#([0-9A-F]{3}){1,2}$/i.test(color)) // Filter valid hex colors
+              .map((color) => (
+                <li className={`list-color-item color-swatch`} key={color}>
+                  <span className="tooltip">{color}</span>
+                  <span
+                    className="swatch-value"
+                    style={{
+                      display: "inline-block",
+                      borderRadius: "50%",
+                      backgroundColor: color, // Apply hex color
+                      border: "1px solid #ccc",
+                    }}
+                  />
+                </li>
+              ))}
           </ul>
-        )} */}
+        )}
       </div>
     </div>
   );

@@ -71,9 +71,7 @@ export default function DetailsOuterZoom({ product }) {
 
   useEffect(() => {
     if (product?.choice_options) {
-      const sizeOption = product.choice_options?.find(
-        (option) => option.title === "size"
-      );
+      const sizeOption = product.choice_options[0]
       if (sizeOption?.options?.length) {
         setCurrentSize(sizeOption.options[0]);
       }
@@ -86,7 +84,11 @@ export default function DetailsOuterZoom({ product }) {
 
   useEffect(() => {
     if (product?.colors?.length > 0 && product?.choice_options?.length > 0) {
-      setVariant(`${currentColor.replace(/\s+/g, "")}/${currentSize}`); // Set first option as default and format
+      setVariant(
+        `${currentColor.replace(/\s+/g, "")}${
+          currentSize ? "/" + currentSize : ""
+        }`
+      ); // Set first option as default and format
     }
   }, [currentColor, currentSize]);
 
@@ -291,8 +293,7 @@ export default function DetailsOuterZoom({ product }) {
                                 {isHex ? (
                                   // Render a colored circle for hex codes
                                   <span
-                                  className={`btn-checkbox bg-${currentColor}`}
-
+                                    className={`btn-checkbox bg-${currentColor}`}
                                     style={{
                                       width: "20px",
                                       height: "20px",
@@ -331,8 +332,8 @@ export default function DetailsOuterZoom({ product }) {
                       </div>
                       <form className="variant-picker-values">
                         {product?.choice_options.length > 0 &&
-                          product?.choice_options
-                            ?.options?.map((size, index) => (
+                          product?.choice_options[0]?.options?.map(
+                            (size, index) => (
                               <React.Fragment key={index}>
                                 <input
                                   type="radio"
@@ -350,7 +351,8 @@ export default function DetailsOuterZoom({ product }) {
                                   <p>{size}</p>
                                 </label>
                               </React.Fragment>
-                            ))}
+                            )
+                          )}
                       </form>
                     </div>
                   </div>

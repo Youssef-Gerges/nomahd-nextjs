@@ -15,7 +15,7 @@ export default function StickyItem({ product, soldOut = false }) {
   if (product?.colors && product?.choice_options) {
     product?.colors.forEach((color) => {
       // Iterate through each size in choice_options
-      product?.choice_options?.options?.forEach((size) => {
+      product?.choice_options[0]?.options?.forEach((size) => {
         // Create a combined object for each color and size
         options.push({
           value: `${color} / ${size}`,

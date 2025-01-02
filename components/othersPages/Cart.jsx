@@ -8,14 +8,14 @@ import { useGetHomeCategories } from "@/api/categories/getHomeCategories";
 import { useDeleteFromCart } from "@/api/cart/removeFomCart";
 export default function Cart() {
   const cart = useGetCartData();
-  const {cartProducts} = useContextElement();
+  const {cartData} = useContextElement();
   const removeFromCart = useDeleteFromCart();
   // const {data} = useGetHomeCategories()
   // const { 
     // cartProducts, setCartProducts,
     //  totalPrice } = useContextElement();
   const [totalPrice , setTotalPrice] = useState(0);
-  const [cartProductsData, setCartProducts] = useState((cartProducts?.data?.data.flatMap(i =>  i.cart_items)) || []);
+  const [cartProductsData, setCartProducts] = useState((cartData?.data?.data?.flatMap(i =>  i.cart_items)) || []);
 
   // useEffect(() => {
   //   cart.mutate(

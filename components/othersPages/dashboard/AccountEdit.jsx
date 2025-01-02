@@ -136,12 +136,13 @@
 //   );
 // }
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useUpdateProfile } from "@/api/profile/updateProfile";
 
 export default function AccountEdit() {
   const updateProfile = useUpdateProfile();
-
+  const [errorMessage, setErrorMessage] = useState(null); // Error message state
+  const [success, setSuccess] = useState(null);
   // Refs for form inputs
   const firstNameRef = useRef();
   const lastNameRef = useRef();
@@ -155,7 +156,7 @@ export default function AccountEdit() {
 
     // Validate password confirmation
     if (newPasswordRef.current.value !== confirmPasswordRef.current.value) {
-      alert("New password and confirm password do not match.");
+      setErrorMessage("New password and confirm password do not match.");
       return;
     }
 
@@ -173,7 +174,7 @@ export default function AccountEdit() {
       newPasswordRef.current.value &&
       newPasswordRef.current.value !== confirmPasswordRef.current.value
     ) {
-      alert("New password and confirm password do not match.");
+      setErrorMessage("New password and confirm password do not match.");
       return;
     }
 
@@ -183,6 +184,9 @@ export default function AccountEdit() {
       name: firstNameRef.current.value + lastNameRef.current.value,
     };
 
+    // if (emailRef.current.value) {
+    //   updateData.email = emailRef.current.value;
+    // }
     // If new password is provided, include both new and current passwords
     if (newPasswordRef.current.value) {
       updateData.password = newPasswordRef.current.value;
@@ -190,7 +194,20 @@ export default function AccountEdit() {
     }
 
     // Send mutation with input values
-    updateProfile.mutate(updateData);
+    updateProfile.mutate(updateData, {
+      onSuccess: (response) => {
+        setSuccess(
+          response.response?.data?.message || "Profile updated successfully"
+        );
+        setErrorMessage("");
+      },
+      onError: (error) => {
+        setErrorMessage(
+          error.response?.data?.message || "An unexpected error occurred"
+        );
+        setSuccess("");
+      },
+    });
   };
 
   return (
@@ -251,9 +268,11 @@ export default function AccountEdit() {
               className="tf-field-label fw-4 text_black-2"
               htmlFor="property3"
             >
-              Email
+              Email or Phone *
             </label>
           </div>
+          {errorMessage && <p className="text-danger mb_20">{errorMessage}</p>}
+          {success && <p className="text-success mb_20">{success}</p>}
           <h6 className="mb_20">Passwordss Change</h6>
           <div className="tf-field style-1 mb_30">
             <input

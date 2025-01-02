@@ -15,30 +15,53 @@ export default function ShopDefault({ data, id }) {
     bestSelling,
     allProducts,
     linkProducts,
+    subCategories,
     setLink,
     setPage,
     flashSale,
     featured,
     link,
-    page
+    page,
   } = useContextElement();
 
   useEffect(() => {
-    const foundLink = categories?.data.find((item) => item.id == id)?.links
-      .products;
-    const foundCategory = categories?.data.find((item) => item.id == id)?.name;
-    // setCategoryName(foundCategory);
-    console.log("foundlink", foundLink);
-    setLink(foundLink);
-  }, [categories, data]);
+    // if (data === "sub-category") {
+    //   const foundLink = subCategories?.data.find((item) => item.id == id)?.links
+    //     .products;
+    //   // setCategoryName(foundCategory);
+    //   console.log("bahha soltan link", foundLink);
+    //   setLink(foundLink);
+    // } else {
+      const foundCategoryLink = subCategories?.data.find(
+        (item) => item.id == id
+      )?.links.products;
+      const foundLink = categories?.data.find((item) => item.id == id)?.links
+        .products;
 
+      console.log("foundlink", foundLink, foundCategoryLink);
+      console.log("bahha soltan foundlink", foundLink, foundCategoryLink);
+
+      setLink(foundLink);
+    // }
+  }, [categories, data, id]);
+
+  useEffect(() => {
+    if (data === "sub-category") {
+      const foundLink = subCategories?.data.find((item) => item.id == id)?.links
+        .products;
+      // setCategoryName(foundCategory);
+      console.log("bahha soltan link", foundLink);
+      setLink(foundLink);
+    }
+  }, [subCategories, data]);
+  useEffect(() => {
+    console.log("bahha soltan link", link);
+  }, [link]);
   useEffect(() => {
     switch (data) {
       case "home-category":
         if (linkProducts?.data) {
           setProducts(linkProducts?.data);
-          console.log("jjjj lll",linkProducts)
-          // setFiltered(linkProducts?.data);
         }
         break;
 
@@ -47,7 +70,12 @@ export default function ShopDefault({ data, id }) {
           setProducts(allProducts?.data);
         }
         break;
-
+      case "sub-category":
+        if (linkProducts?.data) {
+          setProducts(linkProducts?.data);
+          console.log("bahha soltan link", linkProducts?.data);
+        }
+        break;
       case "best-selling":
         if (bestSelling?.data) {
           setProducts(bestSelling?.data);
@@ -64,10 +92,18 @@ export default function ShopDefault({ data, id }) {
 
       default:
         // Handle cases where `data` does not match any of the above
-        setProducts(allProducts?.data);
+        setProducts([]);
         break;
     }
-  }, [data, linkProducts, allProducts, bestSelling, flashSale, link]);
+  }, [
+    data,
+    linkProducts,
+    subCategories,
+    allProducts,
+    bestSelling,
+    flashSale,
+    link,
+  ]);
 
   return (
     <>

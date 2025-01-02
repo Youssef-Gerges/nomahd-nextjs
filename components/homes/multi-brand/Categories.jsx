@@ -32,9 +32,10 @@ export default function Categories({
                     >
                       <Link
                         href={
-                          isHomeCategories
-                            ? `/shop-collection-sub/${item?.name}/${item?.id}`
-                            : `/home-category/${category?.name}/${category?.id}/${item.id}/${item.slug}`
+                          // isHomeCategories
+                            // ? 
+                            `/shop-collection-sub/${item?.name}/${item?.id}`
+                            // : `/home-category/${category?.name}/${category?.id}/${item.id}/${item.slug}`
                         }
                         className="collection-image img-style"
                       >

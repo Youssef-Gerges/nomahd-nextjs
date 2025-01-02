@@ -72,20 +72,16 @@ export const registerUser = async (userData) => {
     const queryClient = useQueryClient();
   
     return useMutation({
-      onError: () => {
-        console.log('Registration failed. Please try again.');
+      onError: (error) => {
+        console.error('Register failed:', error.response?.data?.message || error.message);
       },
       onSuccess: (data) => {
-        const { access_token } = data.data;
-        const {id} = data.data.user;
-        const {name} = data.data.user;
+        const { access_token ,user } = data.data;
         if (typeof window !== 'undefined') {
           localStorage.setItem('token', access_token);
-          localStorage.setItem('id' , id)
-          logcalStorage.setItem('name', name)
-
+          localStorage.setItem('id' , user.id)
+          logcalStorage.setItem('name', user.name)
         }
-  
         console.log('Registration successful');
         queryClient.invalidateQueries(['register_user']);
       },
@@ -118,24 +114,53 @@ export const registerUser = async (userData) => {
 // }
 
 
+  // export const useLogin = () => {
+  //   const queryClient = useQueryClient();
+  
+  //   return useMutation({
+  //     onError: () => {
+  //       console.error('Login failed. Please try again.');
+  //     },
+  //     onSuccess: (data) => {
+  //       const { access_token } = data.data;
+  //       const {id} = data.data.user;
+  //       const { name } = data.data.user
+  //       if (typeof window !== 'undefined') {
+  //         localStorage.setItem('token', access_token);
+  //         localStorage.setItem('id' , id);
+  //         logcalStorage.setItem('name', name)
+  //       }
+  //       // api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  
+  //       console.log('Login successful');
+  //       queryClient.invalidateQueries(['user']); // Adjust the query key if necessary
+  //     },
+  //     mutationFn: async (credentials) => {
+  //       return await api.post('/auth/login', JSON.stringify(credentials), {
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           'Accept':'application/json'
+  //         },
+  //       });
+  //     },
+  //   });
+  // };
+
+
   export const useLogin = () => {
     const queryClient = useQueryClient();
   
     return useMutation({
-      onError: () => {
-        console.error('Login failed. Please try again.');
+      onError: (error) => {
+        console.error('Login failed:', error.response?.data?.message || error.message);
       },
       onSuccess: (data) => {
-        const { access_token } = data.data;
-        const {id} = data.data.user;
-        const {name} = data.data.user
+        const { access_token, user } = data.data;
         if (typeof window !== 'undefined') {
           localStorage.setItem('token', access_token);
-          localStorage.setItem('id' , id);
-          logcalStorage.setItem('name', name)
+          localStorage.setItem('id', user.id);
+          localStorage.setItem('name', user.name);
         }
-        // api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  
         console.log('Login successful');
         queryClient.invalidateQueries(['user']); // Adjust the query key if necessary
       },
@@ -143,12 +168,13 @@ export const registerUser = async (userData) => {
         return await api.post('/auth/login', JSON.stringify(credentials), {
           headers: {
             'Content-Type': 'application/json',
-            'Accept':'application/json'
+            'Accept': 'application/json',
           },
         });
       },
     });
   };
+  
   
 
 

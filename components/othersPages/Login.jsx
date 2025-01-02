@@ -15,34 +15,48 @@ export default function Login() {
     email_or_phone: "",
     send_code_by: "email",
   });
+  const [errorMessage, setErrorMessage] = useState(null); // Error message state
+  const [success, setSuccess] = useState(null);
   const loginMutation = useLogin();
   const sentToMail = useSendToMail();
 
-  // const handleLogin = (e) => {
-  //   e.preventDefault();
-  //   loginMutation.mutate(formData, { onSuccess: () => router.push("/") });
-  // };
-
   const handleLogin = (e) => {
     e.preventDefault();
-  
-    // Check if the input is an email or phone number
+
     const emailOrPhone = formData.email;
-    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailOrPhone); // Basic email regex
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailOrPhone);
     const loginBy = isEmail ? "email" : "phone";
-  
-    // Update the login_by attribute dynamically
     const updatedFormData = { ...formData, login_by: loginBy };
-  
-    // Trigger login mutation
+
     loginMutation.mutate(updatedFormData, {
       onSuccess: () => router.push("/"),
+      onError: (error) => {
+        // Extract and set error message
+        setErrorMessage(
+          error.response?.data?.message || "An unexpected error occurred"
+        );
+      },
     });
   };
 
   const handleSendToMail = (e) => {
     e.preventDefault();
-    sentToMail.mutate(resetPassword);
+    const emailOrPhone = resetPassword.email_or_phone;
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailOrPhone);
+    const loginBy = isEmail ? "email" : "phone";
+    const updatedFormData = { ...resetPassword, send_code_by: loginBy };
+    sentToMail.mutate(updatedFormData, {
+      onSuccess: (response) => {
+        setSuccess(
+          response.response?.data?.message || "Code sent successfully"
+        );
+      },
+      onError: (error) => {
+        setErrorMessage(
+          error.response?.data?.message || "An unexpected error occurred"
+        );
+      },
+    });
   };
   const handleMailChange = (e) => {
     const { name, value } = e.target;
@@ -60,7 +74,7 @@ export default function Login() {
             <div id="recover">
               <h5 className="mb_24">Reset your password</h5>
               <p className="mb_30">
-                We will send you an email to reset your password
+                We will send you an email or SMS to reset your password
               </p>
               <div>
                 <form onSubmit={(e) => e.preventDefault()} className="">
@@ -89,6 +103,10 @@ export default function Login() {
                       Email or Phone *
                     </label>
                   </div>
+                  {errorMessage && (
+                    <p className="text-danger mb_20">{errorMessage}</p>
+                  )}
+                  {success && <p className="text-success mb_20">{success}</p>}
                   <div className="mb_20">
                     <a href="#login" className="tf-btn btn-line">
                       Cancel
@@ -122,17 +140,11 @@ export default function Login() {
                       autoComplete="abc@xyz.com"
                       id="property3"
                     />
-                    {/* <label
+                    <label
                       className="tf-field-label fw-4 text_black-2"
                       htmlFor="property3"
                     >
-                      Email *
-                    </label> */}
-                     <label
-                      className="tf-field-label fw-4 text_black-2"
-                      htmlFor="property3"
-                    >
-                    Email or Phone *
+                      Email or Phone *
                     </label>
                   </div>
                   <div className="tf-field style-1 mb_30">
@@ -154,6 +166,9 @@ export default function Login() {
                       Password *
                     </label>
                   </div>
+                  {errorMessage && (
+                    <p className="text-danger mb_20">{errorMessage}</p>
+                  )}
                   <div className="mb_20">
                     <a href="#recover" className="tf-btn btn-line">
                       Forgot your password?
@@ -164,8 +179,9 @@ export default function Login() {
                       type="submit"
                       onClick={handleLogin}
                       className="tf-btn w-100 radius-3 btn-fill animate-hover-btn justify-content-center"
+                      disabled={loginMutation.isLoading} // Disable button while loading
                     >
-                      Log in
+                      {loginMutation.isLoading ? "Loading..." : "Log in"}
                     </button>
                   </div>
                 </form>

@@ -242,13 +242,15 @@
 //   );
 // }
 "use client";
-import { useRegister} from "@/api/auth/auth";
+import { useRegister } from "@/api/auth/auth";
 import React, { useState } from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 export default function Register() {
   const registerMutation = useRegister();
-  const router = useRouter(); 
+  const router = useRouter();
+  const [errorMessage, setErrorMessage] = useState(null); // Error message state
+
   // const handleRegister = async (e) => {
   //   e.preventDefault();
   //   // setLoading(true);
@@ -262,10 +264,8 @@ export default function Register() {
   //     // Perform additional actions like redirecting the user
   //   } catch (error) {
   //     console.log(error.message || 'Failed to register');
-  //   } 
+  //   }
   // };
-
-
 
   // const handleRegister = async (event) => {
   //   event.preventDefault();
@@ -278,11 +278,12 @@ export default function Register() {
   //   } catch (error) {
   //     console.error(error.message);
   //     alert('Registration failed: ' + error.message);
-  //   } 
+  //   }
   // };
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    // firstName: "",
+    // lastName: "",
+    name:"",
     email_or_phone: "",
     password: "",
     password_confirmation: "",
@@ -300,26 +301,35 @@ export default function Register() {
       name: fullName, // Concatenated name
     };
 
-    // registerMutation.mutate(formDataToSubmit);
-
-    registerMutation.mutate(formDataToSubmit, {
+    const emailOrPhone = formData.email;
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailOrPhone);
+    const registerBy = isEmail ? "email" : "phone";
+    const updatedFormData = {
+      ...formDataToSubmit,
+      register_by: registerBy,
+    };
+    console.log("formdataaa" , updatedFormData)
+    registerMutation.mutate(updatedFormData, {
       onSuccess: () => {
         const modalElement = document.getElementById("register");
-      if (modalElement) {
-        modalElement.classList.remove("show");
-        modalElement.setAttribute("aria-hidden", "true");
-        modalElement.style.display = "none";
-      } 
-      const backdrop = document.querySelector(".modal-backdrop");
-      if (backdrop) {
-        backdrop.parentNode.removeChild(backdrop);
-      }
+        if (modalElement) {
+          modalElement.classList.remove("show");
+          modalElement.setAttribute("aria-hidden", "true");
+          modalElement.style.display = "none";
+        }
+        const backdrop = document.querySelector(".modal-backdrop");
+        if (backdrop) {
+          backdrop.parentNode.removeChild(backdrop);
+        }
         // Navigate to the desired route on successful registration
-        console.log("navigating ")
+        console.log("navigating ");
         router.push("/");
       },
       onError: (error) => {
-        console.error("Registration failed:", error);
+        // Extract and set error message
+        setErrorMessage(
+          error.response?.data?.message || "An unexpected error occurred"
+        );
       },
     });
   };
@@ -434,18 +444,22 @@ export default function Register() {
                   formData.password_confirmation !== "" && (
                     <p style={{ color: "red" }}>Passwords do not match</p>
                   )}
+                {errorMessage && (
+                  <p className="text-danger mb_20">{errorMessage}</p>
+                )}
               </div>
 
               <div className="bottom">
                 <div className="w-100">
                   <button
-                    onClick={(e)=>handleRegister(e)}
+                    onClick={handleRegister}
                     className="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center"
                     disabled={
-                      formData.password !== formData.password_confirmation
+                      formData.password !== formData.password_confirmation ||
+                      registerMutation.isLoading
                     }
                   >
-                    Register
+                    {registerMutation.isLoading ? "Registering..." : "Register"}
                   </button>
                 </div>
 

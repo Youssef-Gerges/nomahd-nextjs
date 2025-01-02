@@ -56,16 +56,16 @@ export default function Context({ children }) {
   const { data: brands } = useGetAllBrands();
   const { data: topBrands } = useGetTopBrands();
   const { data: featured } = useGetFeaturedCategories();
-  const { data: cartProducts } = useGetCartData(userId);
+  const { data: cartData } = useGetCartData();
   const [removeFromWishlistSuccess, setRemoveFromWishlistSuccess] =
     useState(false);
   const removeFromWishlist = useNewRemoveFromWishlist();
   useEffect(() => {
-    const subtotal = cartProducts?.data.reduce((accumulator, product) => {
+    const subtotal = cartData?.data.reduce((accumulator, product) => {
       return accumulator + product.quantity * product.price;
     }, 0);
     setTotalPrice(subtotal);
-  }, [cartProducts]);
+  }, [cartData]);
 
   const handleCheckWishlist = (setIsInWishlist, product_id) => {
     if (product_id && userId) {
@@ -84,14 +84,14 @@ export default function Context({ children }) {
     }
   };
 
-  useEffect(()=>{
-    console.log("link is ", link)
-  },[link])
+  useEffect(() => {
+    console.log("link is ", link);
+  }, [link]);
   useEffect(() => {
     console.log("wishlist pro", wishlist?.data);
   }, [wishlist]);
   const addProductToCart = (id, qty) => {
-    if (!cartProducts.filter((elm) => elm.id == id)[0]) {
+    if (!cartData.filter((elm) => elm.id == id)[0]) {
       const item = {
         ...allProducts.filter((elm) => elm.id == id)[0],
         quantity: qty ? qty : 1,
@@ -119,30 +119,48 @@ export default function Context({ children }) {
   };
 
   const handleAddToWishlist = (product_id) => {
-    addToWishlist.mutate(
-      { productId: product_id, userId: userId },
-      {
-        onSuccess: (data) => {
-          console.log("Wishlist data:", data);
-          setAddToWishlistSucess(true);
-        },
-        onError: (error) => {
-          console.error("Error:", error.message);
-        },
+    if (!userId) {
+      const loginModal = document.getElementById("login");
+      if (loginModal) {
+        const bootstrap = require("bootstrap");
+        const modal = new bootstrap.Modal(loginModal);
+        modal.show();
       }
-    );
+    } else {
+      addToWishlist.mutate(
+        { productId: product_id, userId: userId },
+        {
+          onSuccess: (data) => {
+            console.log("Wishlist data:", data);
+            setAddToWishlistSucess(true);
+          },
+          onError: (error) => {
+            console.error("Error:", error.message);
+          },
+        }
+      );
+    }
   };
 
   const handleAddToCart = (item_id, variant, quantity) => {
-    addToCart.mutate({
-      id: item_id,
-      variant: variant,
-      user_id: JSON.parse(userId),
-      quantity: quantity,
-    });
+    if (!userId) {
+      const loginModal = document.getElementById("login");
+      if (loginModal) {
+        const bootstrap = require("bootstrap");
+        const modal = new bootstrap.Modal(loginModal);
+        modal.show();
+      }
+    } else {
+      addToCart.mutate({
+        id: item_id,
+        variant: variant,
+        user_id: JSON.parse(userId),
+        quantity: quantity,
+      });
+    }
   };
   const isAddedToCartProducts = (id) => {
-    if (cartProducts?.data?.filter((elm) => elm.id == id)[0]) {
+    if (cartData?.data?.filter((elm) => elm.id == id)[0]) {
       return true;
     }
     return false;
@@ -194,8 +212,8 @@ export default function Context({ children }) {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("cartList", JSON.stringify(cartProducts));
-  }, [cartProducts]);
+    localStorage.setItem("cartList", JSON.stringify(cartData));
+  }, [cartData]);
   // useEffect(() => {
   //   const items = JSON.parse(localStorage.getItem("wishlist"));
   //   if (items?.length) {
@@ -208,7 +226,7 @@ export default function Context({ children }) {
   // }, [wishList]);
 
   const contextElement = {
-    cartProducts,
+    cartData,
     // setCartProducts,
     totalPrice,
     addProductToCart,
