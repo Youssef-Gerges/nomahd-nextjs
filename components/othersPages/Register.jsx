@@ -214,7 +214,7 @@ export default function Register() {
       name: fullName, // Concatenated name
     };
 
-    const emailOrPhone = formData.email;
+    const emailOrPhone = formData.email_or_phone;
     const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailOrPhone);
     const registerBy = isEmail ? "email" : "phone";
     const updatedFormData = {
