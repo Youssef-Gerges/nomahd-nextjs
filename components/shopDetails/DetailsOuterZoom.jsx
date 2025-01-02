@@ -25,7 +25,7 @@ export default function DetailsOuterZoom({ product }) {
   const [id, setId] = useState(null);
   const [currentColor, setCurrentColor] = useState(null);
   const [currentSize, setCurrentSize] = useState(null);
-  const { data: cartData } = useGetCartData(id);
+  // const { data: cartData } = useGetCartData(id);
   const [isInWishlist, setIsInWishlist] = useState(false);
   const [isInCart, setIsInCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
@@ -61,13 +61,13 @@ export default function DetailsOuterZoom({ product }) {
     handleCheckWishlist(setIsInWishlist, product?.id);
   }, [product, addToWishlistSuccess, removeFromWishlistSuccess]);
 
-  useEffect(() => {
-    if (cartData?.data) {
-      cartData?.data?.includes(product?.id)
-        ? setIsInCart(true)
-        : setIsInCart(false);
-    }
-  }, [cartData]);
+  // useEffect(() => {
+  //   if (cartData?.data) {
+  //     cartData?.data?.includes(product?.id)
+  //       ? setIsInCart(true)
+  //       : setIsInCart(false);
+  //   }
+  // }, [cartData]);
 
   useEffect(() => {
     if (product?.choice_options) {
