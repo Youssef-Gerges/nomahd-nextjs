@@ -80,7 +80,7 @@ export const registerUser = async (userData) => {
         if (typeof window !== 'undefined') {
           localStorage.setItem('token', access_token);
           localStorage.setItem('id' , user.id)
-          logcalStorage.setItem('name', user.name)
+          localStorage.setItem('name', user.name)
         }
         console.log('Registration successful');
         queryClient.invalidateQueries(['register_user']);

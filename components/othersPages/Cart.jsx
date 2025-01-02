@@ -1,5 +1,5 @@
 "use client";
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useGetCartData } from "@/api/cart/getCart";
 import { useContextElement } from "@/context/Context";
 import Image from "next/image";
@@ -7,15 +7,19 @@ import Link from "next/link";
 import { useGetHomeCategories } from "@/api/categories/getHomeCategories";
 import { useDeleteFromCart } from "@/api/cart/removeFomCart";
 export default function Cart() {
-  const cart = useGetCartData();
-  const {cartData} = useContextElement();
+  const [userId, setUserId] = useState(null);
+  const cartData = useGetCartData(userId);
+
+  // const {cartData} = useContextElement();
   const removeFromCart = useDeleteFromCart();
   // const {data} = useGetHomeCategories()
-  // const { 
-    // cartProducts, setCartProducts,
-    //  totalPrice } = useContextElement();
-  const [totalPrice , setTotalPrice] = useState(0);
-  const [cartProductsData, setCartProducts] = useState((cartData?.data?.data?.flatMap(i =>  i.cart_items)) || []);
+  // const {
+  // cartProducts, setCartProducts,
+  //  totalPrice } = useContextElement();
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [cartProductsData, setCartProducts] = useState(
+    cartData?.data?.data?.flatMap((i) => i.cart_items) || []
+  );
 
   // useEffect(() => {
   //   cart.mutate(
@@ -43,10 +47,15 @@ export default function Cart() {
   };
   const removeItem = (product_id) => {
     setCartProducts((pre) => [...pre.filter((elm) => elm.id != product_id)]);
-    removeFromCart.mutate(product_id)
+    removeFromCart.mutate(product_id);
   };
+  useEffect(() => {
+    const Id = localStorage.getItem("id");
+    if (Id) {
+      setUserId(Id);
+    }
+  }, []);
 
- 
   return (
     <section className="flat-spacing-11">
       <div className="container">
@@ -113,8 +122,13 @@ export default function Cart() {
                           >
                             {elm.product_name}
                           </Link>
-                          <div className="cart-meta-variant"> {elm.variation ? elm.variation.replace("-", " / ") : "No variation"}</div>
-                          
+                          <div className="cart-meta-variant">
+                            {" "}
+                            {elm.variation
+                              ? elm.variation.replace("-", " / ")
+                              : "No variation"}
+                          </div>
+
                           <span
                             className="remove-cart link remove"
                             onClick={() => removeItem(elm.id)}
@@ -190,7 +204,11 @@ export default function Cart() {
                           className="cart-total"
                           style={{ minWidth: "60px" }}
                         >
-                          {elm.currency_symbol} {(parseFloat(elm.price.replace(/[^\d.-]/g, "")) * elm.quantity).toFixed(2)}
+                          {elm.currency_symbol}{" "}
+                          {(
+                            parseFloat(elm.price.replace(/[^\d.-]/g, "")) *
+                            elm.quantity
+                          ).toFixed(2)}
                         </div>
                       </td>
                     </tr>

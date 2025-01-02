@@ -32,7 +32,7 @@ export default function Context({ children }) {
   const [userId, setUserId] = useState(null);
   const [page, setPage] = useState(1);
   const [link, setLink] = useState(null);
-  // const [cartProducts, setCartProducts] = useState([]);
+  const [cartProducts, setCartProducts] = useState([]);
   const addToCart = useAddToCart();
   const [productId, setProductId] = useState(null);
   const [categoryId, setCategoryId] = useState(null);
@@ -56,16 +56,16 @@ export default function Context({ children }) {
   const { data: brands } = useGetAllBrands();
   const { data: topBrands } = useGetTopBrands();
   const { data: featured } = useGetFeaturedCategories();
-  const { data: cartData } = useGetCartData();
+  // const { data: cartData } = useGetCartData(userId);
   const [removeFromWishlistSuccess, setRemoveFromWishlistSuccess] =
     useState(false);
   const removeFromWishlist = useNewRemoveFromWishlist();
   useEffect(() => {
-    const subtotal = cartData?.data.reduce((accumulator, product) => {
+    const subtotal = cartProducts?.reduce((accumulator, product) => {
       return accumulator + product.quantity * product.price;
     }, 0);
     setTotalPrice(subtotal);
-  }, [cartData]);
+  }, [cartProducts]);
 
   const handleCheckWishlist = (setIsInWishlist, product_id) => {
     if (product_id && userId) {
@@ -91,7 +91,7 @@ export default function Context({ children }) {
     console.log("wishlist pro", wishlist?.data);
   }, [wishlist]);
   const addProductToCart = (id, qty) => {
-    if (!cartData.filter((elm) => elm.id == id)[0]) {
+    if (!cartProducts.filter((elm) => elm.id == id)[0]) {
       const item = {
         ...allProducts.filter((elm) => elm.id == id)[0],
         quantity: qty ? qty : 1,
@@ -160,7 +160,7 @@ export default function Context({ children }) {
     }
   };
   const isAddedToCartProducts = (id) => {
-    if (cartData?.data?.filter((elm) => elm.id == id)[0]) {
+    if (cartProducts.filter((elm) => elm.id == id)[0]) {
       return true;
     }
     return false;
@@ -201,19 +201,19 @@ export default function Context({ children }) {
     return false;
   };
   useEffect(() => {
-    // const items = JSON.parse(localStorage.getItem("cartList"));
-    // if (items?.length) {
-    //   setCartProducts(items);
-    // }
+    const items = JSON.parse(localStorage.getItem("cartList"));
+    if (items?.length) {
+      setCartProducts(items);
+    }
     const id = localStorage.getItem("id");
     if (id) {
       setUserId(id);
     }
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("cartList", JSON.stringify(cartData));
-  }, [cartData]);
+  // useEffect(() => {
+  //   localStorage.setItem("cartList", JSON.stringify(cartData));
+  // }, [cartData]);
   // useEffect(() => {
   //   const items = JSON.parse(localStorage.getItem("wishlist"));
   //   if (items?.length) {
@@ -226,8 +226,9 @@ export default function Context({ children }) {
   // }, [wishList]);
 
   const contextElement = {
-    cartData,
-    // setCartProducts,
+    cartProducts,
+    // cartData,
+    setCartProducts,
     totalPrice,
     addProductToCart,
     isAddedToCartProducts,

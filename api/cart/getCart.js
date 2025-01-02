@@ -2,8 +2,8 @@ import { useQuery ,useQueryClient,useMutation} from "@tanstack/react-query";
 import { api ,token } from '../api';
 import toast from 'react-hot-toast';
 
-export const useGetCartData = () => {
-  const id = localStorage.getItem('id')
+export const useGetCartData = (id) => {
+  // const id = localStorage.getItem('id')
   if (id) {
     return useQuery({
       queryKey: ['cart'],

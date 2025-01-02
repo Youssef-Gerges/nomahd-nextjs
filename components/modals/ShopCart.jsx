@@ -13,7 +13,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 export default function ShopCart() {
   const [id, setId] = useState(null);
   // const { t, lang } = useTranslation("common"); // "common" is the namespace
-  const {cartData} = useContextElement();
+  // const {cartData} = useContextElement();
   // const { data: cart } = useGetCartData(id);
   const removeFromCart = useDeleteFromCart();
   const {
@@ -42,9 +42,9 @@ export default function ShopCart() {
   const addGiftRef = useRef();
   const addShipingRef = useRef();
 
-  useEffect(() => {
-    setCartProducts(cartData?.data)
-  }, [cartData]);
+  // useEffect(() => {
+  //   setCartProducts(cart?.data)
+  // }, [cart]);
   // useEffect(() => {
   //   cart.mutate(
   //     { user_id: id },

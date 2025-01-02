@@ -27,7 +27,7 @@ export default function QuickAdd() {
   const [isInWishlist, setIsInWishlist] = useState(false);
   const [isInCart, setIsInCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const { data: cartData } = useGetCartData(id);
+  // const { data: cartData } = useGetCartData(id);
   const [currentColor, setCurrentColor] = useState(null);
   const [currentSize, setCurrentSize] = useState(null);
   const [item, setItem] = useState({});
@@ -57,13 +57,13 @@ export default function QuickAdd() {
     handleCheckWishlist(setIsInWishlist, quickAddItem.id);
   }, [quickAddItem, addToWishlistSuccess, removeFromWishlistSuccess]);
 
-  useEffect(() => {
-    if (cartData?.data) {
-      cartData?.data?.includes(quickAddItem.id)
-        ? setIsInCart(true)
-        : setIsInCart(false);
-    }
-  }, [cartData]);
+  // useEffect(() => {
+  //   if (cartData?.data) {
+  //     cartData?.data?.includes(quickAddItem.id)
+  //       ? setIsInCart(true)
+  //       : setIsInCart(false);
+  //   }
+  // }, [cartData]);
 
   useEffect(() => {
     if (quickAddItem?.choice_options) {
