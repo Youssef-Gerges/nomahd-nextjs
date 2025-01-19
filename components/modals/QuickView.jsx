@@ -71,7 +71,7 @@ export default function QuickView() {
     ) {
       setVariant(
         `${currentColor.replace(/\s+/g, "")}${
-          currentSize ? "/" + currentSize?.replace(/\s+/g, "") : ""
+          currentSize ? "-" + currentSize?.replace(/\s+/g, "") : ""
         }`
       ); // Set first option as default and format
     }
@@ -389,18 +389,16 @@ export default function QuickView() {
                           : quickViewItem?.base_price}
                       </span>
                     </a>
-                    <a
-                      onClick={() => {
-                        isInWishlist
-                          ? handleRemoveFromWishlist(quickViewItem.id)
-                          : handleAddToWishlist(quickViewItem.id);
-                      }}
-                      className="tf-product-btn-wishlist hover-tooltip box-icon bg_white wishlist btn-icon-action"
-                    >
-                      <span
+                    <a className="tf-product-btn-wishlist hover-tooltip box-icon bg_white wishlist btn-icon-action">
+                      <i
                         className={`${
                           isInWishlist ? "icon-heart-full" : "icon-heart"
                         }`}
+                        onClick={() => {
+                          isInWishlist
+                            ? handleRemoveFromWishlist(quickViewItem.id)
+                            : handleAddToWishlist(quickViewItem.id);
+                        }}
                       />
                       <span className="tooltip">
                         {isInWishlist

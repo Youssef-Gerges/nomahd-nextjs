@@ -86,7 +86,7 @@ export default function DetailsOuterZoom({ product }) {
     if (product?.colors?.length > 0 && product?.choice_options?.length > 0) {
       setVariant(
         `${currentColor.replace(/\s+/g, "")}${
-          currentSize ? "/" + currentSize : ""
+          currentSize ? "-" + currentSize : ""
         }`
       ); // Set first option as default and format
     }

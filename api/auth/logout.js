@@ -70,8 +70,8 @@ export const useLogout = () => {
       queryClient.setQueryData(['cart'], []); // Empty the cart
 
       // Step 3: Invalidate the queries to ensure a clean state
-      queryClient.invalidateQueries({ queryKey: 'wishlist' });
-      queryClient.invalidateQueries({ queryKey: 'cart' });
+      queryClient.invalidateQueries(['wishlist']);
+      queryClient.invalidateQueries([ 'cart' ]);
       console.log('Logged out successfully and cleared cart/wishlist data');
       
     },

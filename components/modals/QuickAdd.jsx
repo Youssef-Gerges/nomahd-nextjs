@@ -48,7 +48,7 @@ export default function QuickAdd() {
       quickAddItem?.choice_options?.length > 0
     ) {
       setVariant(
-        `${currentColor.replace(/\s+/g, "")}${currentSize ? "/"+currentSize?.replace(/\s+/g, ""):""}`
+        `${currentColor.replace(/\s+/g, "")}${currentSize ? "-"+currentSize?.replace(/\s+/g, ""):""}`
       ); // Set first option as default and format
     }
   }, [currentColor, currentSize]);

@@ -29,8 +29,9 @@ export default function StickyItem({ product, soldOut = false }) {
     const selectedValue = e.target.value;
     console.log("valuee", e.target.value);
     const formattedValue = selectedValue.replace(/\s+/g, ""); // Remove spaces and format
-    console.log("valuee", formattedValue);
-    setVariant(formattedValue); // Update the variant state
+    const formattedValuewithoutSlash = formattedValue.replace(/\//g, "-");
+    console.log("valuee", formattedValuewithoutSlash);
+    setVariant(formattedValuewithoutSlash); // Update the variant state
   };
 
   useEffect(() => {

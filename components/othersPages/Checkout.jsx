@@ -3,10 +3,10 @@ import { useContextElement } from "@/context/Context";
 import Image from "next/image";
 import Link from "next/link";
 export default function Checkout() {
-  // const { cartProducts, setCartProducts, totalPrice } = useContextElement();
+  const { wishlist } = useContextElement();
   return (
     <section className="flat-spacing-11">
-      {/* <div className="container">
+      <div className="container">
         <div className="tf-page-cart-wrap layout-2">
           <div className="tf-page-cart-item">
             <h5 className="fw-5 mb_20">Billing details</h5>
@@ -209,12 +209,12 @@ export default function Checkout() {
                 className="tf-page-cart-checkout widget-wrap-checkout"
               >
                 <ul className="wrap-checkout-product">
-                  {cartProducts.map((elm, i) => (
+                  {wishlist?.data?.map((elm, i) => (
                     <li key={i} className="checkout-product-item">
                       <figure className="img-product">
                         <Image
                           alt="product"
-                          src={elm.imgSrc}
+                          src={elm.thumbnail_image}
                           width={720}
                           height={1005}
                         />
@@ -222,7 +222,7 @@ export default function Checkout() {
                       </figure>
                       <div className="content">
                         <div className="info">
-                          <p className="name">{elm.title}</p>
+                          <p className="name">{elm.name}</p>
                           <span className="variant">Brown / M</span>
                         </div>
                         <span className="price">
@@ -232,7 +232,7 @@ export default function Checkout() {
                     </li>
                   ))}
                 </ul>
-                {!cartProducts.length && (
+                {!wishlist?.data?.length && (
                   <div className="container">
                     <div className="row align-items-center mt-5 mb-5">
                       <div className="col-12 fs-18">
@@ -323,7 +323,7 @@ export default function Checkout() {
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
     </section>
   );
 }

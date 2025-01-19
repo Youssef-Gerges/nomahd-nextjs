@@ -29,13 +29,36 @@ import { api, token } from '../api';
 //   });
 // };
 
+// export const useGetUserWishlist = () => {
+//   return useQuery({
+//     queryKey: ['wishlist'],
+//     queryFn: async () => {
+//       const response = await api.get(`/wishlists`, {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       });
+
+//       if (!response || response.status !== 200) {
+//         throw new Error('Failed to fetch wishlist data');
+//       }
+
+//       return response.data;
+//     },
+//     onError: () => {
+//       toast.error('Unable to fetch wishlist data. Please try again later.');
+//     }
+//   });
+// };
+
+
 export const useGetUserWishlist = () => {
   return useQuery({
     queryKey: ['wishlist'],
     queryFn: async () => {
       const response = await api.get(`/wishlists`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`, // Ensure token is correctly provided
         },
       });
 
@@ -45,8 +68,9 @@ export const useGetUserWishlist = () => {
 
       return response.data;
     },
+    staleTime: 0, // Ensure it always refetches when invalidated
     onError: () => {
-      toast.error('Unable to fetch wishlist data. Please try again later.');
-    }
+      console.log('Unable to fetch wishlist data. Please try again later.');
+    },
   });
 };
