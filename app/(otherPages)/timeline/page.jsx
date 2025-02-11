@@ -4,8 +4,8 @@ import Timelines from "@/components/othersPages/Timelines";
 import React from "react";
 
 export const metadata = {
-  title: "Timeline || Ecomus - Ultimate Nextjs Ecommerce Template",
-  description: "Ecomus - Ultimate Nextjs Ecommerce Template",
+  title: "Timeline || Nomahd - Ultimate Ecommerce",
+  description: "Nomahd - Ultimate Ecommerce",
 };
 export default function page() {
   return (

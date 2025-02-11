@@ -4,13 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useContextElement } from "@/context/Context";
 import CountdownComponent from "../common/Countdown";
-import { useAddToCart } from "@/api/cart/addToCart";
-import { useCartProccess } from "@/api/cart/proccess";
-import { useCheckProductInWishlist } from "@/api/wishlist/checkProduct";
-import { useAddToWishlistNew } from "@/api/wishlist/newAddToWishlist";
-import { useNewRemoveFromWishlist } from "@/api/wishlist/newRemoveFromWishlist";
 export const ProductCard = ({ product }) => {
-  const [currentImage, setCurrentImage] = useState(product.thumbnail_image);
+  const [currentImage, setCurrentImage] = useState(product?.thumbnail_image);
   const [isAddedtoWishlist, setIsAddedtoWishlist] = useState(false);
   const { setQuickViewItem } = useContextElement();
 
@@ -18,16 +13,16 @@ export const ProductCard = ({ product }) => {
     setQuickAddItem,
     handleAddToWishlist,
     handleRemoveFromWishlist,
-    // addToCompareItem,
-    // isAddedtoCompareItem,
     handleCheckWishlist,
     addToWishlistSuccess,
     removeFromWishlistSuccess,
   } = useContextElement();
 
   useEffect(() => {
-    handleCheckWishlist(setIsAddedtoWishlist, product.id);
-    setCurrentImage(product.thumbnail_image);
+    if(product){
+      handleCheckWishlist(setIsAddedtoWishlist, product.id);
+      setCurrentImage(product.thumbnail_image);
+    }
   }, [product, addToWishlistSuccess, removeFromWishlistSuccess]);
 
   return (
@@ -153,30 +148,6 @@ export const ProductCard = ({ product }) => {
             <span>{product.main_price}</span>
           )}
         </span>
-        {/* {product.colors && (
-          <ul className="list-color-product">
-            {product.colors.map((color) => (
-              <li
-                className={`list-color-item color-swatch ${
-                  currentImage == color.imgSrc ? "active" : ""
-                } `}
-                key={color.name}
-                onMouseOver={() => setCurrentImage(color.thumbnail_image)}
-              >
-                <span className="tooltip">{color.name}</span>
-                <span className={`swatch-value ${color.colorClass}`} />
-                <Image
-                  className="lazyload"
-                  data-src={color.imgSrc}
-                  src={color.imgSrc}
-                  alt="image-product"
-                  width={720}
-                  height={1005}
-                />
-              </li>
-            ))}
-          </ul>
-        )} */}
         {product.colors && (
           <ul className="list-color-product">
             {product.colors

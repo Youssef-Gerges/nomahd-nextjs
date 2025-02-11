@@ -22,7 +22,7 @@ export default function Location() {
             <p className="subtext wow fadeInUp" data-wow-delay="0s">
               301 Front St W Toronto, Canada
               <br />
-              support@ecomus.com
+              support@Nomahd.com
               <br />
               (08) 8942 1299
             </p>

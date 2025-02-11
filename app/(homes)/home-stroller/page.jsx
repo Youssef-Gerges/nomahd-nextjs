@@ -13,8 +13,8 @@ import Testimonials from "@/components/homes/home-stroller/Testimonials";
 import React from "react";
 
 export const metadata = {
-  title: "Home Stroller || Ecomus - Ultimate Nextjs Ecommerce Template",
-  description: "Ecomus - Ultimate Nextjs Ecommerce Template",
+  title: "Home Stroller || Nomahd - Ultimate Ecommerce",
+  description: "Nomahd - Ultimate Ecommerce",
 };
 export default function page() {
   return (

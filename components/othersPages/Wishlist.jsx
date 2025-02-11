@@ -1,5 +1,4 @@
 "use client";
-import { allProducts } from "@/data/products";
 import { useContextElement } from "@/context/Context";
 import { useEffect, useState } from "react";
 import { ProductCardWishlist } from "../shopCards/ProductCardWishlist";
@@ -9,26 +8,15 @@ import { useGetAllProducts } from "@/api/products/useGetAllProducts";
 export default function Wishlist() {
   const { wishlist } = useContextElement();
   const { data: products } = useGetAllProducts();
-  const [wishListItems, setWishListItems] = useState([]);
-  // useEffect(() => {
-  //   if (wishlist) {
-  //     console.log(wishlist);
-  //     setWishListItems(
-  //       [...products].filter((el) => wishlist.includes(el.id))
-  //     );
-  //   }
-  // }, [wishlist]);
+
 
   useEffect(() => {
-    console.log("data products", products?.data);
     if (wishlist) {
-      console.log("data wish products", wishlist?.data);
       const matchingProducts = products?.data.filter((product) =>
         wishlist?.data.some(
           (wishlistItem) => wishlistItem.product.id === product.id
         )
       );
-      console.log("data products filtered", matchingProducts);
     }
   }, [wishlist, products]);
   return (

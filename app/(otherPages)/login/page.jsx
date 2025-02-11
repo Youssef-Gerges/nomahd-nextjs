@@ -4,8 +4,8 @@ import Login from "@/components/othersPages/Login";
 import React from "react";
 
 export const metadata = {
-  title: "Login || Ecomus - Ultimate Nextjs Ecommerce Template",
-  description: "Ecomus - Ultimate Nextjs Ecommerce Template",
+  title: "Login || Nomahd - Ultimate Ecommerce",
+  description: "Nomahd - Ultimate Ecommerce",
 };
 export default function page() {
   return (

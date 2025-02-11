@@ -2,15 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import { api ,token} from '../api';
 import toast from 'react-hot-toast';
 
-export const useGetPurchaseHistory = (userId) => {
+export const useGetPurchaseHistory = () => {
   return useQuery({
-    queryKey: ['purchase-history', userId],
+    queryKey: ['purchase-history'],
     queryFn: async () => {
-      const response = await api.get(`/purchase-history/${userId}`, {
+      const response = await api.get(`/purchase-history`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
-          'SYSTEM-KEY': "NOMAHD-SECRIT" 
         },
       });
 

@@ -318,13 +318,13 @@ export default function QuickAdd() {
                 <a
                   className="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn"
                   onClick={() =>
-                    handleAddToCart(quickAddItem?.id, variant, quantity)
+                    handleAddToCart(quickAddItem?.id, variant, quantity, quickAddItem?.weight)
                   }
                 >
                   <span>
                     {isInCart ? "Already Added - " : "Add to cart - "}
                   </span>
-                  <span className="tf-qty-price">
+                  <span className="tf-qty-price ms-1">
                     {quickAddItem?.currency_symbol
                       ? `${
                           (quickAddItem?.currency_symbol,
@@ -346,30 +346,6 @@ export default function QuickAdd() {
                     }}
                   />
                   <i className="icon-delete" />
-                </div>
-                {/* <a
-                  href="#compare"
-                  data-bs-toggle="offcanvas"
-                  aria-controls="offcanvasLeft"
-                  onClick={() => addToCompareItem(quickAddItem?.id)}
-                  className="tf-product-btn-wishlist box-icon bg_white compare btn-icon-action"
-                >
-                  <span className="icon icon-compare" />
-                  <span className="icon icon-check" />
-                </a> */}
-                <div className="w-100">
-                  <a href="#" className="btns-full">
-                    Buy with
-                    <Image
-                      alt="image"
-                      src="/images/payments/paypal.png"
-                      width={64}
-                      height={18}
-                    />
-                  </a>
-                  <a href="#" className="payment-more-option">
-                    More payment options
-                  </a>
                 </div>
               </form>
             </div>

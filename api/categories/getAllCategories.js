@@ -4,11 +4,7 @@ export const useGetAllCategories = () => {
   return useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
-      const response = await api.get('/categories', {
-        // headers: {
-        //   'SYSTEM-KEY': 'NOMAHD-SECRIT',
-        // },
-      });
+      const response = await api.get('/categories');
 
       if (response.status !== 200) {
         throw new Error('Failed to fetch categories');

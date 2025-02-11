@@ -12,8 +12,8 @@ import Features from "@/components/homes/home-grocery/Features";
 import Banner from "@/components/homes/home-grocery/Banner";
 
 export const metadata = {
-  title: "Home Grocery || Ecomus - Ultimate Nextjs Ecommerce Template",
-  description: "Ecomus - Ultimate Nextjs Ecommerce Template",
+  title: "Home Grocery || Nomahd - Ultimate Ecommerce",
+  description: "Nomahd - Ultimate Ecommerce",
 };
 export default function page() {
   return (

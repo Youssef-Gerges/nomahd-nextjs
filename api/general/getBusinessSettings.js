@@ -6,11 +6,7 @@ export const useGetBusinessSettings = () => {
   return useQuery({
     queryKey: ['business-settings'],
     queryFn: async () => {
-      const response = await api.get('/business-settings', {
-        headers: {
-          'SYSTEM-KEY': 'NOMAHD-SECRIT',
-        },
-      });
+      const response = await api.get('/business-settings');
 
       if (response.status !== 200) {
         throw new Error('Failed to fetch business settings');

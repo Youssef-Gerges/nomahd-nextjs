@@ -225,77 +225,21 @@ import NewsletterModal from "@/components/modals/NewsletterModal";
 import ShareModal from "@/components/modals/ShareModal";
 import ScrollTop from "@/components/common/ScrollTop";
 import RtlToggle from "@/components/common/RtlToggle";
+import Head from "next/head";
+import AddPackage from "../components/modals/AddPackage";
+import { Toaster } from "react-hot-toast";
 // import { Toaster } from "react-hot-toast";
 // import i18n from "@/i18n";
 // import { useTranslation } from "react-i18next";
 function RootLayout({ children }) {
   const pathname = usePathname();
-  // const { t } = useTranslation();
-  // const [lang, setLang] = useState("ar"); 
-
-  // i18n.init({
-  //   lng: i18n.language,
-  //   debug: true,
-    
-  // }, function(err, t) {
-  //   // initialized and ready to go!
-  //   console.log("Ready to go!");
-  // });
-  const queryClient =  new QueryClient();
-
-  // const changeLanguage = (newLang) => {
-  //   const direction = newLang === 'ar' ? 'rtl' : 'ltr';
-  //   document.documentElement.dir = direction;
-  
-  //   // router.push(router.pathname, router.asPath, { locale: newLang });
-  // };
-
-  // const changeLanguage = async (newLang) => {
-  //   const dir = newLang === "ar" ? "rtl" : "ltr";
-  //   document.documentElement.dir = dir;
-  //   document.body.className = dir;
-  //   localStorage.setItem("language", newLang);
-  
-  //   try {
-  //     await i18n.changeLanguage(newLang);
-  //     setLang(newLang);
-  //   } catch (error) {
-  //     console.error("Error changing language:", error);
-  //   }
-  // };
+  const [queryClient] = useState(()=>  new QueryClient());
   
   useEffect(() => {
     if (typeof window !== "undefined") {
       import("bootstrap/dist/js/bootstrap.esm").then(() => {});
     }
   }, []);
-  // useEffect(() => {
-  //   const savedLang = localStorage.getItem("language") || "ar";
-  //   setLang(savedLang);
-
-  //   const dir = savedLang === "ar" ? "rtl" : "ltr";
-  //   document.documentElement.dir = dir;
-  //   document.body.className = dir;
-
-  //   if (i18n.isInitialized) {
-  //     i18n.changeLanguage(savedLang).catch((err) => console.error("Error changing language:", err));
-  //   } else {
-  //     i18n.on("initialized", () => {
-  //       i18n.changeLanguage(savedLang).catch((err) => console.error("Error changing language:", err));
-  //     });
-  //   }
-  // }, []);
-
-  // const handleLanguageChange = (newLang) => {
-  //   setLang(newLang);
-  //   localStorage.setItem("language", newLang);
-
-  //   const dir = newLang === "ar" ? "rtl" : "ltr";
-  //   document.documentElement.dir = dir;
-  //   document.body.className = dir;
-
-  //   i18n.changeLanguage(newLang).catch((err) => console.error("Error changing language:", err));
-  // };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -521,6 +465,10 @@ function RootLayout({ children }) {
   }, []); 
   return (
     <html lang="en">
+      <Head>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js" integrity="sha512-b+nQTCdtTBIRIbraqNEwsjB6UvL3UEMkXnhzd8awtCYh0Kcsjl9uEgwVFVbhoj3uu1DO1ZMacNvLoyJJiNfcvg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      </Head>
       <body className="preload-wrapper">
         <QueryClientProvider client={queryClient}>
           <div className="preload preload-container" id="preloader">
@@ -530,11 +478,12 @@ function RootLayout({ children }) {
           </div>
 
           <Context>
-            {/* <Toaster position="bottom-left" /> */}
+            <Toaster position="bottom-left" />
             <div id="wrapper">{children}</div>
-            <RtlToggle />
+            {/* <RtlToggle /> */}
             <HomesModal /> <QuickView />
             <QuickAdd />
+            <AddPackage />
             <ProductSidebar />
             <Compare />
             <ShopCart />

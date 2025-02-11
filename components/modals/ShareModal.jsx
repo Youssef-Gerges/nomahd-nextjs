@@ -1,7 +1,12 @@
 "use client";
-import React from "react";
+import React, {useState, useEffect} from "react";
 
 export default function ShareModal() {
+  const [url, setUrl] = useState("");
+
+  useEffect(() => {
+    setUrl(window.location.href);
+  }, []);
   return (
     <div
       className="modal modalCentered fade modalDemo tf-product-modal modal-part-content"
@@ -17,14 +22,14 @@ export default function ShareModal() {
             />
           </div>
           <div className="overflow-y-auto">
-            <ul className="tf-social-icon d-flex gap-10">
+            <><ul className="tf-social-icon d-flex gap-10">
               <li>
-                <a href="#" className="box-icon social-facebook bg_line">
+                <a href={`https://www.facebook.com/sharer/sharer.php?u=${url}`} target={'_blank'} className="box-icon social-facebook bg_line">
                   <i className="icon icon-fb" />
                 </a>
               </li>
               <li>
-                <a href="#" className="box-icon social-twiter bg_line">
+                <a href={`https://twitter.com/intent/tweet?url=${url}`} className="box-icon social-twiter bg_line">
                   <i className="icon icon-Icon-x" />
                 </a>
               </li>
@@ -53,7 +58,7 @@ export default function ShareModal() {
               <fieldset>
                 <input
                   type="text"
-                  defaultValue="https://themesflat.co/html/ecomus/"
+                  defaultValue={url}
                   tabIndex={0}
                   aria-required="true"
                 />
@@ -66,7 +71,7 @@ export default function ShareModal() {
                   Copy
                 </button>
               </div>
-            </form>
+            </form></>
           </div>
         </div>
       </div>

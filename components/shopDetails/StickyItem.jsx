@@ -80,7 +80,7 @@ export default function StickyItem({ product, soldOut = false }) {
                 ) : (
                   <a
                     onClick={() =>
-                      handleAddToCart(product?.id, variant, quantity)
+                      handleAddToCart(product?.id, variant, quantity, product?.weight)
                     }
                     className="tf-btn btn-fill radius-3 justify-content-center fw-6 fs-14 flex-grow-1 animate-hover-btn"
                   >

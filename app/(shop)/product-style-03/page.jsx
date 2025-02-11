@@ -6,8 +6,8 @@ import ProductStyle3 from "@/components/shop/ProductStyle3";
 import React from "react";
 
 export const metadata = {
-  title: "Product Style 3 || Ecomus - Ultimate Nextjs Ecommerce Template",
-  description: "Ecomus - Ultimate Nextjs Ecommerce Template",
+  title: "Product Style 3 || Nomahd - Ultimate Ecommerce",
+  description: "Nomahd - Ultimate Ecommerce",
 };
 export default function page() {
   return (

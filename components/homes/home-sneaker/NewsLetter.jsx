@@ -49,7 +49,7 @@ export default function NewsLetter() {
             >
               <span className="title text_black fw-7">
                 BECOME PART <br />
-                OF THE ECOMUS DISTRICT
+                OF THE Nomahd DISTRICT
               </span>
               <p className="sub-title text_black">
                 Promotions, new products and sales. Directly to your inbox.

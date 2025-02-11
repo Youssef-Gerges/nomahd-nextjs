@@ -23,12 +23,15 @@ import { useGetAllProducts } from "@/api/products/useGetAllProducts";
 import { useGetLinkCategories } from "@/api/categories/getLinkCategories";
 import { useGetFeaturedCategories } from "@/api/categories/getFeaturedCategories";
 import { useGetCartData } from "@/api/cart/getCart";
+import {useQueryClient} from "@tanstack/react-query";
 const dataContext = React.createContext();
 export const useContextElement = () => {
   return useContext(dataContext);
 };
 
 export default function Context({ children }) {
+  const queryClient = useQueryClient();
+  const {data: userWishlist} = useGetUserWishlist();
   const [userId, setUserId] = useState(null);
   const [page, setPage] = useState(1);
   const [link, setLink] = useState(null);
@@ -36,8 +39,12 @@ export default function Context({ children }) {
   const addToCart = useAddToCart();
   const [productId, setProductId] = useState(null);
   const [categoryId, setCategoryId] = useState(null);
-  const addToWishlist = useAddToWishlistNew();
-  // const [wishList, setWishList] = useState([1, 2, 3]);
+  const addToWishlist = useAddToWishlistNew({
+      onSuccess: () => {
+          queryClient.invalidateQueries()
+          queryClient.refetchQueries()
+      }
+  });
   const [compareItem, setCompareItem] = useState([1, 2, 3]);
   const [quickAddItem, setQuickAddItem] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -68,19 +75,14 @@ export default function Context({ children }) {
   }, [cartProducts]);
 
   const handleCheckWishlist = (setIsInWishlist, product_id) => {
-    if (product_id && userId) {
-      checkWishlist.mutate(
-        { productId: product_id, userId: userId },
-        {
-          onSuccess: (data) => {
-            setIsInWishlist(data?.is_in_wishlist);
-            console.log("Wishlist data:", data?.is_in_wishlist);
-          },
-          onError: (error) => {
-            console.error("Error:", error.message);
-          },
-        }
-      );
+    if (product_id && userWishlist) {
+      let items = [...userWishlist?.data];
+      let selected_item = items.find(item => item.product.id === product_id)
+     if(selected_item) {
+      setIsInWishlist(true)
+    } else{
+       setIsInWishlist(false)
+     }
     }
   };
 
@@ -103,19 +105,11 @@ export default function Context({ children }) {
     }
   };
 
-  const handleRemoveFromWishlist = (product_id) => {
+  const handleRemoveFromWishlist = async (product_id) => {
     removeFromWishlist.mutate(
-      { productId: product_id, userId: userId },
-      {
-        onSuccess: (data) => {
-          setRemoveFromWishlistSuccess(true);
-          console.log("Wishlist data:", data);
-        },
-        onError: (error) => {
-          console.error("Error:", error.message);
-        },
-      }
+      { productId: product_id, userId: userId }
     );
+    await queryClient.invalidateQueries()
   };
 
   const handleAddToWishlist = (product_id) => {
@@ -131,8 +125,8 @@ export default function Context({ children }) {
         { productId: product_id, userId: userId },
         {
           onSuccess: (data) => {
-            console.log("Wishlist data:", data);
             setAddToWishlistSucess(true);
+            queryClient.invalidateQueries({ queryKey: ['wishlist'] })
           },
           onError: (error) => {
             console.error("Error:", error.message);
@@ -142,7 +136,7 @@ export default function Context({ children }) {
     }
   };
 
-  const handleAddToCart = (item_id, variant, quantity) => {
+  const handleAddToCart = (item_id, variant, quantity, weight=0) => {
     if (!userId) {
       const loginModal = document.getElementById("login");
       if (loginModal) {
@@ -153,7 +147,7 @@ export default function Context({ children }) {
     } else {
       addToCart.mutate({
         id: item_id,
-        variant: variant,
+        variant: variant?.replace(' ', '')?.replace('/', '-'),
         user_id: JSON.parse(userId),
         quantity: quantity,
       });

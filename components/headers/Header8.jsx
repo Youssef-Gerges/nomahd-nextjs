@@ -47,7 +47,7 @@ export default function Header8() {
                 <Nav />
                 <li className="menu-item">
                   <a
-                    href="https://themeforest.net/item/ecomus-ultimate-html5-template/53417990?s_rank=3"
+                    href="https://themeforest.net/item/Nomahd-ultimate-html5-template/53417990?s_rank=3"
                     className="item-link"
                   >
                     Buy now

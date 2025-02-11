@@ -9,16 +9,16 @@ export async function generateMetadata({ params }) {
   return {
     title: `${decodeURIComponent(
       name
-    )} || Ecomus - Ultimate Nextjs Ecommerce Template`,
+    )} || Nomahd - Ultimate Ecommerce`,
     description: `Explore our collection of ${decodeURIComponent(
       name
-    )} at Ecomus - Ultimate Nextjs Ecommerce Template`,
+    )} at Nomahd - Ultimate Ecommerce`,
   };
 }
 // export const metadata = {
 //   title:
-//     "Product Collection Sub || Ecomus - Ultimate Nextjs Ecommerce Template",
-//   description: "Ecomus - Ultimate Nextjs Ecommerce Template",
+//     "Product Collection Sub || Nomahd - Ultimate Ecommerce",
+//   description: "Nomahd - Ultimate Ecommerce",
 // };
 export default function page({ params }) {
   const { name, id } = params;

@@ -6,11 +6,7 @@ export const useGetCities = () => {
   return useQuery({
     queryKey: ['cities'],
     queryFn: async () => {
-      const response = await api.get('/cities', {
-        headers: {
-          'SYSTEM-KEY': 'NOMAHD-SECRIT',
-        },
-      });
+      const response = await api.get('/cities');
 
       if (response.status !== 200) {
         throw new Error('Failed to fetch cities');

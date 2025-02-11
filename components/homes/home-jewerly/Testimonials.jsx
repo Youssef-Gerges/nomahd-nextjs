@@ -10,7 +10,7 @@ export default function Testimonials() {
       <div className="container-full">
         <div className="flat-title wow fadeInUp" data-wow-delay="0s">
           <span className="title fw-8 font-poppins fs-28">
-            LOVE NOTES AN ECOMUS
+            LOVE NOTES AN Nomahd
           </span>
           <p className="sub-title font-poppins fs-14 text_black-2">
             Where wishlists come true. Discover the pieces of their (or your)

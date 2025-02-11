@@ -52,12 +52,6 @@ export const useCheckProductInWishlist = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       return response.data;
-    },
-    onSuccess: (data) => {
-      console.log("Success:", data);
-    },
-    onError: (error) => {
-      console.error("Error:", error);
-    },
+    }
   });
 };

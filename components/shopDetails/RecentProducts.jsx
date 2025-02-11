@@ -1,68 +1,78 @@
 "use client";
 
-import { products1 } from "@/data/products";
-import { Swiper, SwiperSlide } from "swiper/react";
 import { ProductCard } from "../shopCards/ProductCard";
-import { Navigation, Pagination } from "swiper/modules";
 import { useContextElement } from "@/context/Context";
+import {useAddPackageToCart} from "@/api/cart/addPackageToCart"
 import { useEffect } from "react";
 export default function RecentProducts({ id }) {
   const { relatedProducts, setProductId } = useContextElement();
+  const addPackageToCart = useAddPackageToCart()
+
   useEffect(() => {
     if (id) {
-      setProductId(id); // Set the product ID in context
+      setProductId(id?.slug); // Set the product ID in context
     }
   }, [id, setProductId]);
   useEffect(() => {
     console.log("related products", relatedProducts);
   }, [relatedProducts]);
-  return (
-    <section className="flat-spacing-4 pt_0">
-      <div className="container">
-        <div className="flat-title">
-          {/* <span className="title">Recently Viewed</span> */}
-          <span className="title">Related products</span>
-        </div>
-        <div className="hover-sw-nav hover-sw-2">
-          <Swiper
-            dir="ltr"
-            className="swiper tf-sw-product-sell wrap-sw-over"
-            slidesPerView={4} // Equivalent to data-preview={4}
-            spaceBetween={30} // Equivalent to data-space-lg={30}
-            breakpoints={{
-              1024: {
-                slidesPerView: 4, // Equivalent to data-tablet={3}
-              },
-              640: {
-                slidesPerView: 3, // Equivalent to data-tablet={3}
-              },
-              0: {
-                slidesPerView: 2, // Equivalent to data-mobile={2}
-                spaceBetween: 15, // Equivalent to data-space-md={15}
-              },
-            }}
-            modules={[Navigation, Pagination]}
-            navigation={{
-              prevEl: ".snbp308",
-              nextEl: ".snbn308",
-            }}
-            pagination={{ clickable: true, el: ".spd308" }}
-          >
-            {relatedProducts?.data?.slice(4, 12).map((product, i) => (
-              <SwiperSlide key={i} className="swiper-slide">
-                <ProductCard product={product} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <div className="nav-sw nav-next-slider nav-next-recent box-icon w_46 round snbp308">
-            <span className="icon icon-arrow-left" />
+
+  if (relatedProducts?.products?.data?.length > 0) {
+    return (
+      <section className="flat-spacing-4 pt_0">
+        <div className="container">
+          <div className="flat-title">
+            <span className="title">Related products</span>
           </div>
-          <div className="nav-sw nav-prev-slider nav-prev-recent box-icon w_46 round snbn308">
-            <span className="icon icon-arrow-right" />
+          <div className="hover-sw-nav hover-sw-2">
+            <div
+              className="grid-layout wow fadeInUp"
+              data-wow-delay="0s"
+              data-grid="grid-4"
+            >
+              <div
+                className="d-flex align-items-center"
+                style={{ gap: "2rem" }}
+              >
+                <span style={{ fontSize: "1.5rem", visibility: "hidden" }}>
+                  +
+                </span>
+                <div className="h-100">
+                  <ProductCard product={id} />
+                </div>
+              </div>
+              {relatedProducts?.products?.data?.map((product, i) => (
+                <>
+                  <div
+                    className="d-flex align-items-center"
+                    style={{ gap: "2rem" }}
+                    key={i}
+                  >
+                    <span style={{ fontSize: "1.5rem" }}>+</span>
+                    <div className="h-100">
+                      <ProductCard product={product} />
+                    </div>
+                  </div>
+                </>
+              ))}
+            </div>
+
+            <div
+              className="d-flex h-100 w-100 align-items-center justify-content-center"
+              style={{ fontSize: "1.5rem", gap: "2rem" }}
+            >
+              <a
+                href="#add_package"
+                // onClick={}
+                data-bs-toggle="modal"
+                className="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn"
+              >
+                Add to cart For SAR {relatedProducts?.package?.package_price}
+              </a>
+            </div>
           </div>
-          <div className="sw-dots style-2 sw-pagination-recent justify-content-center spd308" />
         </div>
-      </div>
-    </section>
-  );
+      </section>
+    );
+  }
 }

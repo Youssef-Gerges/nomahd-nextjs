@@ -5,12 +5,9 @@ import Link from "next/link";
 import { useContextElement } from "@/context/Context";
 import CountdownComponent from "../common/Countdown";
 export const ProductCardWishlist = ({ product, productId }) => {
-  const [currentImage, setCurrentImage] = useState(product.thumbnail_image);
-  const [isInWishlist, setIsInWishlist] = useState(false);
+  const [isInWishlist, setIsInWishlist] = useState(true);
   const {
     setQuickAddItem,
-    // addToCompareItem,
-    // isAddedtoCompareItem,
     setQuickViewItem,
     handleRemoveFromWishlist,
     handleAddToWishlist,
@@ -29,7 +26,7 @@ export const ProductCardWishlist = ({ product, productId }) => {
           <Image
             className="lazyload img-product"
             data-src={product?.thumbnail_image}
-            src={currentImage}
+            src={product?.thumbnail_image}
             alt="image-product"
             width={720}
             height={1005}

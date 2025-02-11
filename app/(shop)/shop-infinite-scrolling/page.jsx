@@ -6,8 +6,8 @@ import React from "react";
 
 export const metadata = {
   title:
-    "Shop Infinite Scrolling  || Ecomus - Ultimate Nextjs Ecommerce Template",
-  description: "Ecomus - Ultimate Nextjs Ecommerce Template",
+    "Shop Infinite Scrolling  || Nomahd - Ultimate Ecommerce",
+  description: "Nomahd - Ultimate Ecommerce",
 };
 export default function page() {
   return (

@@ -59,7 +59,7 @@ export default function Header17() {
                 <Image
                   alt="logo"
                   className="logo"
-                  src="/images/logo/ecomus_kids.svg"
+                  src="/images/logo/Nomahd_kids.svg"
                   width={123}
                   height={21}
                 />
@@ -119,7 +119,7 @@ export default function Header17() {
                 <Nav />
                 <li className="menu-item">
                   <a
-                    href="https://themeforest.net/item/ecomus-ultimate-html5-template/53417990?s_rank=3"
+                    href="https://themeforest.net/item/Nomahd-ultimate-html5-template/53417990?s_rank=3"
                     className="item-link"
                   >
                     Buy now

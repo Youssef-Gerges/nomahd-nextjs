@@ -17,7 +17,7 @@ export default function Banner() {
           />
           <div className="box-content">
             <div className="container wow fadeInUp" data-wow-delay="0s">
-              <div className="sub fw-7 text_white">ECOMUS HEADPHONE DESIGN</div>
+              <div className="sub fw-7 text_white">Nomahd HEADPHONE DESIGN</div>
               <h2 className="heading fw-6 text_white">Uniting Performance</h2>
               <p className="text_white">Fast wireless charging on-the-go.</p>
               <Link

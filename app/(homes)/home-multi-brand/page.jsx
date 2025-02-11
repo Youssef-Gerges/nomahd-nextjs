@@ -14,8 +14,8 @@ import Testimonials from "@/components/homes/multi-brand/Testimonials";
 import React from "react";
 
 export const metadata = {
-  title: "Home Multi Brand || Ecomus - Ultimate Nextjs Ecommerce Template",
-  description: "Ecomus - Ultimate Nextjs Ecommerce Template",
+  title: "Home Multi Brand || Nomahd - Ultimate Ecommerce",
+  description: "Nomahd - Ultimate Ecommerce",
 };
 export default function page() {
   return (

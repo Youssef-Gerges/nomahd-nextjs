@@ -6,11 +6,7 @@ export const useGetCountries = () => {
   return useQuery({
     queryKey: ['countries'],
     queryFn: async () => {
-      const response = await api.get('/countries', {
-        headers: {
-          'SYSTEM-KEY': 'NOMAHD-SECRIT',
-        },
-      });
+      const response = await api.get('/countries');
 
       if (response.status !== 200) {
         throw new Error('Failed to fetch countries');

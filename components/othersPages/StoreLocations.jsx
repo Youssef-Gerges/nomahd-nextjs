@@ -19,7 +19,7 @@ export default function StoreLocations() {
                   <div className="icon">
                     <i className="icon-place" />
                   </div>
-                  Ecomus Paris
+                  Nomahd Paris
                 </h6>
                 <div className="tf-store-info">
                   <span>Address</span>
@@ -31,7 +31,7 @@ export default function StoreLocations() {
                 </div>
                 <div className="tf-store-info">
                   <span>Email</span>
-                  <p>Ecomus.paris@example.com</p>
+                  <p>Nomahd.paris@example.com</p>
                 </div>
               </div>
               <div
@@ -44,7 +44,7 @@ export default function StoreLocations() {
                   <div className="icon">
                     <i className="icon-place" />
                   </div>
-                  Ecomus London
+                  Nomahd London
                 </h6>
                 <div className="tf-store-info">
                   <span>Address</span>
@@ -56,7 +56,7 @@ export default function StoreLocations() {
                 </div>
                 <div className="tf-store-info">
                   <span>Email</span>
-                  <p>Ecomus.london@example.com</p>
+                  <p>Nomahd.london@example.com</p>
                 </div>
               </div>
               <div
@@ -69,7 +69,7 @@ export default function StoreLocations() {
                   <div className="icon">
                     <i className="icon-place" />
                   </div>
-                  Ecomus Marid
+                  Nomahd Marid
                 </h6>
                 <div className="tf-store-info">
                   <span>Address</span>
@@ -81,7 +81,7 @@ export default function StoreLocations() {
                 </div>
                 <div className="tf-store-info">
                   <span>Email</span>
-                  <p>Ecomus.marid@example.com</p>
+                  <p>Nomahd.marid@example.com</p>
                 </div>
               </div>
               <div
@@ -94,7 +94,7 @@ export default function StoreLocations() {
                   <div className="icon">
                     <i className="icon-place" />
                   </div>
-                  Ecomus Tokyo
+                  Nomahd Tokyo
                 </h6>
                 <div className="tf-store-info">
                   <span>Address</span>
@@ -106,7 +106,7 @@ export default function StoreLocations() {
                 </div>
                 <div className="tf-store-info">
                   <span>Email</span>
-                  <p>Ecomus.tokyo@example.com</p>
+                  <p>Nomahd.tokyo@example.com</p>
                 </div>
               </div>
             </div>

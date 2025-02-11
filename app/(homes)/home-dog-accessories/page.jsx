@@ -13,8 +13,8 @@ import Products from "@/components/homes/home-dog-accessories/Products";
 import React from "react";
 
 export const metadata = {
-  title: "Home Dog Accessories || Ecomus - Ultimate Nextjs Ecommerce Template",
-  description: "Ecomus - Ultimate Nextjs Ecommerce Template",
+  title: "Home Dog Accessories || Nomahd - Ultimate Ecommerce",
+  description: "Nomahd - Ultimate Ecommerce",
 };
 export default function page() {
   return (

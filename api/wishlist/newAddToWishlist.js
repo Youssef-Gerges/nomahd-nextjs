@@ -1,5 +1,6 @@
-import { useMutation } from '@tanstack/react-query';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
 import { api, token } from '../api';
+import toast from "react-hot-toast";
 
 // export const useAddToWishlistNew = () => {
 //   return useMutation(
@@ -42,8 +43,9 @@ import { api, token } from '../api';
 // };
 
 
-export const useAddToWishlistNew = () => {
-  return useMutation({
+export const useAddToWishlistNew = (options={}) => {
+
+    return useMutation({
     mutationFn: async ({ productId, userId }) => {
       const response = await api.get("/wishlists-add-product", {
         params: { product_id: productId, user_id: userId },
@@ -52,10 +54,11 @@ export const useAddToWishlistNew = () => {
       return response.data;
     },
     onSuccess: (data) => {
-      console.log("Success:", data);
+        console.log("Success:", data);
     },
     onError: (error) => {
       console.error("Error:", error);
     },
+        ...options
   });
 };

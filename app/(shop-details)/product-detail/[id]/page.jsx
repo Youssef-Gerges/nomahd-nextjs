@@ -3,18 +3,11 @@ import Footer1 from "@/components/footers/Footer1";
 import Header2 from "@/components/headers/Header2";
 import Products from "@/components/shopDetails/Products";
 
-// import BestSellingProducts from "@/components/shopDetails/Products";
 import RecentProducts from "@/components/shopDetails/RecentProducts";
 import ShopDetailsTab from "@/components/shopDetails/ShopDetailsTab";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import DetailsOuterZoom from "@/components/shopDetails/DetailsOuterZoom";
-// export const metadata = {
-//   title: "Shop Details || Ecomus - Ultimate Nextjs Ecommerce Template",
-//   description: "Ecomus - Ultimate Nextjs Ecommerce Template",
-// };
-import { allProducts } from "@/data/products";
-import ProductSinglePrevNext from "@/components/common/ProductSinglePrevNext";
 import { useGetProductDetails } from "@/api/products/getProductDetails";
 export default function page({ params }) {
   const [product, setProduct] = useState(
@@ -52,7 +45,7 @@ export default function page({ params }) {
       <DetailsOuterZoom product={product} />
       <ShopDetailsTab product={product}/>
       <Products />
-      <RecentProducts id={product?.slug} />
+      <RecentProducts id={product} />
       <Footer1 />
     </>
   );
@@ -70,8 +63,8 @@ export default function page({ params }) {
 // import { api } from "@/api/api";
 
 // export const metadata = {
-//   title: "Shop Details || Ecomus - Ultimate Nextjs Ecommerce Template",
-//   description: "Ecomus - Ultimate Nextjs Ecommerce Template",
+//   title: "Shop Details || Nomahd - Ultimate Ecommerce",
+//   description: "Nomahd - Ultimate Ecommerce",
 // };
 
 // export default async function Page({ params }) {

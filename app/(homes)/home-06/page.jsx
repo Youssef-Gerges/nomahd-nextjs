@@ -12,8 +12,8 @@ import React from "react";
 import Announcmentbar from "@/components/common/Announcmentbar";
 
 export const metadata = {
-  title: "Home 6 || Ecomus - Ultimate Nextjs Ecommerce Template",
-  description: "Ecomus - Ultimate Nextjs Ecommerce Template",
+  title: "Home 6 || Nomahd - Ultimate Ecommerce",
+  description: "Nomahd - Ultimate Ecommerce",
 };
 export default function page() {
   return (

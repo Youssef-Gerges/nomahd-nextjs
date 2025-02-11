@@ -13,13 +13,13 @@ import Subcollections from "@/components/shop/Subcollections";
 export async function generateMetadata({ params }) {
   const { category } = params;
   return {
-    title: `${category} || Ecomus - Ultimate Nextjs Ecommerce Template`,
-    description: `Explore our collection of ${category} at Ecomus - Ultimate Nextjs Ecommerce Template`,
+    title: `${category} || Nomahd - Ultimate Ecommerce`,
+    description: `Explore our collection of ${category} at Nomahd - Ultimate Ecommerce`,
   };
 }
 // export const metadata = {
-//   title: "Home Men || Ecomus - Ultimate Nextjs Ecommerce Template",
-//   description: "Ecomus - Ultimate Nextjs Ecommerce Template",
+//   title: "Home Men || Nomahd - Ultimate Ecommerce",
+//   description: "Nomahd - Ultimate Ecommerce",
 // };
 export default function page({ params }) {
   // const { categories, subCategories, setCategoryId } = useContextElement();

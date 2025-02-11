@@ -6,11 +6,7 @@ export const useGetAllProductReviews = (product_id) => {
   return useQuery({
     queryKey: ['product-reviews', product_id],
     queryFn: async () => {
-      const response = await api.get(`/reviews/product/${product_id}`, {
-        headers: {
-          'SYSTEM-KEY': "NOMAHD-SECRIT" 
-        },
-      });
+      const response = await api.get(`/reviews/product/${product_id}`);
 
       if (!response || response.status !== 200) {
         throw new Error('Failed to fetch product reviews');

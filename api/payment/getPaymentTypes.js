@@ -1,15 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
-import { api } from '../api';
+import {api, token} from '../api';
 import toast from 'react-hot-toast';
 
 export const useGetPaymentTypes = () => {
   return useQuery({
     queryKey: ['payment-types'],
     queryFn: async () => {
-      const response = await api.get('/shipping_cost', {
+      const response = await api.get('/payment-types', {
         headers: {
             Authorization:`Bearer ${token}`,
-          'SYSTEM-KEY': 'NOMAHD-SECRIT',
         },
       });
 

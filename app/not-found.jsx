@@ -4,8 +4,8 @@ import Header7 from "@/components/headers/Header7";
 import Link from "next/link";
 import React from "react";
 export const metadata = {
-  title: "Page Not Found || Ecomus - Ultimate Nextjs Ecommerce Template",
-  description: "Ecomus - Ultimate Nextjs Ecommerce Template",
+  title: "Page Not Found || Nomahd - Ultimate Ecommerce",
+  description: "Nomahd - Ultimate Ecommerce",
 };
 export default function notFound() {
   return (

@@ -373,7 +373,7 @@ export default function QuickView() {
                       href="#"
                       className="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn"
                       onClick={() =>
-                        handleAddToCart(quickViewItem?.id, variant, quantity)
+                        handleAddToCart(quickViewItem?.id, variant, quantity, quickAddItem?.weight)
                       }
                     >
                       <span>
@@ -427,20 +427,6 @@ export default function QuickView() {
                       </span>
                       <span className="icon icon-check" />
                     </a> */}
-                    <div className="w-100">
-                      <a href="#" className="btns-full">
-                        Buy with
-                        <Image
-                          alt="image"
-                          src="/images/payments/paypal.png"
-                          width={64}
-                          height={18}
-                        />
-                      </a>
-                      <a href="#" className="payment-more-option">
-                        More payment options
-                      </a>
-                    </div>
                   </form>
                 </div>
                 <div>

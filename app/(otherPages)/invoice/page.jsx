@@ -93,8 +93,8 @@ export default function page() {
               </div>
               <div className="footer">
                 <ul className="box-contact">
-                  <li>www.ecomus.com</li>
-                  <li>invoice@ecomus.com</li>
+                  <li>www.Nomahd.com</li>
+                  <li>invoice@Nomahd.com</li>
                   <li>(123) 123-456</li>
                 </ul>
               </div>

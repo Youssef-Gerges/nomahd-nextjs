@@ -13,7 +13,7 @@ export default function Topbar2({ bgColor = "bg_dark" }) {
           <div className="tf-top-bar_left">
             <div className="d-flex gap-30 text_white fw-5">
               <span>(+333) 123-1688</span>
-              <span>sayhello@ecomus.com</span>
+              <span>sayhello@Nomahd.com</span>
             </div>
           </div>
           <div className="text-center overflow-hidden">

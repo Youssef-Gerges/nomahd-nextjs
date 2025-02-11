@@ -12,7 +12,6 @@ export const useSubmitReview = () => {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
-            'SYSTEM-KEY': 'NOMAHD-SECRIT',
           },
         });
         return response.data; 

@@ -12,8 +12,8 @@ import Products2 from "@/components/homes/home-baby/Products2";
 
 import React from "react";
 export const metadata = {
-  title: "Home Baby || Ecomus - Ultimate Nextjs Ecommerce Template",
-  description: "Ecomus - Ultimate Nextjs Ecommerce Template",
+  title: "Home Baby || Nomahd - Ultimate Ecommerce",
+  description: "Nomahd - Ultimate Ecommerce",
 };
 export default function page() {
   return (
