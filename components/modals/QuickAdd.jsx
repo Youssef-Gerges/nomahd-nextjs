@@ -9,7 +9,6 @@ import { allProducts } from "@/data/products";
 import { colors, sizeOptions } from "@/data/singleProductOptions";
 import { useGetAllProducts } from "@/api/products/useGetAllProducts";
 
-import { useGetCartData } from "@/api/cart/getCart";
 export default function QuickAdd() {
   const {
     quickAddItem,

@@ -47,6 +47,7 @@ export default function Context({ children }) {
   });
   const [compareItem, setCompareItem] = useState([1, 2, 3]);
   const [quickAddItem, setQuickAddItem] = useState(1);
+  const [quickAddPackage, setQuickAddPackage] = useState({id: 0, products: []});
   const [totalPrice, setTotalPrice] = useState(0);
   const { data: wishlist } = useGetUserWishlist();
   const checkWishlist = useCheckProductInWishlist();
@@ -234,6 +235,8 @@ export default function Context({ children }) {
     setQuickViewItem,
     quickAddItem,
     setQuickAddItem,
+    setQuickAddPackage,
+    quickAddPackage,
     addToCompareItem,
     isAddedtoCompareItem,
     removeFromCompareItem,

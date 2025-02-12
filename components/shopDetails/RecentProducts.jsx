@@ -6,7 +6,7 @@ import {useAddPackageToCart} from "@/api/cart/addPackageToCart"
 import { useEffect } from "react";
 export default function RecentProducts({ id }) {
   const { relatedProducts, setProductId } = useContextElement();
-  const addPackageToCart = useAddPackageToCart()
+  const {setQuickAddPackage} = useContextElement()
 
   useEffect(() => {
     if (id) {
@@ -63,7 +63,7 @@ export default function RecentProducts({ id }) {
             >
               <a
                 href="#add_package"
-                // onClick={}
+                onClick={() => setQuickAddPackage({id: relatedProducts?.package?.package_id, products: [...relatedProducts?.products?.data, id] ?? []})}
                 data-bs-toggle="modal"
                 className="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn"
               >

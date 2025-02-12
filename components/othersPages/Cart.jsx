@@ -4,6 +4,7 @@ import { useGetCartData } from "@/api/cart/getCart";
 import Image from "next/image";
 import Link from "next/link";
 import { useDeleteFromCart } from "@/api/cart/removeFomCart";
+import { useDeletePackageFromCart } from "@/api/cart/removePackageFomCart";
 import { useRouter } from "next/navigation";
 import { useGetBusinessSettings } from "@/api/general/getBusinessSettings";
 
@@ -11,6 +12,7 @@ import { useGetBusinessSettings } from "@/api/general/getBusinessSettings";
   const router = useRouter();
   const {data: cartData} = useGetCartData();
   const {data: settings} = useGetBusinessSettings();
+  const deletePackageFromCart = useDeletePackageFromCart()
   const removeFromCart = useDeleteFromCart();
   const [freeShipping, setFreeShipping] = useState(0)
   const [cartProductsData, setCartProducts] = useState([]);
@@ -125,7 +127,7 @@ import { useGetBusinessSettings } from "@/api/general/getBusinessSettings";
                             href={`/product-detail/${elm.id}`}
                             className="cart-title link"
                           >
-                            {elm.product_name}
+                            {elm.package_name ?? elm.product_name}
                           </Link>
                           <div className="cart-meta-variant">
                             {" "}
@@ -136,7 +138,13 @@ import { useGetBusinessSettings } from "@/api/general/getBusinessSettings";
 
                           <span
                             className="remove-cart link remove"
-                            onClick={() => removeItem(elm.id)}
+                            onClick={() => {
+                              if(elm.package_id) {
+                                deletePackageFromCart.mutate(elm.package_id);
+                                setCartProducts((pre) => [...pre.filter((item) => item.package_id != elm.package_id)]);
+                              }else{
+                                removeItem(elm.id)}}
+                              }
                           >
                             Remove
                           </span>
@@ -154,7 +162,7 @@ import { useGetBusinessSettings } from "@/api/general/getBusinessSettings";
                         className="tf-cart-item_quantity"
                         cart-data-title="Quantity"
                       >
-                        <div className="cart-quantity">
+                        {!elm?.package_id && <div className="cart-quantity">
                           <div className="wg-quantity">
                             <span
                               className="btn-quantity minus-btn"
@@ -198,7 +206,7 @@ import { useGetBusinessSettings } from "@/api/general/getBusinessSettings";
                               </svg>
                             </span>
                           </div>
-                        </div>
+                        </div>}
                       </td>
                       <td
                         className="tf-cart-item_total"
@@ -208,7 +216,7 @@ import { useGetBusinessSettings } from "@/api/general/getBusinessSettings";
                           className="cart-total"
                           style={{ minWidth: "60px" }}
                         >
-                          {elm?.sub_total}
+                          {elm?.sub_total ?? elm.price}
                         </div>
                       </td>
                     </tr>
