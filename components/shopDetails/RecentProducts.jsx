@@ -2,7 +2,6 @@
 
 import { ProductCard } from "../shopCards/ProductCard";
 import { useContextElement } from "@/context/Context";
-import {useAddPackageToCart} from "@/api/cart/addPackageToCart"
 import { useEffect } from "react";
 export default function RecentProducts({ id }) {
   const { relatedProducts, setProductId } = useContextElement();

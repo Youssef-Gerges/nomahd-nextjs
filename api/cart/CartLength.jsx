@@ -1,10 +1,11 @@
 "use client";
-import { useGetCartData } from "@/api/cart/getCart";
 import { useContextElement } from "@/context/Context";
 import { useEffect, useState } from "react";
+import { useGetCartData } from "./getCart";
 
 export default function CartLength() {
   const {data: cartData} = useGetCartData();
+
   const [cartLength, setCartLength] = useState(0);
 
   useEffect(() => {

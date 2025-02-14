@@ -7,8 +7,10 @@ import { useDeleteFromCart } from "@/api/cart/removeFomCart";
 import { useDeletePackageFromCart } from "@/api/cart/removePackageFomCart";
 import { useRouter } from "next/navigation";
 import { useGetBusinessSettings } from "@/api/general/getBusinessSettings";
+import { useQueryClient } from "@tanstack/react-query";
 
   export default function Cart() {
+    const queryClient = useQueryClient()
   const router = useRouter();
   const {data: cartData} = useGetCartData();
   const {data: settings} = useGetBusinessSettings();
@@ -57,7 +59,12 @@ import { useGetBusinessSettings } from "@/api/general/getBusinessSettings";
   };
   const removeItem = (product_id) => {
     setCartProducts((pre) => [...pre.filter((elm) => elm.id != product_id)]);
-    removeFromCart.mutate(product_id);
+    removeFromCart.mutate(product_id, {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['cart', 'summery'])
+        queryClient.refetchQueries(['cart', 'summery'])
+    }
+    });
   };
 
   const HandlecheckoutBtnClick = () => {
@@ -140,7 +147,13 @@ import { useGetBusinessSettings } from "@/api/general/getBusinessSettings";
                             className="remove-cart link remove"
                             onClick={() => {
                               if(elm.package_id) {
-                                deletePackageFromCart.mutate(elm.package_id);
+                                deletePackageFromCart.mutate(elm.package_id, {
+                                  onSuccess: () => {
+                                    queryClient.invalidateQueries(['cart', 'summery'])
+                                    queryClient.refetchQueries(['cart', 'summery'])
+                                }
+                                });
+                                
                                 setCartProducts((pre) => [...pre.filter((item) => item.package_id != elm.package_id)]);
                               }else{
                                 removeItem(elm.id)}}
@@ -229,7 +242,7 @@ import { useGetBusinessSettings } from "@/api/general/getBusinessSettings";
                     <div className="col-6 fs-18">Your shop cart is empty</div>
                     <div className="col-6">
                       <Link
-                        href={`/shop-default`}
+                        href={`/`}
                         className="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center"
                         style={{ width: "fit-content" }}
                       >

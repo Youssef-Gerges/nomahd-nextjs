@@ -4,8 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useContextElement } from "@/context/Context";
 import { useAddPackageToCart } from "@/api/cart/addPackageToCart";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function AddPackage() {
+  const queryClient = useQueryClient();
   const { quickAddPackage } = useContextElement();
   const addPackageToCart = useAddPackageToCart()
   const [selectedVariations, setSelectedVariations] = useState({});
@@ -46,6 +48,8 @@ export default function AddPackage() {
     addPackageToCart.mutate({package_id: quickAddPackage.id, ...body}, {
       onSuccess: () => {
         window.location.href = '/view-cart'
+          queryClient.invalidateQueries(['cart', 'summery'])
+          queryClient.refetchQueries(['cart', 'summery'])
       }
     });
     

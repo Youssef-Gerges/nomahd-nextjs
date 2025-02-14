@@ -151,7 +151,13 @@ export default function Context({ children }) {
         variant: variant?.replace(' ', '')?.replace('/', '-'),
         user_id: JSON.parse(userId),
         quantity: quantity,
+      }, {
+        onSuccess: () => {
+          queryClient.invalidateQueries(['cart', 'summery'])
+          queryClient.refetchQueries(['cart', 'summery'])
+      }
       });
+      
     }
   };
   const isAddedToCartProducts = (id) => {
