@@ -258,7 +258,7 @@ import { useQueryClient } from "@tanstack/react-query";
             <div className="tf-cart-footer-inner">
               <div className="tf-free-shipping-bar">
                 <div className="tf-progress-bar">
-                  <span style={{ width: `${(cartData?.total_weight/freeShipping) * 100}%` }}>
+                  <span style={{ width: `${Math.min((cartData?.total_weight / freeShipping) * 100, 100)}%` }}>
                     <div className="progress-car">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

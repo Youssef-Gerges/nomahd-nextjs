@@ -71,9 +71,7 @@ export default function Nav({ isArrow = true, textColor = "", Linkfs = "" }) {
       setCategoryId(hoveredItem);
     }
   }, [setCategoryId, hoveredItem]);
-  useEffect(() => {
-    console.log("categories data ", categories);
-  }, [categories]);
+
   return (
     <>
       {/* <li className="menu-item">
@@ -161,20 +159,18 @@ export default function Nav({ isArrow = true, textColor = "", Linkfs = "" }) {
                   {subCategories?.data?.map((menu, index) => (
                     <div className="col-lg-2" key={index}>
                       <div className="mega-menu-item">
-                        <div className="menu-heading">{menu.name}</div>
+                        {/* <div className="menu-heading">{menu.name}</div> */}
                         <ul className="menu-list">
-                          {/* {menu.links.map((link, linkIndex) => (
-                            <li key={linkIndex}>
+                            <li>
                               <Link
-                                href={link.href}
+                                href={`/shop-collection-sub/${category?.name}/${category?.id}`}
                                 className={`menu-link-text link ${
-                                  isMenuActive(link) ? "activeMenu" : ""
+                                  isMenuActive(`/shop-collection-sub/${category?.name}/${category?.id}`) ? "activeMenu" : ""
                                 }`}
                               >
-                                {link.text}
+                                {menu.name}
                               </Link>
                             </li>
-                          ))} */}
                         </ul>
                       </div>
                     </div>

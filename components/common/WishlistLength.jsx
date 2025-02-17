@@ -7,7 +7,7 @@ export default function WishlistLength() {
   const [wishlistLength, setWishlistLength] = useState(0);
 
   useEffect(() => {
-    setWishlistLength(wishlist?.data.length);
+    setWishlistLength(wishlist?.data?.length);
   }, [wishlist]);
 
   return <>{wishlistLength || 0}</>;

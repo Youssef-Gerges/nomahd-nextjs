@@ -7,6 +7,7 @@ import Slider1ZoomOuter from "./sliders/Slider1ZoomOuter";
 import { useContextElement } from "@/context/Context";
 import Image from "next/image";
 import { useGetBusinessSettings } from "@/api/general/getBusinessSettings";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function DetailsOuterZoom({ product }) {
   const {data:settings} = useGetBusinessSettings();
@@ -31,6 +32,7 @@ export default function DetailsOuterZoom({ product }) {
     handleAddToWishlist,
     handleRemoveFromWishlist,
     handleAddToCart,
+    addToCart,
     addToWishlistSuccess,
     removeFromWishlistSuccess,
   } = useContextElement();
@@ -328,11 +330,19 @@ export default function DetailsOuterZoom({ product }) {
                     <form onSubmit={(e) => e.preventDefault()} className="">
                       <a
                         onClick={() => {
-                          handleAddToCart(product?.id, variant, quantity, product?.weight);
-                          // openCartModal();
+                          addToCart.status != 'pending' && handleAddToCart(product?.id, variant, quantity, product?.weight);
                         }}
                         className="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn"
                       >
+                {addToCart.status == 'pending'? <ThreeDots
+                                    visible={true}
+                                    height={10}
+                                    color="#b7ec31"
+                                    radius="9"
+                                    ariaLabel="three-dots-loading"
+                                    wrapperStyle={{}}
+                                    wrapperClass=""
+                                    />: <>
                         <span>
                           {isAddedToCartProducts(product?.id)
                             ? "Already Added"
@@ -343,6 +353,7 @@ export default function DetailsOuterZoom({ product }) {
                           {product?.currency_symbol}{" "}
                           {((product?.calculable_price * quantity) ?? 0).toFixed(2)}
                         </span>
+                        </>}
                       </a>
                       <a
                         // onClick={() => handleAddToWishlist(product?.id)}

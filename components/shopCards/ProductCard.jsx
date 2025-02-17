@@ -121,9 +121,9 @@ export const ProductCard = ({ product }) => {
             </div>
           </div>
         )}
-        {product.sizes && (
+        {product.choice_options && (
           <div className="size-list">
-            {product.sizes.map((size) => (
+            {product.choice_options[0].options.map((size) => (
               <span key={size}>{size}</span>
             ))}
           </div>
@@ -149,25 +149,35 @@ export const ProductCard = ({ product }) => {
           )}
         </span>
         {product.colors && (
-          <ul className="list-color-product">
-            {product.colors
-              .filter((color) => /^#([0-9A-F]{3}){1,2}$/i.test(color)) // Filter valid hex colors
-              .map((color) => (
-                <li className={`list-color-item color-swatch`} key={color}>
-                  <span className="tooltip">{color}</span>
-                  <span
-                    className="swatch-value"
-                    style={{
-                      display: "inline-block",
-                      borderRadius: "50%",
-                      backgroundColor: color, // Apply hex color
-                      border: "1px solid #ccc",
-                    }}
-                  />
-                </li>
-              ))}
-          </ul>
-        )}
+  <ul className="list-color-product">
+    {product.colors.map((colorObj, index) => {
+      const color = colorObj.name || colorObj; // Adjust based on your data structure
+
+      const isHexColor = /^#([0-9A-F]{3}){1,2}$/i.test(color);
+
+      return (
+        <li style={{ cursor: "pointer" }} key={index}>
+          <span className="tooltip">{color}</span>
+          <span
+            className="swatch-value"
+            style={{
+              display: "inline-block",
+              borderRadius: isHexColor ? "50%" : "2px",
+              backgroundColor: isHexColor ? color : "transparent",
+              border: "1px solid #ccc",
+              padding: "5px",
+              color: isHexColor ? "inherit" : "#000",
+              width: "fit-content",
+            }}
+          >
+            {!isHexColor && color}
+          </span>
+        </li>
+      );
+    })}
+  </ul>
+)}
+
       </div>
     </div>
   );

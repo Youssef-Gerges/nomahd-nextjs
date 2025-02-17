@@ -9,12 +9,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Quantity from "../shopDetails/Quantity";
 import { colors, sizeOptions } from "@/data/singleProductOptions";
 import React, { useState, useEffect } from "react";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function QuickView() {
   const {
     quickViewItem,
     addProductToCart,
     handleAddToCart,
+    addToCart,
     isAddedToCartProducts,
     addToWishlist,
     isAddedtoWishlist,
@@ -373,9 +375,18 @@ export default function QuickView() {
                       href="#"
                       className="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn"
                       onClick={() =>
-                        handleAddToCart(quickViewItem?.id, variant, quantity, quickAddItem?.weight)
+                        addToCart.status != 'pending' &&handleAddToCart(quickViewItem?.id, variant, quantity, quickAddItem?.weight)
                       }
                     >
+                      {addToCart.status == 'pending'? <ThreeDots
+                    visible={true}
+                    height={10}
+                    color="#b7ec31"
+                    radius="9"
+                    ariaLabel="three-dots-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    />: <>
                       <span>
                         {isInCart ? "Already Added - " : "Add to cart - "}
                       </span>
@@ -388,6 +399,7 @@ export default function QuickView() {
                             } `
                           : quickViewItem?.base_price}
                       </span>
+                      </>}
                     </a>
                     <a className="tf-product-btn-wishlist hover-tooltip box-icon bg_white wishlist btn-icon-action">
                       <i

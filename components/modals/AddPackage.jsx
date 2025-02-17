@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useContextElement } from "@/context/Context";
 import { useAddPackageToCart } from "@/api/cart/addPackageToCart";
 import { useQueryClient } from "@tanstack/react-query";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function AddPackage() {
   const queryClient = useQueryClient();
@@ -173,9 +174,19 @@ export default function AddPackage() {
           <div className="tf-product-info-buy-button text-center mt-4">
             <button
               className="tf-btn btn-fill fw-6 fs-16 animate-hover-btn"
-              onClick={handleAddAllToCart}
+              onClick={addPackageToCart.status != 'pending' && handleAddAllToCart}
             >
-              Add All to Cart
+              {addPackageToCart.status == 'pending'? 
+              <ThreeDots
+              visible={true}
+              height={10}
+              color="#b7ec31"
+              radius="9"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+              />
+              : 'Add All to Cart'}
             </button>
           </div>
         </div>

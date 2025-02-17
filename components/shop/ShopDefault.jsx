@@ -19,44 +19,22 @@ export default function ShopDefault({ data, id }) {
     setLink,
     setPage,
     flashSale,
-    featured,
     link,
-    page,
   } = useContextElement();
 
   useEffect(() => {
-    // if (data === "sub-category") {
-    //   const foundLink = subCategories?.data.find((item) => item.id == id)?.links
-    //     .products;
-    //   // setCategoryName(foundCategory);
-    //   console.log("bahha soltan link", foundLink);
-    //   setLink(foundLink);
-    // } else {
-      const foundCategoryLink = subCategories?.data.find(
-        (item) => item.id == id
-      )?.links.products;
       const foundLink = categories?.data.find((item) => item.id == id)?.links
         .products;
-
-      console.log("foundlink", foundLink, foundCategoryLink);
-      console.log("bahha soltan foundlink", foundLink, foundCategoryLink);
-
       setLink(foundLink);
-    // }
   }, [categories, data, id]);
 
   useEffect(() => {
     if (data === "sub-category") {
       const foundLink = subCategories?.data.find((item) => item.id == id)?.links
         .products;
-      // setCategoryName(foundCategory);
-      console.log("bahha soltan link", foundLink);
       setLink(foundLink);
     }
   }, [subCategories, data]);
-  useEffect(() => {
-    console.log("bahha soltan link", link);
-  }, [link]);
   useEffect(() => {
     switch (data) {
       case "home-category":
@@ -73,7 +51,6 @@ export default function ShopDefault({ data, id }) {
       case "sub-category":
         if (linkProducts?.data) {
           setProducts(linkProducts?.data);
-          console.log("bahha soltan link", linkProducts?.data);
         }
         break;
       case "best-selling":
@@ -144,7 +121,7 @@ export default function ShopDefault({ data, id }) {
           </div>
           <div className="wrapper-control-shop">
             <div className="meta-filter-shop" />
-            <ProductGrid allproducts={finalSorted} gridItems={gridItems} />
+            {Array.isArray(finalSorted) && <ProductGrid allproducts={finalSorted} gridItems={gridItems} />}
             {/* pagination */}
             {finalSorted.length ? (
               <ul className="tf-pagination-wrap tf-pagination-list tf-pagination-btn">

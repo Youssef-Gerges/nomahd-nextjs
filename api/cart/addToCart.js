@@ -18,9 +18,11 @@ export const useAddToCart = () => {
     onError: () => {
       console.log('Failed to add product to cart. Please try again.');
     },
-    onSuccess: () => {
-      console.log('Product added to cart successfully!');
-      
+    onSuccess: (data) => {
+      toast.success("Added to cart successfully.");
+      if(data?.data?.temp_user_id){
+        localStorage.setItem('temp_user_id', data.data?.temp_user_id)
+      }
       queryClient.invalidateQueries(['cart']);
     },
   });

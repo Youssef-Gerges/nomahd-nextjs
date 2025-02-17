@@ -3,21 +3,21 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import CartLength from "../common/CartLength";
 import WishlistLength from "../common/WishlistLength";
+import { token } from "@/api/api";
 // import { useTranslation } from "react-i18next";
 // import useTranslation from "next-translate/useTranslation";
 
 export default function ToolbarBottom() {
   const [hasToken, setHasToken] = useState(false);
-  // const { t } = useTranslation("common");
-  // const { t } = useTranslation("common"); // "common" is the namespace
-
-  // const direction = localStorage.getItem('direction')
 
   const router = useRouter();
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setHasToken(!!token); // Set true if token exists, false otherwise
-  }, []);
+    if(!token){
+      setHasToken(false);
+    }else{
+      setHasToken(true);
+    }
+  }, [token]);
 
   const handleClick = (e) => {
     if (!hasToken) {
@@ -37,16 +37,14 @@ export default function ToolbarBottom() {
   return (
     <div className="tf-toolbar-bottom type-1150">
       <div className="toolbar-item active">
-        <a
-          href="#toolbarShopmb"
-          data-bs-toggle="offcanvas"
-          aria-controls="offcanvasLeft"
+        <Link
+          href="/"
         >
           <div className="toolbar-icon">
             <i className="icon-shop" />
           </div>
           <div className="toolbar-label">Shop</div>
-        </a>
+        </Link>
       </div>
       <div className="toolbar-item">
         <a

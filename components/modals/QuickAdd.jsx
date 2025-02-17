@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Quantity from "../shopDetails/Quantity";
+import {ThreeDots} from "react-loader-spinner";
 import { useContextElement } from "@/context/Context";
 
 import { allProducts } from "@/data/products";
@@ -12,14 +13,13 @@ import { useGetAllProducts } from "@/api/products/useGetAllProducts";
 export default function QuickAdd() {
   const {
     quickAddItem,
-    // addToCompareItem,
-    // isAddedtoCompareItem,
     handleAddToWishlist,
     handleRemoveFromWishlist,
     handleAddToCart,
     handleCheckWishlist,
     addToWishlistSuccess,
     removeFromWishlistSuccess,
+    addToCart
   } = useContextElement();
   const [id, setId] = useState(null);
   const { data } = useGetAllProducts(1);
@@ -55,6 +55,7 @@ export default function QuickAdd() {
   useEffect(() => {
     handleCheckWishlist(setIsInWishlist, quickAddItem.id);
   }, [quickAddItem, addToWishlistSuccess, removeFromWishlistSuccess]);
+
 
   // useEffect(() => {
   //   if (cartData?.data) {
@@ -317,9 +318,18 @@ export default function QuickAdd() {
                 <a
                   className="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn"
                   onClick={() =>
-                    handleAddToCart(quickAddItem?.id, variant, quantity, quickAddItem?.weight)
+                    addToCart.status != 'pending' && handleAddToCart(quickAddItem?.id, variant, quantity, quickAddItem?.weight)
                   }
                 >
+                  {addToCart.status == 'pending'? <ThreeDots
+                    visible={true}
+                    height={10}
+                    color="#b7ec31"
+                    radius="9"
+                    ariaLabel="three-dots-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    />: <>
                   <span>
                     {isInCart ? "Already Added - " : "Add to cart - "}
                   </span>
@@ -332,6 +342,7 @@ export default function QuickAdd() {
                         } `
                       : quickAddItem?.base_price}
                   </span>
+                  </>}
                 </a>
                 <div className="tf-product-btn-wishlist btn-icon-action">
                   <i

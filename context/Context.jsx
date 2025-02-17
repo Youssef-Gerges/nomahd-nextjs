@@ -5,7 +5,6 @@ import { useGetSubCategory } from "@/api/categories/getSubCategories";
 import { useGetAllBrands } from "@/api/brand/getAllBrands";
 import { useGetAllBanners } from "@/api/general/getAllBanners";
 import { useGetAllFlashDeals } from "@/api/products/flashDeal/getAllFlashDeals";
-import { useGetFlashDealProducts } from "@/api/products/flashDeal/getAllFlashDealsProducts";
 import { useGetSubCategoryProducts } from "@/api/products/getAllSubCategoryProducts";
 import { useGetBestSellingProducts } from "@/api/products/getBestSellingProducts";
 import { useGetRelatedProducts } from "@/api/products/getRelatedProducts";
@@ -33,6 +32,7 @@ export default function Context({ children }) {
   const queryClient = useQueryClient();
   const {data: userWishlist} = useGetUserWishlist();
   const [userId, setUserId] = useState(null);
+  const [tempUserId, setTempUserId] = useState(null);
   const [page, setPage] = useState(1);
   const [link, setLink] = useState(null);
   const [cartProducts, setCartProducts] = useState([]);
@@ -77,7 +77,7 @@ export default function Context({ children }) {
 
   const handleCheckWishlist = (setIsInWishlist, product_id) => {
     if (product_id && userWishlist) {
-      let items = [...userWishlist?.data];
+      let items = [...(userWishlist?.data ?? [])];
       let selected_item = items.find(item => item.product.id === product_id)
      if(selected_item) {
       setIsInWishlist(true)
@@ -138,27 +138,18 @@ export default function Context({ children }) {
   };
 
   const handleAddToCart = (item_id, variant, quantity, weight=0) => {
-    if (!userId) {
-      const loginModal = document.getElementById("login");
-      if (loginModal) {
-        const bootstrap = require("bootstrap");
-        const modal = new bootstrap.Modal(loginModal);
-        modal.show();
-      }
-    } else {
-      addToCart.mutate({
-        id: item_id,
-        variant: variant?.replace(' ', '')?.replace('/', '-'),
-        user_id: JSON.parse(userId),
-        quantity: quantity,
-      }, {
-        onSuccess: () => {
-          queryClient.invalidateQueries(['cart', 'summery'])
-          queryClient.refetchQueries(['cart', 'summery'])
-      }
-      });
-      
+    addToCart.mutate({
+      id: item_id,
+      variant: variant?.replace(' ', '')?.replace('/', '-'),
+      user_id: JSON.parse(userId),
+      temp_user_id: tempUserId,
+      quantity: quantity,
+    }, {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['cart', 'summery'])
+        queryClient.refetchQueries(['cart', 'summery'])
     }
+    });
   };
   const isAddedToCartProducts = (id) => {
     if (cartProducts.filter((elm) => elm.id == id)[0]) {
@@ -166,19 +157,6 @@ export default function Context({ children }) {
     }
     return false;
   };
-
-  // const addToWishlist = (id) => {
-  //   // if (!wishList.includes(id)) {
-  //   //   setWishList((pre) => [...pre, id]);
-  //   // } else {
-  //   //   setWishList((pre) => [...pre].filter((elm) => elm != id));
-  //   // }
-  // };
-  // const removeFromWishlist = (id) => {
-  //   // if (wishList.includes(id)) {
-  //   //   setWishList((pre) => [...pre.filter((elm) => elm != id)]);
-  //   // }
-  // };
   const addToCompareItem = (id) => {
     if (!compareItem.includes(id)) {
       setCompareItem((pre) => [...pre, id]);
@@ -209,6 +187,11 @@ export default function Context({ children }) {
     const id = localStorage.getItem("id");
     if (id) {
       setUserId(id);
+    }
+
+    const temp_user_id = localStorage.getItem("temp_user_id");
+    if (temp_user_id) {
+      setTempUserId(temp_user_id);
     }
   }, []);
 
@@ -250,6 +233,7 @@ export default function Context({ children }) {
     setCompareItem,
     handleAddToCart,
     handleAddToWishlist,
+    addToCart,
     handleRemoveFromWishlist,
     handleCheckWishlist,
     addToWishlistSuccess,

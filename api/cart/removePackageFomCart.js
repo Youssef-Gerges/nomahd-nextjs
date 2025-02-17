@@ -1,5 +1,5 @@
 import { useMutation} from "@tanstack/react-query";
-import {api, token, user_id} from '../api';
+import {api, temp_user_id, token, user_id} from '../api';
 export const useDeletePackageFromCart = () => {
   return useMutation({
     mutationFn: async (id) => {
@@ -9,7 +9,8 @@ export const useDeletePackageFromCart = () => {
       try {
         const response = await api.post(`/carts/remove-package`, {
           package_id: id,
-          user_id: user_id
+          user_id: user_id,
+          temp_user_id: temp_user_id,
         }, {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -83,7 +83,7 @@ export default function ShopCart() {
           <div className="wrap">
             <div className="tf-mini-cart-threshold">
               <div className="tf-progress-bar">
-              <span style={{ width: `${(cartData?.total_weight/freeShipping) * 100}%` }}>
+              <span style={{ width: `${Math.min((cartData?.total_weight / freeShipping) * 100, 100)}%` }}>
                   <div className="progress-car">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -224,25 +224,6 @@ export default function ShopCart() {
                     Taxes and <a href="#">shipping</a> calculated at checkout
                   </div>
                   <div className="tf-mini-cart-line" />
-                  <div className="tf-cart-checkbox">
-                    <div className="tf-checkbox-wrapp">
-                      <input
-                        className=""
-                        type="checkbox"
-                        id="CartDrawer-Form_agree"
-                        name="agree_checkbox"
-                      />
-                      <div>
-                        <i className="icon-check" />
-                      </div>
-                    </div>
-                    <label htmlFor="CartDrawer-Form_agree">
-                      I agree with the
-                      <a href="#" title="Terms of Service">
-                        terms and conditions
-                      </a>
-                    </label>
-                  </div>
                   <div className="tf-mini-cart-view-checkout">
                     <Link
                       href={`/view-cart`}

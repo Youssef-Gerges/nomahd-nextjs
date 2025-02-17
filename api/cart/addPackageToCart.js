@@ -1,6 +1,6 @@
 
 import { useMutation ,useQueryClient} from "@tanstack/react-query";
-import {api, token} from '../api';
+import {api, temp_user_id, token} from '../api';
 import {useState, useEffect} from 'react'
 
 export const useAddPackageToCart = () => {
@@ -13,9 +13,9 @@ export const useAddPackageToCart = () => {
 
   return useMutation({
     mutationFn: async (productData) => {
-      return await api.post('/carts/add-package', JSON.stringify({...productData, user_id: userId}), {
+      return await api.post('/carts/add-package', JSON.stringify({...productData, user_id: userId, temp_user_id: temp_user_id}), {
         headers: {
-             Authorization :`Bearer ${token}`,
+            Authorization :`Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       });

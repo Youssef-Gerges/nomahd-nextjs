@@ -1,58 +1,25 @@
 "use client";
 
 import { useGetAllCurrencies } from "@/api/general/getAllCurrencies";
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
-// const optionsData = [
-//   {
-//     value: "fr",
-//     thumbnail: "/images/country/fr.svg",
-//     text: "EUR € | France",
-//   },
-//   {
-//     value: "de",
-//     thumbnail: "/images/country/de.svg",
-//     text: "EUR € | Germany",
-//   },
-//   {
-//     value: "us",
-//     thumbnail: "/images/country/us.svg",
-//     text: "USD $ | United States",
-//     selected: true,
-//   },
-//   {
-//     value: "vn",
-//     thumbnail: "/images/country/vn.svg",
-//     text: "VND ₫ | Vietnam",
-//   },
-// ];
 export default function CurrencySelect({ topStart = false, light = false }) {
   const {data:optionsData} = useGetAllCurrencies();
   
-  const [selected, setSelected] = useState(optionsData?.data?.is_default);
+  const [selected, setSelected] = useState();
   const [isDDOpen, setIsDDOpen] = useState(false);
-  const languageSelect = useRef();
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        languageSelect.current &&
-        !languageSelect.current.contains(event.target)
-      ) {
-        setIsDDOpen(false); // Close the dropdown if click is outside
-      }
-    };
-    // Add the event listener when the component mounts
-    document.addEventListener("click", handleClickOutside);
 
-    // Cleanup the event listener when the component unmounts
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
+  useEffect(() => {
+    if (optionsData?.data?.is_default) {
+      setSelected(optionsData?.data);
+    } else {
+      setSelected(optionsData?.data.find((option) => option.is_default));
+    }
+    setIsDDOpen(false);
+  }, [optionsData])
+
   return (
     <div
-      ref={languageSelect}
       onClick={() => setIsDDOpen((pre) => !pre)}
       className={`dropdown bootstrap-select image-select center style-default type-currencies ${
         light ? "color-white" : ""
@@ -67,12 +34,6 @@ export default function CurrencySelect({ topStart = false, light = false }) {
         <div className="filter-option">
           <div className="filter-option-inner">
             <div className="filter-option-inner-inner">
-              {/* <Image
-                src={selected.thumbnail}
-                width="640"
-                height="480"
-                alt="image"
-              /> */}
               {`${selected?.code} ${selected?.symbol} | ${selected?.name}`}
             </div>
           </div>
@@ -108,15 +69,7 @@ export default function CurrencySelect({ topStart = false, light = false }) {
                   }`}
                 >
                   <span className="text">
-                    {/* <Image
-                      src={elm.thumbnail}
-                      width="640"
-                      height="480"
-                      alt="image"
-                    /> */}
-                    {/* {elm.text} */}
-              {`${elm?.code} ${elm?.symbol} | ${elm?.name}`}
-
+                    {`${elm?.code} ${elm?.symbol} | ${elm?.name}`}
                   </span>
                 </a>
               </li>

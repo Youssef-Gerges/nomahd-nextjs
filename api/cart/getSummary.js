@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { api ,token} from '../api';
+import { api ,temp_user_id,token} from '../api';
 import { useState, useEffect } from'react';
 import toast from 'react-hot-toast';
 
@@ -16,7 +16,8 @@ export const useGetSummary = () => {
     queryKey: ['summary'],
     queryFn: async () => {
       const response = await api.post(`/cart-summary`, {
-        user_id: userId
+        user_id: userId,
+        temp_user_id: temp_user_id
       }, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -33,6 +34,5 @@ export const useGetSummary = () => {
     onError: () => {
       toast.error('Unable to fetch cart summary. Please try again later.');
     },
-    enabled: !!userId,
   });
 };

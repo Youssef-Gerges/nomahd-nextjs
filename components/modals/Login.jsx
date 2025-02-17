@@ -33,7 +33,7 @@ export default function Login() {
           backdrop.parentNode.removeChild(backdrop);
         }
         // Navigate to the desired route on successful registration
-        // router.push("/");
+        window.location.href = '/'
       },
       onError: (error) => {
         // Extract and set error message

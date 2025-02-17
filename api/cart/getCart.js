@@ -1,5 +1,5 @@
 import { useQuery ,useQueryClient,useMutation} from "@tanstack/react-query";
-import { api ,token } from '../api';
+import { api ,temp_user_id,token } from '../api';
 import toast from 'react-hot-toast';
 import { useState, useEffect } from "react";
 
@@ -17,7 +17,8 @@ export const useGetCartData = () => {
       queryKey: ['cart'],
       queryFn: async () => {
         const response = await api.post(`/carts`, JSON.stringify({
-          user_id: userId
+          user_id: userId,
+          temp_user_id: temp_user_id
         }),{
           headers: {
             Authorization: `Bearer ${token}`,
@@ -32,7 +33,6 @@ export const useGetCartData = () => {
         console.info('cart data', response.data);
         return response.data;
       },
-      enabled: !!userId,
       onError: () => {
         toast.error('Unable to fetch cart data. Please try again later.');
       }

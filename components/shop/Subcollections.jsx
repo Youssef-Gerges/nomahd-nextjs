@@ -33,8 +33,6 @@ export default function Subcollections({ data, id }) {
       case "home-category":
         if (subCategories?.data) {
           setProducts(subCategories?.data);
-          console.log("nardiene",subCategories?.data)
-          // setFiltered(linkProducts?.data);
         }
         break;
 
@@ -44,19 +42,6 @@ export default function Subcollections({ data, id }) {
         }
         break;
 
-      // case "best-selling":
-      //   if (bestSelling?.data) {
-      //     setProducts(bestSelling?.data);
-      //   }
-      //   break;
-
-      // case "flash-sale-id":
-      //   if (flashSale?.data) {
-      //     const SaleProducts = flashSale?.data?.find((sale) => sale?.id == id)
-      //       ?.products?.data;
-      //     setProducts(SaleProducts);
-      //   }
-      //   break;
 
       default:
         // Handle cases where `data` does not match any of the above
