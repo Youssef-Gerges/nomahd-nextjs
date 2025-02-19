@@ -29,7 +29,18 @@ export default function Login() {
     const updatedFormData = { ...formData, login_by: loginBy };
 
     loginMutation.mutate(updatedFormData, {
-      onSuccess: () => router.push("/"),
+      onSuccess: (data) => {
+        const { access_token, user } = data.data;
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('token', access_token);
+          localStorage.setItem('id', user.id);
+          localStorage.setItem('name', user.name);
+        }
+        console.log('Login successful');
+        
+        window.localStorage.removeItem('temp_user_id');
+        window.location.href = '/'
+      },
       onError: (error) => {
         // Extract and set error message
         setErrorMessage(

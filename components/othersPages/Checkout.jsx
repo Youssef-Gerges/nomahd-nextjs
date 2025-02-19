@@ -90,6 +90,7 @@ export default function Checkout() {
                   {
                     user_id: userId,
                     payment_type: paymentType,
+                    whatsapp: address.whatsapp
                   },
                   {
                     onSuccess: (orderData) => {

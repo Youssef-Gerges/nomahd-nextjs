@@ -32,6 +32,7 @@ export default function Login() {
         if (backdrop) {
           backdrop.parentNode.removeChild(backdrop);
         }
+        window.localStorage.removeItem('temp_user_id')
         // Navigate to the desired route on successful registration
         window.location.href = '/'
       },

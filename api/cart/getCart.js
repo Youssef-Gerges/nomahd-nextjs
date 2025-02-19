@@ -1,23 +1,15 @@
 import { useQuery ,useQueryClient,useMutation} from "@tanstack/react-query";
-import { api ,temp_user_id,token } from '../api';
+import { api ,temp_user_id,token, user_id } from '../api';
 import toast from 'react-hot-toast';
 import { useState, useEffect } from "react";
 
 
 export const useGetCartData = () => {
-  const [userId, setUserId] = useState(null);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const id = localStorage.getItem("id");
-      setUserId(id);
-    }
-  }, []);
     return useQuery({
       queryKey: ['cart'],
       queryFn: async () => {
         const response = await api.post(`/carts`, JSON.stringify({
-          user_id: userId,
+          user_id: user_id,
           temp_user_id: temp_user_id
         }),{
           headers: {
