@@ -6,13 +6,13 @@ const languageOptions = [
   { id: "sa", label: "العربية" },
 ];
 
-const selectedLanguageId = Cookies.get('language') || 'sa';
+const selectedLanguageId = Cookies.get('language');
 
 export default function LanguageSelect({
   parentClassName = "image-select center style-default type-languages",
   topStart = false,
 }) {
-  const [selected, setSelected] = useState(JSON.parse(selectedLanguageId));
+  const [selected, setSelected] = useState(JSON.parse(selectedLanguageId ?? '{}') ?? languageOptions[0]);
   const [isDDOpen, setIsDDOpen] = useState(false);
   const languageSelect = useRef();
 
