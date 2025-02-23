@@ -23,7 +23,7 @@ export const useAddToCart = () => {
       if(data?.data?.temp_user_id){
         localStorage.setItem('temp_user_id', data.data?.temp_user_id)
       }
-      queryClient.invalidateQueries(['cart']);
+      queryClient.invalidateQueries();
     },
   });
 };

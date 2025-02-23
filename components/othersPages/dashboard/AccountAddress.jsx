@@ -316,8 +316,8 @@ export default function AccountAddress() {
         <p>themesflat</p>
         <p>1234 Fashion Street, Suite 567</p>
         <p>New York</p>
-        <p>info@fashionshop.com</p>
-        <p className="mb_10">(212) 555-1234</p>
+        <p>support@nomahd.com</p>
+        <p className="mb_10">+966537094604</p>
         <div className="d-flex gap-10 justify-content-center">
           <button
             className="tf-btn btn-fill animate-hover-btn justify-content-center btn-edit-address"

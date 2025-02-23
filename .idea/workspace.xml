@@ -5,16 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e0f22cc-b165-4f73-a729-e41ac12c4d99" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/middleware.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/auth/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/auth/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/auth/logout.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/auth/logout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(otherPages)/payment-confirmation/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(otherPages)/payment-confirmation/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/othersPages/PaymentConfirmation.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/PaymentConfirmation.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/othersPages/Wishlist.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/Wishlist.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/headers/Nav.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/headers/Nav.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/modals/MobileMenu.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/modals/MobileMenu.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shopDetails/DetailsOuterZoom.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shopDetails/DetailsOuterZoom.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +64,8 @@
       <workItem from="1740158871292" duration="6117000" />
       <workItem from="1740171071633" duration="617000" />
       <workItem from="1740246955147" duration="1432000" />
+      <workItem from="1740312802776" duration="3383000" />
+      <workItem from="1740319255269" duration="1328000" />
     </task>
     <servers />
   </component>

@@ -45,13 +45,6 @@ export default function Hero({ banner }) {
                 <div className="container">
                   <h1 className="fade-item fade-item-1">{slide.heading}</h1>
                   <p className="fade-item fade-item-2">{slide.description}</p>
-                  <Link
-                    href={`/shop-default`} // Directly added href here
-                    className="fade-item fade-item-3 tf-btn btn-fill animate-hover-btn btn-xl radius-60"
-                  >
-                    <span>{slide.buttonText}</span>
-                    <i className="icon icon-arrow-right" />
-                  </Link>
                 </div>
               </div>
             </div>

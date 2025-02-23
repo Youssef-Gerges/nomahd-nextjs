@@ -1,188 +1,128 @@
 "use client";
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import LanguageSelect from "../common/LanguageSelect";
 import CurrencySelect from "../common/CurrencySelect";
-import { navItems } from "@/data/menu";
 import { usePathname } from "next/navigation";
 import { useContextElement } from "@/context/Context";
-export default function MobileMenu() {
-  const pathname = usePathname();
-  const { categories, subCategories, setCategoryId } = useContextElement();
-  const [isMenuActive, setIsMenuActive] = useState(null);
-  // const isMenuActive = (menuItem) => {
-  //   let active = false;
-  //   if (menuItem.href?.includes("/")) {
-  //     if (menuItem.href?.split("/")[1] == pathname.split("/")[1]) {
-  //       active = true;
-  //     }
-  //   }
-  //   if (menuItem.links) {
-  //     menuItem.links?.forEach((elm2) => {
-  //       if (elm2.href?.includes("/")) {
-  //         if (elm2.href?.split("/")[1] == pathname.split("/")[1]) {
-  //           active = true;
-  //         }
-  //       }
-  //       if (elm2.links) {
-  //         elm2.links.forEach((elm3) => {
-  //           if (elm3.href.split("/")[1] == pathname.split("/")[1]) {
-  //             active = true;
-  //           }
-  //         });
-  //       }
-  //     });
-  //   }
+import {api, token, user_id} from "@/api/api";
 
-  //   return active;
-  // };
-  return (
-    <div className="offcanvas offcanvas-start canvas-mb" id="mobileMenu">
+export default function MobileMenu() {
+    const { categories } = useContextElement();
+    const [isMenuActive, setIsMenuActive] = useState(null);
+    const [activeSubMenu, setActiveSubMenu] = useState(null);
+    const [isLogged, setIsLogged] = useState(false)
+    const [subCategories, setSubCategories] = useState([]);
+
+    useEffect(() => {
+        setIsLogged(user_id && token);
+    }, [user_id, token]);
+
+    const fetchSubCategories = async (link) => {
+        try {
+            const response = await api.get(`sub-categories/${link}`, {
+                Accept: 'Application/JSON'
+            });
+            const data = await response.json();
+            setSubCategories(data);
+        } catch (error) {
+            console.error("Failed to fetch subcategories:", error);
+        }
+    };
+
+    return (
+        <div className="offcanvas offcanvas-start canvas-mb" id="mobileMenu">
       <span
-        className="icon-close icon-close-popup"
-        data-bs-dismiss="offcanvas"
-        aria-label="Close"
+          className="icon-close icon-close-popup"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
       />
-      <div className="mb-canvas-content">
-        <div className="mb-body">
-          <ul className="nav-ul-mb" id="wrapper-menu-navigation">
-            {categories?.data?.map((item, i) => (
-              <li key={i} className="nav-mb-item">
-                <Link
-                  // href={`#${item.href}`}
-                  onClick={() => setIsMenuActive(item?.id)}
-                  href={`/shop-collection-sub/${item?.name}/${item?.id}`}
-                  className={`collapsed mb-menu-link current ${
-                    isMenuActive === item?.id ? "activeMenu" : ""
-                  }`}
-                  data-bs-toggle="collapse"
-                  aria-expanded="true"
-                  aria-controls={item.id}
-                >
-                  <span>{item.name}</span>
-                  {/* <span className="btn-open-sub" /> */}
-                </Link>
-                {/* <div id={item.id} className="collapse">
-                  <ul className="sub-nav-menu">
-                    {item.links.map((subItem, i2) => (
-                      <li key={i2}>
-                        {subItem.links ? (
-                          <>
-                            <a
-                              href={`#${subItem.id}`}
-                              className={`sub-nav-link collapsed  ${
-                                isMenuActive(subItem) ? "activeMenu" : ""
-                              }`}
-                              data-bs-toggle="collapse"
-                              aria-expanded="true"
-                              aria-controls={subItem.id}
-                            >
-                              <span>{subItem.label}</span>
-                              <span className="btn-open-sub" />
-                            </a>
-                            <div id={subItem.id} className="collapse">
-                              <ul className="sub-nav-menu sub-menu-level-2">
-                                {subItem.links.map((innerItem, i3) => (
-                                  <li key={i3}>
-                                    <Link
-                                      href={innerItem.href}
-                                      className={`sub-nav-link  ${
-                                        isMenuActive(innerItem)
-                                          ? "activeMenu"
-                                          : ""
-                                      }`}
-                                    >
-                                      {innerItem.label}
-                                      {innerItem.demoLabel && (
-                                        <div className="demo-label">
-                                          <span className="demo-new">New</span>
-                                        </div>
-                                      )}
-                                    </Link>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          </>
-                        ) : (
-                          <Link
-                            href={subItem.href}
-                            className={`sub-nav-link ${
-                              isMenuActive(subItem) ? "activeMenu" : ""
-                            }`}
-                          >
-                            {subItem.label}
-                            {subItem.demoLabel && (
-                              <div className="demo-label">
-                                <span className="demo-new">New</span>
-                              </div>
-                            )}
-                          </Link>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </div> */}
-              </li>
-            ))}
-            <li className="nav-mb-item">
-              <a
-                href="https://themeforest.net/item/Nomahd-ultimate-html5-template/53417990?s_rank=3"
-                className="mb-menu-link"
-              >
-                Buy now
-              </a>
-            </li>
-          </ul>
-          <div className="mb-other-content">
-            <div className="d-flex group-icon">
-              <Link href={`/wishlist`} className="site-nav-icon">
-                <i className="icon icon-heart" />
-                Wishlist
-              </Link>
-              <Link href={`/home-search`} className="site-nav-icon">
-                <i className="icon icon-search" />
-                Search
-              </Link>
+            <div className="mb-canvas-content">
+                <div className="mb-body">
+                    <ul className="nav-ul-mb" id="wrapper-menu-navigation">
+                        {categories?.data?.map((item, i) => (
+                            <li key={i} className="nav-mb-item">
+                                <Link
+                                    onClick={() => {
+                                        setIsMenuActive(item?.id);
+                                        setActiveSubMenu(activeSubMenu === item?.id ? null : item?.id);
+                                    }}
+                                    href={`/shop-collection-sub/${item?.name}/${item?.id}`}
+                                    className={`collapsed mb-menu-link current ${
+                                        isMenuActive === item?.id ? "activeMenu" : ""
+                                    }`}
+                                    data-bs-toggle="collapse"
+                                    aria-expanded={activeSubMenu === item?.id}
+                                    aria-controls={item.id}
+                                >
+                                    <span>{item.name}</span>
+                                </Link>
+                                {activeSubMenu === item?.id && (
+                                    <ul className="sub-menu">
+                                        {item?.sub_categories?.data?.map((subItem, j) => (
+                                            <li key={j}>
+                                                <Link href={`/shop-collection-sub/${subItem.name}/${subItem.id}/sub`}>
+                                                    {subItem.name}
+                                                </Link>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                    <div className="mb-other-content">
+                        <div className="d-flex group-icon">
+                            <Link href={`/wishlist`} className="site-nav-icon">
+                                <i className="icon icon-heart" />
+                                Wishlist
+                            </Link>
+                            <Link href={`/home-search`} className="site-nav-icon">
+                                <i className="icon icon-search" />
+                                Search
+                            </Link>
+                        </div>
+                        <div className="mb-notice">
+                            <Link href={`/contact-1`} className="text-need">
+                                Need help ?
+                            </Link>
+                        </div>
+                        <ul className="mb-info">
+                            <li>
+                                Address: 1234 Fashion Street, Suite 567, <br />
+                                New York, NY 10001
+                            </li>
+                            <li>
+                                Email: <b>support@nomahd.com</b>
+                            </li>
+                            <li>
+                                Phone: <b>+966537094604</b>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div className="mb-bottom">
+                    { isLogged?  <Link href={`/my-account`} className="site-nav-icon">
+                        <i className="icon icon-account" />
+                        My Account
+                    </Link>: <Link href={`/login`} className="site-nav-icon">
+                        <i className="icon icon-account"/>
+                        Login
+                    </Link>}
+                    <div className="bottom-bar-language">
+                        <div className="tf-currencies">
+                            <CurrencySelect />
+                        </div>
+                        <div className="tf-languages">
+                            <LanguageSelect
+                                parentClassName={
+                                    "image-select center style-default type-languages"
+                                }
+                            />
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="mb-notice">
-              <Link href={`/contact-1`} className="text-need">
-                Need help ?
-              </Link>
-            </div>
-            <ul className="mb-info">
-              <li>
-                Address: 1234 Fashion Street, Suite 567, <br />
-                New York, NY 10001
-              </li>
-              <li>
-                Email: <b>info@fashionshop.com</b>
-              </li>
-              <li>
-                Phone: <b>(212) 555-1234</b>
-              </li>
-            </ul>
-          </div>
         </div>
-        <div className="mb-bottom">
-          <Link href={`/login`} className="site-nav-icon">
-            <i className="icon icon-account" />
-            Login
-          </Link>
-          <div className="bottom-bar-language">
-            <div className="tf-currencies">
-              <CurrencySelect />
-            </div>
-            <div className="tf-languages">
-              <LanguageSelect
-                parentClassName={
-                  "image-select center style-default type-languages"
-                }
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+    );
 }

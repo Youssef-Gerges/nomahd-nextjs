@@ -9,9 +9,10 @@ import { useGetCountries } from "@/api/address/getCountries";
 import { useGetCities } from "@/api/address/getCities";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useGetBusinessSettings } from "@/api/general/getBusinessSettings";
+import {ThreeDots} from "react-loader-spinner";
 
 
 
@@ -363,7 +364,15 @@ export default function Checkout() {
                   type="button"
                   className="tf-btn radius-3 btn-fill btn-icon animate-hover-btn justify-content-center"
                 >
-                  Place order
+                    {createAddress.status === 'pending' || placeOrder.status === 'pending' || selectAddress.status === 'pending'? <ThreeDots
+                        visible={true}
+                        height={10}
+                        color="#b7ec31"
+                        radius="9"
+                        ariaLabel="three-dots-loading"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                    /> :'Place order'}
                 </button>
               </form>
             </div>

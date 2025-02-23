@@ -1,22 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import { api ,temp_user_id,token} from '../api';
+import {api, temp_user_id, token, user_id} from '../api';
 import { useState, useEffect } from'react';
 import toast from 'react-hot-toast';
 
 export const useGetSummary = () => {
-    const [userId, setUserId] = useState(null);
-  
-    useEffect(() => {
-      if (typeof window !== "undefined") {
-        const id = localStorage.getItem("id");
-        setUserId(id);
-      }
-    }, []);
+
+
   return useQuery({
     queryKey: ['summary'],
     queryFn: async () => {
       const response = await api.post(`/cart-summary`, {
-        user_id: userId,
+        user_id: user_id,
         temp_user_id: temp_user_id
       }, {
         headers: {

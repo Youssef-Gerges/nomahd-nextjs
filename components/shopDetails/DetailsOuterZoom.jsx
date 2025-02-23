@@ -440,7 +440,7 @@ export default function DetailsOuterZoom({ product }) {
                             <i className="icon-delivery-time" />
                           </div>
                           <p>
-                            Free shipping starting from:
+                            Free shipping:
                             <span className="fw-7 ms-1">
                               {settings?.data?.filter(item => item.type == 'shipping_free_after_amount')[0]?.value} Gram
                             </span>
