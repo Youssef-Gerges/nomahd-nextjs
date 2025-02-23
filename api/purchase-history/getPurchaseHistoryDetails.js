@@ -2,15 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import { api ,token} from '../api';
 import toast from 'react-hot-toast';
 
-export const useGetPurchaseHistoryDetails = (userId) => {
+export const useGetPurchaseHistoryDetails = (orderId) => {
   return useQuery({
-    queryKey: ['purchase-history-details', userId],
+    queryKey: ['purchase-history-details', orderId],
     queryFn: async () => {
-      const response = await api.get(`/purchase-history-details/${userId}`, {
+      const response = await api.get(`/purchase-history-details/${orderId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
-          'SYSTEM-KEY': "NOMAHD-SECRIT" 
         },
       });
 
@@ -18,10 +17,11 @@ export const useGetPurchaseHistoryDetails = (userId) => {
         throw new Error('Failed to fetch purchase history details');
       }
 
-      return response.data;
+      return response.data.data[0];
     },
     onError: () => {
       toast.error('Unable to fetch purchase history details. Please try again later.');
-    }
+    },
+      enabled: !!orderId,
   });
 };

@@ -1,5 +1,7 @@
 import { useMutation ,useQueryClient} from "@tanstack/react-query";
 import {api, token} from '../api';
+import Cookies from 'js-cookie'
+
 export const registerUser = async (userData) => {
     const response = await fetch('https://nomahd.com/api/v2/auth/signup', {
       method: 'POST',
@@ -81,6 +83,8 @@ export const registerUser = async (userData) => {
           localStorage.setItem('token', access_token);
           localStorage.setItem('id' , user.id)
           localStorage.setItem('name', user.name)
+            Cookies.set('token', access_token)
+
         }
         console.log('Registration successful');
         queryClient.invalidateQueries(['register_user']);
@@ -158,6 +162,7 @@ export const registerUser = async (userData) => {
         const { access_token, user } = data.data;
         if (typeof window !== 'undefined') {
           localStorage.setItem('token', access_token);
+        Cookies.set('token', access_token)
           localStorage.setItem('id', user.id);
           localStorage.setItem('name', user.name);
         }

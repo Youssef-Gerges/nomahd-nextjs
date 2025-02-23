@@ -4,7 +4,7 @@ import PaymentConfirmation from "@/components/othersPages/PaymentConfirmation";
 import React from "react";
 
 export const metadata = {
-  title: "Payment Confirmation || Nomahd - Ultimate Ecommerce",
+  title: "Order Confirmation || Nomahd - Ultimate Ecommerce",
   description: "Nomahd - Ultimate Ecommerce",
 };
 export default function page() {
@@ -13,7 +13,7 @@ export default function page() {
       <Header2 />
       <div className="tf-page-title">
         <div className="container-full">
-          <div className="heading text-center">Payment confirmation</div>
+          <div className="heading text-center">Order confirmation</div>
         </div>
       </div>
 

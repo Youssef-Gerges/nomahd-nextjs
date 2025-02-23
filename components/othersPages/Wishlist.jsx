@@ -23,7 +23,7 @@ export default function Wishlist() {
     <section className="flat-spacing-2">
       <div className="container">
         <div className="grid-layout wrapper-shop" data-grid="grid-4">
-          {wishlist?.data.map((elm, i) => (
+          {wishlist?.data?.map((elm, i) => (
             <ProductCardWishlist key={i} product={elm.product} productId={elm.id} />
           ))}
         </div>

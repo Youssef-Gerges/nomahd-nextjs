@@ -27,7 +27,7 @@ export default function Orders() {
               <td>{order.grand_total}</td>
               <td>
                   <Link
-                      href={`/my-account-orders-details`}
+                      href={`my-account-orders-details/${order.id}`}
                       className="tf-btn btn-fill animate-hover-btn rounded-0 justify-content-center"
                   >
                       <span>View</span>

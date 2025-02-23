@@ -1,6 +1,45 @@
-import React from "react";
+"use client"
+import React, {useEffect, useState} from "react";
 import Link from "next/link";
+import {useGetPurchaseHistory} from "@/api/purchase-history/getUserPurchaseHistory";
+import {token} from "@/api/api";
 export default function PaymentConfirmation() {
+    const {data: orders} = useGetPurchaseHistory()
+    const [lastOrder, setLastOrder] = useState(null)
+
+    useEffect(() => {
+            console.log('orders', orders)
+        if(orders?.data?.length > 0){
+            setLastOrder(orders.data[0]);
+        }
+    }, [orders])
+    const getInvoice = async () => {
+        try {
+            const response = await fetch(`https://nomahd.com/api/v2/invoice/download/${lastOrder?.id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    Accept: 'application/json',
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to download file: ${response.statusText}`);
+            }
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `invoice-${lastOrder?.id}.pdf`; // Adjust file name & extension if needed
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error("Error downloading invoice:", error);
+        }
+    };
+
   return (
     <section className="flat-spacing-11">
       <div className="container">
@@ -9,45 +48,27 @@ export default function PaymentConfirmation() {
             <h5 className="fw-5 mb_20">Payment confirmation</h5>
             <div className="tf-page-cart-checkout">
               <div className="d-flex align-items-center justify-content-between mb_15">
+                <div className="fs-18">Code</div>
+                <p>{lastOrder?.code}</p>
+              </div>
+                <div className="d-flex align-items-center justify-content-between mb_15">
                 <div className="fs-18">Date</div>
-                <p>01/01/2024</p>
+                <p>{lastOrder?.date}</p>
               </div>
               <div className="d-flex align-items-center justify-content-between mb_15">
                 <div className="fs-18">Payment method</div>
-                <p>Visa</p>
-              </div>
-              <div className="d-flex align-items-center justify-content-between mb_15">
-                <div className="fs-18">Card number</div>
-                <p>**** **** **** 9999</p>
-              </div>
-              <div className="d-flex align-items-center justify-content-between mb_15">
-                <div className="fs-18">Cardholder name</div>
-                <p>Themesflat</p>
-              </div>
-              <div className="d-flex align-items-center justify-content-between mb_15">
-                <div className="fs-18">Email</div>
-                <p>info@fashionshop.com</p>
-              </div>
-              <div className="d-flex align-items-center justify-content-between mb_15">
-                <div className="fs-18">Phone</div>
-                <p>(212) 555-1234</p>
+                <p>{lastOrder?.payment_type}</p>
               </div>
               <div className="d-flex align-items-center justify-content-between mb_24">
-                <div className="fs-22 fw-6">Subtotal</div>
-                <span className="total-value">$188.00 USD</span>
+                <div className="fs-22 fw-6">Total</div>
+                <span className="total-value">{lastOrder?.grand_total}</span>
               </div>
               <div className="d-flex gap-10">
-                <Link
-                  href={`/checkout`}
-                  className="tf-btn w-100 btn-outline animate-hover-btn rounded-0 justify-content-center"
-                >
-                  <span>Cancel Payment</span>
-                </Link>
                 <a
-                  href="#"
+                  onClick={getInvoice}
                   className="tf-btn w-100 btn-fill animate-hover-btn radius-3 justify-content-center"
                 >
-                  <span>Confirm Payment</span>
+                  <span>Download Invoice</span>
                 </a>
               </div>
             </div>

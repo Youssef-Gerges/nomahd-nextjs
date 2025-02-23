@@ -38,6 +38,8 @@
 // };
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api, token } from "../api";
+import Cookies from 'js-cookie'
+
 
 export const useLogout = () => {
   const queryClient = useQueryClient();
@@ -65,6 +67,7 @@ export const useLogout = () => {
       localStorage.removeItem('id');
       localStorage.removeItem('name');
 
+        Cookies.remove('token')
       // Step 2: Clear cart and wishlist data from the cache
       queryClient.setQueryData(['wishlist'], []); // Empty the wishlist
       queryClient.setQueryData(['cart'], []); // Empty the cart
