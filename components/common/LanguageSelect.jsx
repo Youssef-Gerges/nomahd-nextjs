@@ -12,7 +12,7 @@ export default function LanguageSelect({
   parentClassName = "image-select center style-default type-languages",
   topStart = false,
 }) {
-  const [selected, setSelected] = useState(JSON.parse(selectedLanguageId ?? '{}') ?? languageOptions[0]);
+  const [selected, setSelected] = useState(selectedLanguageId ? JSON.parse(selectedLanguageId) : languageOptions[1]);
   const [isDDOpen, setIsDDOpen] = useState(false);
   const languageSelect = useRef();
 

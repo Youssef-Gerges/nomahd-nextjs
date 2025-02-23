@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://nomahd.com/api/v2';
 
-let lang = 'sa';
+let lang = 'en';
 
 try{
  lang = JSON.parse(Cookies.get('language'))?.id;
