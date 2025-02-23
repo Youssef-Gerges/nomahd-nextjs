@@ -1,17 +1,18 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
+import Cookies from "js-cookie";
 const languageOptions = [
   { id: "en", label: "English" },
-  { id: "ar", label: "العربية" },
-  { id: "zh", label: "简体中文" },
-  { id: "ur", label: "اردو" },
+  { id: "sa", label: "العربية" },
 ];
+
+const selectedLanguageId = Cookies.get('language') || 'sa';
 
 export default function LanguageSelect({
   parentClassName = "image-select center style-default type-languages",
   topStart = false,
 }) {
-  const [selected, setSelected] = useState(languageOptions[0]);
+  const [selected, setSelected] = useState(JSON.parse(selectedLanguageId));
   const [isDDOpen, setIsDDOpen] = useState(false);
   const languageSelect = useRef();
 
@@ -21,7 +22,7 @@ export default function LanguageSelect({
         languageSelect.current &&
         !languageSelect.current.contains(event.target)
       ) {
-        setIsDDOpen(false); // Close the dropdown if click is outside
+        setIsDDOpen(false);
       }
     };
     // Add the event listener when the component mounts
@@ -32,6 +33,10 @@ export default function LanguageSelect({
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
+    useEffect(() => {
+    Cookies.set("language", JSON.stringify(selected));
+    }, [selected]);
   return (
     <>
       <div

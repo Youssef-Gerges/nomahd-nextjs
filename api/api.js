@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from "js-cookie";
 
 export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://nomahd.com/api/v2';
 
@@ -7,7 +8,7 @@ export const api = axios.create({
   // withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
-   'Content-Language': 'en'
+   'Content-Language': JSON.parse(Cookies.get('language') ?? '')?.id ?? 'sa'
   }
 });
 

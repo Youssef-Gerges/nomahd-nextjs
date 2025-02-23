@@ -16,8 +16,7 @@ export const usePasswordResendCode = () => {
         return await api.post('/auth/password/resend_code', data, {
           headers: {
             'Content-Type': 'application/json',
-            'SYSTEM-KEY':"NOMAHD-SECRIT"
-          },
+            'SYSTEM-KEY':"NOMAHD-SECRIT"},
         });
       },
     });

@@ -6,7 +6,7 @@ import Link from "next/link";
 import CartLength from "../common/CartLength";
 import WishlistLength from "../common/WishlistLength";
 import { useRouter } from "next/navigation";
-export default function Header2({
+import {useGetUserByAccessToken} from "@/api/auth/getUserByAccessToken";export default function Header2({
   textClass,
   bgColor = "",
   uppercase = false,
@@ -15,7 +15,6 @@ export default function Header2({
 }) {
   const [hasToken, setHasToken] = useState(false);
   const router = useRouter();
-
   useEffect(() => {
     const token = localStorage.getItem("token");
     setHasToken(!!token); // Set true if token exists, false otherwise
