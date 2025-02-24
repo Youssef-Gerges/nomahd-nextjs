@@ -123,7 +123,7 @@ export const ProductCard = ({ product }) => {
         )}
         {product.choice_options && (
           <div className="size-list">
-            {product.choice_options[0].options.map((size) => (
+            {product?.choice_options[0]?.options?.map((size) => (
               <span key={size}>{size}</span>
             ))}
           </div>

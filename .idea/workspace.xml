@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7e0f22cc-b165-4f73-a729-e41ac12c4d99" name="Changes" comment="">
+    <list default="true" id="7e0f22cc-b165-4f73-a729-e41ac12c4d99" name="Changes" comment="fixes">
+      <change beforePath="$PROJECT_DIR$/.idea/ECOMUSNEXT.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/nomahd.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/headers/Nav.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/headers/Nav.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/modals/MobileMenu.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/modals/MobileMenu.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/shopDetails/DetailsOuterZoom.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shopDetails/DetailsOuterZoom.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shopCards/ProductCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shopCards/ProductCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,20 +27,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;H:\\projects\\ECOMUSNEXT\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "ts.external.directory.path": "H:\\projects\\nomahd_next\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="H:\projects\ECOMUSNEXT" />
@@ -66,10 +67,41 @@
       <workItem from="1740246955147" duration="1432000" />
       <workItem from="1740312802776" duration="3383000" />
       <workItem from="1740319255269" duration="1328000" />
+      <workItem from="1740333054059" duration="4306000" />
+      <workItem from="1740415447529" duration="345000" />
+      <workItem from="1740417709977" duration="113000" />
+      <workItem from="1740417829798" duration="959000" />
     </task>
+    <task id="LOCAL-00001" summary="fixes">
+      <option name="closed" value="true" />
+      <created>1740337605303</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1740337605303</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixes" />
+    <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
 </project>
