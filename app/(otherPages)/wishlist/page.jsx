@@ -1,6 +1,5 @@
 import Footer1 from "@/components/footers/Footer1";
 import Header2 from "@/components/headers/Header2";
-import Topbar1 from "@/components/headers/Topbar1";
 import Announcment from "@/components/homes/multi-brand/Announcment";
 
 import Wishlist from "@/components/othersPages/Wishlist";

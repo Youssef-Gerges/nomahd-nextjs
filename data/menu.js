@@ -472,7 +472,7 @@ export const pages = [
     className: "menu-link-text link text_black-2",
     links: [
       {
-        href: "/contact-1",
+        href: "/contact",
         text: "Contact 1",
         className: "menu-link-text link text_black-2",
       },
@@ -853,7 +853,7 @@ export const navItems = [
       { href: "/about-us", label: "About us" },
       { href: "/brands", label: "Brands", demoLabel: true },
       { href: "/brands-v2", label: "Brands V2" },
-      { href: "/contact-1", label: "Contact 1" },
+      { href: "/contact", label: "Contact 1" },
       { href: "/contact-2", label: "Contact 2" },
       { href: "/faq-1", label: "FAQ 01" },
       { href: "/faq-2", label: "FAQ 02" },
