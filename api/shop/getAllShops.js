@@ -2,11 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import { api } from '../api';
 import toast from 'react-hot-toast';
 
-export const useGetAllShops = () => {
+export const useGetAllShops = (page) => {
   return useQuery({
-    queryKey: ['shops'],
+    queryKey: ['shops', page],
     queryFn: async () => {
-      const response = await api.get('/shops');
+      const response = await api.get('/shops?page=' + page);
 
       if (response.status !== 200) {
         throw new Error('Failed to fetch shops');

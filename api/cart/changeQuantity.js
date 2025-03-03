@@ -1,16 +1,13 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {api, token} from '../api';
 import toast from 'react-hot-toast';
-import {useContextElement} from "@/context/Context";
-import bootstrap from "bootstrap";
-import {router} from "next/client";
 
-export const useAddToCart = () => {
+export const useChangeQuantity = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
         mutationFn: async (productData) => {
-            return await api.post('/carts/add', JSON.stringify(productData), {
+            return await api.post('/carts/change-quantity', JSON.stringify(productData), {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -18,14 +15,14 @@ export const useAddToCart = () => {
             });
         },
         onError: () => {
-            console.log('Failed to add product to cart. Please try again.');
+            toast.error('Failed to change product.');
         },
         onSuccess: (data) => {
-            toast.success("Added to cart successfully.");
-            if (data?.data?.temp_user_id) {
-                localStorage.setItem('temp_user_id', data.data?.temp_user_id)
+            if(data.data.result){
+                toast.success("Product quantity changed successfully.");
+            }else{
+                toast.error(data.data.message);
             }
-            window.location.href = '/view-cart'
             queryClient.invalidateQueries();
         },
     });

@@ -10,17 +10,13 @@ export const useGetShopDetails = (id) => {
   return useQuery({
     queryKey: ['shop-details', id], 
     queryFn: async () => {
-      const response = await api.get(`/shops/details/${id}`, {
-        headers: {
-          'SYSTEM-KEY': 'NOMAHD-SECRIT',
-        },
-      });
+      const response = await api.get(`/shops/details/${id}`);
 
       if (response.status !== 200) {
         throw new Error('Failed to fetch shop details');
       }
 
-      return response.data;
+      return response.data?.data;
     },
     onError: () => {
       toast.error('Error fetching shop details. Please try again later.');

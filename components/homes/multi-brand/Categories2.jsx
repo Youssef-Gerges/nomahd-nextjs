@@ -51,7 +51,7 @@ export default function Categories2() {
                 <div className="collection-item style-2 hover-img">
                   <div className="collection-inner">
                     <Link
-                      href={`/shop-collection-sub/${collection?.slug}/${collection?.id}`} // Directly added href here
+                      href={collection.url??''} // Directly added href here
                       className="collection-image img-style"
                     >
                       <Image
@@ -63,15 +63,6 @@ export default function Categories2() {
                         height={432}
                       />
                     </Link>
-                    {/* <div className="collection-content">
-                      <Link
-                        href={`/shop-collection-sub`} // Directly added href here
-                        className="tf-btn collection-title hover-icon fs-15 rounded-full"
-                      >
-                        <span>{collection.name}</span>
-                        <i className="icon icon-arrow1-top-left" />
-                      </Link>
-                    </div> */}
                   </div>
                 </div>
               </SwiperSlide>

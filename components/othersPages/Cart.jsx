@@ -8,6 +8,7 @@ import { useDeletePackageFromCart } from "@/api/cart/removePackageFomCart";
 import { useRouter } from "next/navigation";
 import { useGetBusinessSettings } from "@/api/general/getBusinessSettings";
 import { useQueryClient } from "@tanstack/react-query";
+import {useChangeQuantity} from "@/api/cart/changeQuantity";
 
   export default function Cart() {
     const queryClient = useQueryClient()
@@ -20,6 +21,7 @@ import { useQueryClient } from "@tanstack/react-query";
   const [cartProductsData, setCartProducts] = useState([]);
   const [terms, setTerms] = useState(false);
   const [termsError, setTermsError] = useState(false);
+  const changeQuantity = useChangeQuantity();
 
 
   useEffect(() => {
@@ -54,6 +56,10 @@ import { useQueryClient } from "@tanstack/react-query";
       const itemIndex = items.indexOf(item);
       item.quantity = quantity;
       items[itemIndex] = item;
+        changeQuantity.mutate({
+            id: id,
+            quantity: quantity,
+        })
       setCartProducts(items);
     }
   };
@@ -276,10 +282,16 @@ import { useQueryClient } from "@tanstack/react-query";
                     </div>
                   </span>
                 </div>
-                <div className="tf-progress-msg">
-                  Buy <span className="price fw-6">{freeShipping} Gram</span> more to enjoy{" "}
-                  <span className="fw-6">Free Shipping</span>
-                </div>
+                  {Math.min((cartData?.total_weight / freeShipping) * 100, 100) === 100 ?
+                      <div className="tf-progress-msg text-success text-center">
+                          You got free Cashback
+                      </div>
+                      :
+                      <div className="tf-progress-msg">
+                          Buy <span className="price fw-6">{freeShipping} Gram</span> more to enjoy{" "}
+                          <span className="fw-6">Free Shipping</span>
+                      </div>
+                  }
               </div>
               <div className="tf-page-cart-checkout">
                

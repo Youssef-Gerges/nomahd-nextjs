@@ -12,65 +12,65 @@ import { useEffect } from "react";
 import { useContextElement } from "@/context/Context";
 export default function BannerCollection() {
   const { data } = useGetFeaturedCategories();
-  const { banners } = useContextElement();
-  useEffect(() => {
-    console.log("catat", data?.data);
-  }, [data]);
-  return (
-    <section className="flat-spacing-10 pb_0">
-      <div className="container">
-        <div className="flat-title">
+  if(data?.data.length > 0) {
+      return (
+          <section className="flat-spacing-10 pb_0">
+              <div className="container">
+                  <div className="flat-title">
           <span className="title wow fadeInUp" data-wow-delay="0s">
             Featured categories
           </span>
-        </div>
-        <Swiper
-          dir="ltr"
-          slidesPerView={2}
-          spaceBetween={15}
-          pagination={{ clickable: true, clickable: true }}
-          breakpoints={{
-            0: { slidesPerView: 1 },
-            700: { slidesPerView: 2 },
-            992: { slidesPerView: 3 },
-          }}
-          className="tf-sw-recent"
-        >
-          {data?.data?.map((item, index) => (
-            <SwiperSlide key={index}>
-              <div className="collection-item-v4 hover-img">
-                <div className="collection-inner">
-                  <Link
-                    href={`/shop-collection-sub/${item.slug}/${item.id}`} // Directly added href here
-                    className="collection-image img-style radius-10"
-                  >
-                    <Image
-                      className="lazyload"
-                      data-src={item.banner}
-                      alt={item.imgAlt}
-                      src={item.banner}
-                      width={800}
-                      height={746}
-                    />
-                  </Link>
-                  <div
-                    className="collection-content wow fadeInUp"
-                    data-wow-delay="0s"
-                  >
-                    <h5 className="heading text_white">{item.name}</h5>
-                    <Link
-                      href={`/shop-collection-sub/${item.name}/${item.id}`} // Directly added href here
-                      className="tf-btn style-3 fw-6 btn-light-icon rounded-full animate-hover-btn"
-                    >
-                      <span>Shop now</span>
-                    </Link>
                   </div>
-                </div>
+                  <Swiper
+                      dir="ltr"
+                      slidesPerView={2}
+                      spaceBetween={15}
+                      pagination={{clickable: true}}
+                      breakpoints={{
+                          0: {slidesPerView: 1},
+                          700: {slidesPerView: 2},
+                          992: {slidesPerView: 3},
+                      }}
+                      className="tf-sw-recent"
+                  >
+                      {data?.data?.map((item, index) => (
+                          <SwiperSlide key={index}>
+                              <div className="collection-item-v4 hover-img">
+                                  <div className="collection-inner">
+                                      <Link
+                                          href={`/shop-collection-sub/${item.slug}/${item.id}`} // Directly added href here
+                                          className="collection-image img-style radius-10"
+                                      >
+                                          <Image
+                                              className="lazyload"
+                                              data-src={item.banner}
+                                              alt={item.imgAlt}
+                                              src={item.banner}
+                                              width={800}
+                                              height={746}
+                                          />
+                                      </Link>
+                                      <div
+                                          className="collection-content wow fadeInUp"
+                                          data-wow-delay="0s"
+                                      >
+                                          <h5 className="heading text_white">{item.name}</h5>
+                                          <Link
+                                              href={`/shop-collection-sub/${item.name}/${item.id}`} // Directly added href here
+                                              className="tf-btn style-3 fw-6 btn-light-icon rounded-full animate-hover-btn"
+                                          >
+                                              <span>Shop now</span>
+                                          </Link>
+                                      </div>
+                                  </div>
+                              </div>
+                          </SwiperSlide>
+                      ))}
+                  </Swiper>
               </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
-    </section>
-  );
+          </section>
+      );
+  }else{
+      return <></>
+  }
 }

@@ -13,7 +13,7 @@ export default function Collections() {
               className={`${item.id} collection-item style-2 hover-img`}
             >
               <div className="collection-inner">
-                <Link href={item.href} className="collection-image img-style">
+                <Link href={item.href ?? ''} className="collection-image img-style">
                   <Image
                     className="lazyload"
                     data-src={item.imgSrc}
@@ -25,7 +25,7 @@ export default function Collections() {
                 </Link>
                 <div className="collection-content">
                   <Link
-                    href={item.href}
+                    href={item.href ?? ''}
                     className="tf-btn collection-title hover-icon fs-15 rounded-full"
                   >
                     <span>{item.title}</span>

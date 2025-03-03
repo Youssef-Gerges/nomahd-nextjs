@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import {useGetUserAddress} from "@/api/address/getUserAddress";
 
 export default function AccountAddress() {
   const [activeEdit, setactiveEdit] = useState(false);
   const [activeAdd, setactiveAdd] = useState(false);
+  const {data: addresses} = useGetUserAddress();
 
   return (
     <div className="my-account-content account-address">

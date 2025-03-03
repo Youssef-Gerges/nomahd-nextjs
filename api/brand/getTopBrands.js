@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../api';
-// import toast from 'react-hot-toast';
 
 export const useGetTopBrands = () => {
   return useQuery({

@@ -43,7 +43,7 @@ export default function Compare() {
                           >
                             <i className="icon-close" />
                           </div>
-                          <Link href={`/product-detail/${elm.id}`}>
+                          <Link href={`/product-detail/${elm.slug}`}>
                             <Image
                               className="radius-3"
                               alt="image"

@@ -11,18 +11,12 @@ export const useApplyCoupon = () => {
       return await api.post('/coupon-apply', data, {
         headers: {
           Authorization :`Bearer ${token}`,
-          'Content-Type': 'application/json',
-          'SYSTEM-KEY': "NOMAHD-SECRIT", 
+          'Content-Type': 'application/json'
         },
       });
     },
     onError: () => {
       toast.error('Failed to apply coupon. Please try again.');
-    },
-    onSuccess: () => {
-      toast.success('Coupon applied successfully!');
-      
-      queryClient.invalidateQueries(['cart']);
-    },
+    }
   });
 };

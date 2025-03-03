@@ -21,7 +21,7 @@ export default function HomesModal() {
             <div className="row-demo">
               {allHomepages.map((item, index) => (
                 <div key={index} className="demo-item">
-                  <Link href={item.href}>
+                  <Link href={item.href ?? ''}>
                     <div className="demo-image position-relative">
                       <Image
                         className="lazyload"

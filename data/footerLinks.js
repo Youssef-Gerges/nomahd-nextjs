@@ -3,8 +3,6 @@ export const footerLinks = [
   { href: "/delivery-return", text: "Returns + Exchanges" },
   { href: "/shipping-delivery", text: "Shipping" },
   { href: "/terms-conditions", text: "Terms & Conditions" },
-  { href: "/faq-1", text: "FAQ’s" },
-  { href: "/wishlist", text: "My Wishlist" },
 ];
 export const aboutLinks = [
   { href: "/about-us", text: "Our Story" },

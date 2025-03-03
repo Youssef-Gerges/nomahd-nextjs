@@ -185,7 +185,7 @@ const { subCategories } = useContextElement();
                 {subCategories?.data?.map((category) => (
                   <li key={category.id} className={`cate-item`}>
                     {/* {category.link ? ( */}
-                      <Link href={`/shop-collection-sub/${category.name}/${category.id}/sub`}>
+                      <Link href={`/shop-collection-sub/${category.name}/${category.id}`}>
                         <span>{category.name}</span>
                       </Link>
                     {/* ) : (

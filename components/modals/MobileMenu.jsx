@@ -61,7 +61,7 @@ export default function MobileMenu() {
                                     <ul className="sub-menu">
                                         {item?.sub_categories?.data?.map((subItem, j) => (
                                             <li key={j}>
-                                                <Link href={`/shop-collection-sub/${subItem.name}/${subItem.id}/sub`}>
+                                                <Link href={`/shop-collection-sub/${subItem.name}/${subItem.id}`}>
                                                     {subItem.name}
                                                 </Link>
                                             </li>

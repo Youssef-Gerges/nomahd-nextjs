@@ -220,6 +220,7 @@ export default function Register() {
     const updatedFormData = {
       ...formDataToSubmit,
       register_by: registerBy,
+
     };
     console.log("formdataaa", updatedFormData);
     registerMutation.mutate(updatedFormData, {

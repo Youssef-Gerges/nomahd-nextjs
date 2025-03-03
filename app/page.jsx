@@ -14,6 +14,7 @@ import Testimonials from "@/components/homes/multi-brand/Testimonials";
 // import Categories from "@/components/homes/home-1/Categories";
 import Categories2 from "@/components/homes/multi-brand/Categories2";
 import Announcment from "@/components/homes/multi-brand/Announcment";
+import FlashSale from "@/components/homes/multi-brand/FlashSale";
 
 // import Hero from "@/components/homes/home-1/Hero";
 
@@ -31,6 +32,7 @@ export default function Home() {
       <Categories isHomeCategories={true}/>
       <Hero />
       <Categories2 />
+        <FlashSale />
       <BannerCollection />
       <Products />
       <Collection />

@@ -8,15 +8,6 @@ import { useEffect, useState } from "react";
 
 export default function Wishlist() {
   const { wishList } = useContextElement();
-  // const [wishListItems, setWishListItems] = useState([]);
-  // useEffect(() => {
-  //   if (wishList) {
-  //     setWishListItems(
-  //       // [...allProducts].filter((el) => wishList.includes(el.id))
-  //       wishList?.data
-  //     );
-  //   }
-  // }, [wishList]);
   return (
     <div className="my-account-content account-wishlist">
       <div className="grid-layout wrapper-shop" data-grid="grid-3">

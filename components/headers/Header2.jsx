@@ -17,7 +17,7 @@ import {useGetUserByAccessToken} from "@/api/auth/getUserByAccessToken";export d
   const router = useRouter();
   useEffect(() => {
     const token = localStorage.getItem("token");
-    setHasToken(!!token); // Set true if token exists, false otherwise
+    setHasToken(!!token);
   }, []);
 
   const handleClick = (e) => {
@@ -100,11 +100,6 @@ import {useGetUserByAccessToken} from "@/api/auth/getUserByAccessToken";export d
                 </a>
               </li>
               <li className="nav-account">
-                {/* <a
-                  href="#login"
-                  data-bs-toggle="modal"
-                  className="nav-icon-item"
-                > */}
                 <a href={hasToken ? "/my-account" : "#"} onClick={handleClick}>
                   <i className="icon icon-account" />
                 </a>

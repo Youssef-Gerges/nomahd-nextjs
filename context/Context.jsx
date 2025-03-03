@@ -5,24 +5,21 @@ import { useGetSubCategory } from "@/api/categories/getSubCategories";
 import { useGetAllBrands } from "@/api/brand/getAllBrands";
 import { useGetAllBanners } from "@/api/general/getAllBanners";
 import { useGetAllFlashDeals } from "@/api/products/flashDeal/getAllFlashDeals";
-import { useGetSubCategoryProducts } from "@/api/products/getAllSubCategoryProducts";
 import { useGetBestSellingProducts } from "@/api/products/getBestSellingProducts";
 import { useGetRelatedProducts } from "@/api/products/getRelatedProducts";
 import { useCheckProductInWishlist } from "@/api/wishlist/checkProduct";
 import { useGetUserWishlist } from "@/api/wishlist/getUserWishlist";
 import { useAddToWishlistNew } from "@/api/wishlist/newAddToWishlist";
 import { useNewRemoveFromWishlist } from "@/api/wishlist/newRemoveFromWishlist";
-// import { allProducts } from "@/data/products";
 import { openCartModal } from "@/utlis/openCartModal";
 import { useGetTopBrands } from "@/api/brand/getTopBrands";
-// import { openCart } from "@/utlis/toggleCart";
 import React, { useEffect } from "react";
 import { useContext, useState } from "react";
 import { useGetAllProducts } from "@/api/products/useGetAllProducts";
 import { useGetLinkCategories } from "@/api/categories/getLinkCategories";
 import { useGetFeaturedCategories } from "@/api/categories/getFeaturedCategories";
-import { useGetCartData } from "@/api/cart/getCart";
 import {useQueryClient} from "@tanstack/react-query";
+import {useGetAllShops} from "@/api/shop/getAllShops";
 const dataContext = React.createContext();
 export const useContextElement = () => {
   return useContext(dataContext);
@@ -50,11 +47,11 @@ export default function Context({ children }) {
   const [quickAddPackage, setQuickAddPackage] = useState({id: 0, products: []});
   const [totalPrice, setTotalPrice] = useState(0);
   const { data: wishlist } = useGetUserWishlist();
-  const checkWishlist = useCheckProductInWishlist();
   const [addToWishlistSuccess, setAddToWishlistSucess] = useState(false);
-  const { data: linkProducts } = useGetLinkCategories(link);
-  const { data: allProducts } = useGetAllProducts(page);
-  const { data: bestSelling } = useGetBestSellingProducts();
+  const { data: linkProducts, refetch: linkCategoriesRefetch, status: linkProductsStatus } = useGetLinkCategories(link, page);
+  const { data: allProducts, status: fetchProductsStatus } = useGetAllProducts(page);
+  const { data: bestSelling, status: bestSellingStatus } = useGetBestSellingProducts();
+  const {data: shops} = useGetAllShops();
   const { data: relatedProducts } = useGetRelatedProducts(productId);
   const { data: subCategories } = useGetSubCategory(categoryId);
   const { data: categories } = useGetAllCategories();
@@ -64,6 +61,7 @@ export default function Context({ children }) {
   const { data: brands } = useGetAllBrands();
   const { data: topBrands } = useGetTopBrands();
   const { data: featured } = useGetFeaturedCategories();
+
   // const { data: cartData } = useGetCartData(userId);
   const [removeFromWishlistSuccess, setRemoveFromWishlistSuccess] =
     useState(false);
@@ -214,6 +212,7 @@ export default function Context({ children }) {
     // cartData,
     setCartProducts,
     totalPrice,
+      shops,
     addProductToCart,
     isAddedToCartProducts,
     // removeFromWishlist,
@@ -249,10 +248,14 @@ export default function Context({ children }) {
     brands,
     topBrands,
     allProducts,
+      fetchProductsStatus,
     setPage,
+      page,
     linkProducts,
     setLink,
     featured,
+      bestSellingStatus,
+      linkProductsStatus
   };
   return (
     <dataContext.Provider value={contextElement}>

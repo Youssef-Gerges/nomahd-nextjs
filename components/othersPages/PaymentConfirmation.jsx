@@ -1,14 +1,14 @@
 "use client"
 import React, {useEffect, useState} from "react";
-import Link from "next/link";
 import {useGetPurchaseHistory} from "@/api/purchase-history/getUserPurchaseHistory";
 import {token} from "@/api/api";
+import Cookies from "js-cookie";
 export default function PaymentConfirmation() {
     const {data: orders} = useGetPurchaseHistory()
     const [lastOrder, setLastOrder] = useState(null)
 
     useEffect(() => {
-            console.log('orders', orders)
+    Cookies.remove('order-confirmation')
         if(orders?.data?.length > 0){
             setLastOrder(orders.data[0]);
         }

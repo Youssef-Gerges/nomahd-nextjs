@@ -6,96 +6,27 @@ import ShopFilter from "./ShopFilter";
 import Sorting from "./Sorting";
 import {useContextElement} from "@/context/Context";
 import React, {useEffect, useState} from "react";
+import {useGetSellerProducts} from "@/api/products/getAllSellerProducts";
 
-export default function ShopDefault({data, id}) {
+export default function SellerProducts({id}) {
     const [gridItems, setGridItems] = useState(4);
     const [finalSorted, setFinalSorted] = useState([]);
     const [products, setProducts] = useState([]);
     const {
-        bestSelling,
-        bestSellingStatus,
-        linkProductsStatus,
-        allProducts,
-        linkProducts,
-        subCategories,
-        setLink,
         setPage,
-        flashSale,
         page,
-        link,
-        fetchProductsStatus
     } = useContextElement();
+    const {data, refetch, status} = useGetSellerProducts(page, id)
 
     useEffect(() => {
+        refetch()
+    }, [id, page]);
 
-        setLink(`/products/category/${id}`);
-    }, [id]);
 
     useEffect(() => {
-
-    }, [subCategories, data]);
-    useEffect(() => {
-        switch (data) {
-            case "home-category":
-                if (linkProducts?.data) {
-                    if(page > 1){
-                        setProducts(prev => [...prev, ...linkProducts?.data]);
-                    }else{
-                        setProducts(linkProducts?.data);
-                    }
-                }
-                break;
-
-            case "all-products":
-                if (allProducts?.data) {
-                    if(page > 1){
-                        setProducts(prev => [...prev, ...allProducts?.data]);
-                    }else{
-                        setProducts(allProducts?.data);
-                    }
-                }
-                break;
-            case "sub-category":
-                if (linkProducts?.data) {
-                    if(page > 1){
-                        setProducts(prev => [...prev, ...linkProducts?.data]);
-                    }else{
-                        setProducts(linkProducts?.data);
-                    }
-                }
-                break;
-            case "best-selling":
-                if (bestSelling?.data) {
-                    if(page > 1){
-                        setProducts(prev => [...prev, ...bestSelling?.data]);
-                    }else{
-                        setProducts(bestSelling?.data);
-                    }
-                }
-                break;
-
-            case "flash-sale-id":
-                if (flashSale?.data) {
-                    const SaleProducts = flashSale?.data?.find((sale) => sale?.id == id)
-                        ?.products?.data;
-                    setProducts(prev => [...SaleProducts]);
-                }
-                break;
-
-            default:
-                // Handle cases where `data` does not match any of the above
-                setProducts([]);
-                break;
-        }
-    }, [
-        data,
-        linkProducts,
-        subCategories,
-        allProducts,
-        bestSelling,
-        flashSale,
-        link,
-    ]);
+        setProducts(data?.data ?? [])
+        console.log('dataaaaaaaaaaaaa', data)
+    }, [data])
 
 
     const handleLoad = () => {
@@ -149,7 +80,7 @@ export default function ShopDefault({data, id}) {
                             <div className="tf-pagination-wrap view-more-button text-center tf-pagination-btn">
                                 <button
                                     className={`tf-btn-loading tf-loading-default animate-hover-btn btn-loadmore ${
-                                        (data === 'all-products' && fetchProductsStatus === 'pending') || (data === 'best-selling' && bestSellingStatus === 'pending') || (data === 'home-category' && linkProductsStatus === 'pending') ? "loading" : ""
+                                        status === 'pending' ? "loading" : ""
                                     } `}
                                     onClick={() => handleLoad()}
                                 >

@@ -1,6 +1,5 @@
 "use client";
 
-// import { collectionSlides2 } from "@/data/categories";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Link from "next/link";
 import Image from "next/image";
@@ -9,23 +8,13 @@ import { useContextElement } from "@/context/Context";
 import React, { useState, useEffect } from "react";
 export default function Subcollections({ data, id }) {
   const {
-    link,
-    linkProducts,
-    setLink,
     categories,
-    allProducts,
     subCategories,
     setCategoryId,
   } = useContextElement();
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    const foundLink = subCategories?.data.find((item) => item.id == id)?.links
-      .products;
-    // // const foundCategory = categories?.data.find((item) => item.id == id)?.name;
-    // // setCategoryName(foundCategory);
-    // setLink(foundLink);
     setCategoryId(id);
-    console.log("jjjj", subCategories);
   }, [id, subCategories]);
 
   useEffect(() => {
@@ -44,7 +33,6 @@ export default function Subcollections({ data, id }) {
 
 
       default:
-        // Handle cases where `data` does not match any of the above
         setProducts([]);
         break;
     }
@@ -81,7 +69,7 @@ export default function Subcollections({ data, id }) {
                 <div className="collection-item style-2 hover-img">
                   <div className="collection-inner">
                     <Link
-                      href={`/shop-collection-sub/${slide.name}/${slide.id}/sub`}
+                      href={`/shop-collection-sub/${slide.name}/${slide.id}`}
                       className="collection-image img-style"
                     >
                       <Image
@@ -95,7 +83,7 @@ export default function Subcollections({ data, id }) {
                     </Link>
                     <div className="collection-content">
                       <Link
-                        href={`/shop-collection-sub/${slide.name}/${slide.id}/sub`}
+                        href={`/shop-collection-sub/${slide.name}/${slide.id}`}
                         className="tf-btn collection-title hover-icon fs-15"
                       >
                         <span>{slide.name}</span>

@@ -5,354 +5,78 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e0f22cc-b165-4f73-a729-e41ac12c4d99" name="Changes" comment="fixes">
+      <change afterPath="$PROJECT_DIR$/api/cart/changeQuantity.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/(dashboard)/layout.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/(otherPages)/seller-login/page.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/(otherPages)/seller-register/page.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/(otherPages)/verify-user/page.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/(shop)/shops/[slug]/page.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/othersPages/SellerRegister.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/othersPages/VerifyUser.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/shop/SellerHeader.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/shop/SellerProducts.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(blogs)/blog-detail/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(blogs)/blog-grid/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(blogs)/blog-list/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(blogs)/blog-sidebar-left/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(blogs)/blog-sidebar-right/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-02/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-03/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-04/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-05/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-06/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-07/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-08/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-accessories/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-activewear/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-baby/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-category/[category]/[id]/[subId]/[subSlug]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-category/[category]/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-decor/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-dog-accessories/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-electronic/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-furniture-02/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-furniture/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-giftcard/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-glasses/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-grocery/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-handbag/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-headphone/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-jewerly/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-kids/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-kitchen-wear/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-men/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-multi-brand/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-paddle-boards/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-phonecase/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-pod-store/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-search/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-setup-gear/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-skateboard/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-skincare/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-sneaker/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-sock/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-stroller/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(homes)/home-tee/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(otherPages)/about-us/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(otherPages)/best-seller/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(otherPages)/best-seller/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(otherPages)/brands-v2/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(otherPages)/brands/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(otherPages)/compare/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(otherPages)/contact-1/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(otherPages)/contact/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(otherPages)/contact-2/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(otherPages)/faq-2/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(otherPages)/invoice/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(otherPages)/new-arrivals/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(otherPages)/new-arrivals/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(otherPages)/our-store/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(otherPages)/store-locations/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(otherPages)/timeline/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(otherPages)/wishlist/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(otherPages)/wishlist/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop)/product-style-01/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop)/product-style-02/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop)/product-style-03/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop)/product-style-04/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop)/product-style-05/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop)/product-style-06/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop)/product-style-07/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop)/product-style-list/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop)/shop-collection-list/page.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/address/getUserAddress.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/address/getUserAddress.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/auth/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/auth/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/auth/confirmCode.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/auth/confirmCode.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/brand/getTopBrands.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/brand/getTopBrands.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/cart/addToCart.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/cart/addToCart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/categories/getLinkCategories.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/categories/getLinkCategories.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/coupon/applyCoupon.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/coupon/applyCoupon.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/products/getAllSellerProducts.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/products/getAllSellerProducts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/shop/getAllShops.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/shop/getAllShops.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/shop/getShopInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/shop/getShopInfo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(otherPages)/login/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(otherPages)/login/page.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(otherPages)/payment-confirmation/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(otherPages)/payment-confirmation/page.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(otherPages)/register/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(otherPages)/register/page.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(shop)/shop-collection-sub/[name]/[id]/sub/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(shop)/shop-collection-sub/[name]/[id]/sub/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop)/shop-default/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop)/shop-filter-hidden/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop)/shop-filter-sidebar/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop)/shop-fullwidth/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop)/shop-left-sidebar/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop)/shop-link/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop)/shop-loadmore/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop)/shop-men/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop)/shop-right-sidebar/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop)/shop-women/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-3d/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-advanced-types/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-bottom-thumbnails/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-color-swatch/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-complimentary/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-description-accordion/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-description-list/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-description-vertical/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-drawer-sidebar/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-frequently-bought-together-2/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-frequently-bought-together/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-giftcard/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-grid-1/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-grid-2/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-images-grouped/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-inner-zoom/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-no-zoom/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-notification/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-options-customizer/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-photoswipe-popup/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-pickup/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-pre-orders/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-quick-order-list/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-rectangle-color/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-rectangle/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-right-thumbnails/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-stacked/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-swatch-dropdown-color/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-swatch-dropdown/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-swatch-image-rounded/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-swatch-image/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-upsell-features/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-video/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-zoom-magnifier/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop-details)/product-zoom-popup/[id]/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/not-found.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/not-found.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(shop)/shop-infinite-scrolling/page.jsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/blogs/BlogDetails.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/blogs/BlogGrid.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/blogs/BlogLeftRightbar.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/blogs/BlogLeftSidebar.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/blogs/BlogList.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/blogs/RelatedBlogs.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/blogs/Sidebar.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/footers/Footer2.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/footers/Footer3.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/footers/Footer4.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/footers/Footer5.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/footers/Footer6.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/footers/Footer7.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/headers/Header1.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/headers/Header10.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/headers/Header11.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/headers/Header12.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/headers/Header13.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/headers/Header15.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/headers/Header16.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/headers/Header17.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/headers/Header18.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/headers/Header3.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/headers/Header4.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/headers/Header5.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/headers/Header6.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/headers/Header8.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/headers/Header9.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/headers/Topbar1.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/headers/Topbar2.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/headers/Topbar3.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/headers/Topbar4.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-1/Brands.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-1/Brands.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-1/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-1/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-1/Lookbook.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-1/Lookbook.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-1/Marquee.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-1/Marquee.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-2/BannerCollection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-2/BannerCollection.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-2/Brands.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-2/Brands.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-2/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-2/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-2/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-2/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-3/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-3/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-3/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-3/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-3/Products2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-3/Products2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-3/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-3/Testimonials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-3/VideoBanner.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-3/VideoBanner.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-4/Categories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-4/Categories.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-4/Categories2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-4/Categories2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-4/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-4/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-4/Marquee.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-4/Marquee.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-4/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-4/Testimonials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-5/BannerCountdown.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-5/BannerCountdown.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-5/Collection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-5/Collection.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-5/Features.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-5/Features.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-5/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-5/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-5/Lookbook.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-5/Lookbook.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-6/Banner.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-6/Banner.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-6/Features.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-6/Features.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-6/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-6/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-6/Location.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-6/Location.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-7/Banner.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-7/Banner.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-7/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-7/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-7/Marquee.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-7/Marquee.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-7/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-7/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-8/Blogs.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-8/Blogs.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-8/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-8/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-8/Lookbook.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-8/Lookbook.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-8/Marquee.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-8/Marquee.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-accessories/Brands.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-accessories/Brands.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-accessories/Categories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-accessories/Categories.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-accessories/Collections.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-accessories/Collections.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-accessories/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-accessories/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-accessories/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-accessories/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-accessories/Products2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-accessories/Products2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-accessories/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-accessories/Testimonials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-activewear/Countdown.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-activewear/Countdown.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-activewear/Features.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-activewear/Features.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-activewear/Features2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-activewear/Features2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-activewear/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-activewear/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-activewear/Lookbook.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-activewear/Lookbook.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-activewear/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-activewear/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-activewear/Products2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-activewear/Products2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-activewear/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-activewear/Testimonials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-baby/BannerCollections.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-baby/BannerCollections.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-baby/Brands.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-baby/Brands.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-baby/Categories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-baby/Categories.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-baby/Collections.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-baby/Collections.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-baby/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-baby/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-baby/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-baby/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-baby/Products2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-baby/Products2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-decor/Collections.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-decor/Collections.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-decor/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-decor/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-decor/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-decor/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-decor/Products2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-decor/Products2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-decor/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-decor/Testimonials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-dog-accessories/Categories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-dog-accessories/Categories.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-dog-accessories/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-dog-accessories/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-dog-accessories/Lookbook.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-dog-accessories/Lookbook.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-dog-accessories/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-dog-accessories/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-electronic/Blogs.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-electronic/Blogs.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-electronic/CollectionBanner.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-electronic/CollectionBanner.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-electronic/Collections.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-electronic/Collections.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-electronic/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-electronic/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-electronic/Marquee.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-electronic/Marquee.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-electronic/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-electronic/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-electronic/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-electronic/Testimonials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-furniture-02/Collections.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-furniture-02/Collections.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-furniture-02/Collections2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-furniture-02/Collections2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-furniture-02/Features.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-furniture-02/Features.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-furniture-02/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-furniture-02/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-furniture-02/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-furniture-02/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-furniture-02/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-furniture-02/Testimonials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-furniture/Announcment.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-furniture/Announcment.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-furniture/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-furniture/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-furniture/Lookbook.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-furniture/Lookbook.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-giftcard/Blog.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-giftcard/Blog.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-giftcard/Card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-giftcard/Card.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-giftcard/Features.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-giftcard/Features.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-giftcard/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-giftcard/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-giftcard/Marquee.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-giftcard/Marquee.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-giftcard/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-giftcard/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-giftcard/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-giftcard/Testimonials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-glasses/Banner.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-glasses/Banner.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-glasses/Categories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-glasses/Categories.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-glasses/Collections.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-glasses/Collections.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-glasses/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-glasses/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-grocery/Categories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-grocery/Categories.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-grocery/Collections.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-grocery/Collections.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-grocery/Features.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-grocery/Features.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-grocery/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-grocery/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-grocery/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-grocery/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-handbag/BannerCollections.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-handbag/BannerCollections.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-handbag/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-handbag/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-handbag/Marquee.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-handbag/Marquee.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-handbag/Newsletter.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-handbag/Newsletter.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-handbag/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-handbag/Testimonials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-headphone/Banner.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-headphone/Banner.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-headphone/Collections.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-headphone/Collections.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-headphone/Collections2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-headphone/Collections2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-headphone/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-headphone/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-headphone/Marquee.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-headphone/Marquee.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-headphone/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-headphone/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-headphone/Products2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-headphone/Products2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-headphone/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-headphone/Testimonials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-jewerly/Banner.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-jewerly/Banner.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-jewerly/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-jewerly/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-jewerly/Marquee.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-jewerly/Marquee.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-jewerly/Products2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-jewerly/Products2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-jewerly/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-jewerly/Testimonials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-kids/Collections.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-kids/Collections.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-kids/Features.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-kids/Features.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-kids/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-kids/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-kids/Lookbook.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-kids/Lookbook.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-kids/Marquee.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-kids/Marquee.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-kids/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-kids/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-kids/Products2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-kids/Products2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-kitchen-wear/Collections.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-kitchen-wear/Collections.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-kitchen-wear/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-kitchen-wear/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-kitchen-wear/Lookbook.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-kitchen-wear/Lookbook.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-kitchen-wear/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-kitchen-wear/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-kitchen-wear/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-kitchen-wear/Testimonials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-men/Banner.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-men/Banner.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-men/Blogs.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-men/Blogs.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-men/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-men/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-men/Marquee.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-men/Marquee.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-paddle-boards/Banner.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-paddle-boards/Banner.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-paddle-boards/Features.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-paddle-boards/Features.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-paddle-boards/Features2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-paddle-boards/Features2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-paddle-boards/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-paddle-boards/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-paddle-boards/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-paddle-boards/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-paddle-boards/Products2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-paddle-boards/Products2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-paddle-boards/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-paddle-boards/Testimonials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-phonecase/Features.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-phonecase/Features.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-phonecase/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-phonecase/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-phonecase/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-phonecase/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-phonecase/Products2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-phonecase/Products2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-phonecase/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-phonecase/Testimonials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-pod-store/Brands.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-pod-store/Brands.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-pod-store/Collections2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-pod-store/Collections2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-pod-store/Marquee.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-pod-store/Marquee.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-pod-store/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-pod-store/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-pod-store/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-pod-store/Testimonials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-setup-gear/Collections.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-setup-gear/Collections.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-setup-gear/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-setup-gear/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-setup-gear/Lookbook.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-setup-gear/Lookbook.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-setup-gear/Maequee.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-setup-gear/Maequee.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-setup-gear/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-setup-gear/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-setup-gear/Products2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-setup-gear/Products2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-setup-gear/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-setup-gear/Testimonials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-skateboard/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-skateboard/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-skateboard/Marquee.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-skateboard/Marquee.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-skateboard/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-skateboard/Testimonials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-skincare/Announcement.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-skincare/Announcement.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-skincare/Banner.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-skincare/Banner.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-skincare/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-skincare/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-skincare/Marquee.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-skincare/Marquee.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-skincare/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-skincare/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-skincare/Products2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-skincare/Products2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-skincare/SkinChange.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-skincare/SkinChange.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-skincare/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-skincare/Testimonials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-sneaker/Features.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-sneaker/Features.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-sneaker/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-sneaker/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-sneaker/Lookbook.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-sneaker/Lookbook.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-sneaker/NewsLetter.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-sneaker/NewsLetter.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-sock/Banner.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-sock/Banner.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-sock/Collections.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-sock/Collections.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-sock/Features.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-sock/Features.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-sock/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-sock/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-sock/Marquee.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-sock/Marquee.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-sock/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-sock/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-sock/Products2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-sock/Products2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-sock/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-sock/Testimonials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-stroller/Announcment.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-stroller/Announcment.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-stroller/Brands.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-stroller/Brands.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-stroller/Faqs.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-stroller/Faqs.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-stroller/Features.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-stroller/Features.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-stroller/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-stroller/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-stroller/Products.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-stroller/Products.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-stroller/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-stroller/Testimonials.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-tee/Categories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-tee/Categories.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-tee/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-tee/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/multi-brand/Announcment.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/multi-brand/Announcment.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/footers/Footer1.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/footers/Footer1.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/headers/Header2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/headers/Header2.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/homes/home-men/Collections.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-men/Collections.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/homes/multi-brand/BannerCollection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/multi-brand/BannerCollection.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/homes/multi-brand/Brands.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/multi-brand/Brands.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/homes/multi-brand/Categories2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/multi-brand/Categories2.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/homes/multi-brand/FlashSale.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/multi-brand/FlashSale.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/homes/multi-brand/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/multi-brand/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/multi-brand/Testimonials.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/multi-brand/Testimonials.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/modals/Compare.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/modals/Compare.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/modals/DeliveryReturn.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/modals/DeliveryReturn.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/modals/HomesModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/modals/HomesModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/modals/MobileMenu.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/modals/MobileMenu.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/modals/ProductSidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/modals/ProductSidebar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/modals/ShopCart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/modals/ShopCart.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/othersPages/Cart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/Cart.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/othersPages/Checkout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/Checkout.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/othersPages/Compare.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/Compare.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/othersPages/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/othersPages/PaymentConfirmation.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/PaymentConfirmation.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/othersPages/Register.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/Register.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/othersPages/dashboard/AccountAddress.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/dashboard/AccountAddress.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/othersPages/dashboard/Wishlist.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/dashboard/Wishlist.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shop/ShopDefault.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shop/ShopDefault.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shop/ShopFilter.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shop/ShopFilter.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shop/Sorting.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shop/Sorting.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shop/Subcollections.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shop/Subcollections.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shopCards/ProductCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shopCards/ProductCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shopCards/ProductCard10.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shopCards/ProductCard10.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shopDetails/DetailsOuterZoom.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shopDetails/DetailsOuterZoom.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/context/Context.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/Context.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/footerLinks.js" beforeDir="false" afterPath="$PROJECT_DIR$/data/footerLinks.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/data/menu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/middleware.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JSX File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -372,6 +96,7 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;H:/projects/nomahd_next/app/(dashboard)/verify-user&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -382,7 +107,15 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="H:\projects\nomahd_next\app\(dashboard)\verify-user" />
+      <recent name="H:\projects\nomahd_next\app\(dashboard)" />
+      <recent name="H:\projects\nomahd_next\components\othersPages" />
+      <recent name="H:\projects\nomahd_next\app\(otherPages)" />
+      <recent name="H:\projects\nomahd_next\components\shop" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="H:\projects\nomahd_next\app\(otherPages)" />
       <recent name="H:\projects\ECOMUSNEXT" />
     </key>
   </component>
@@ -411,6 +144,15 @@
       <workItem from="1740417709977" duration="113000" />
       <workItem from="1740417829798" duration="959000" />
       <workItem from="1740504143206" duration="4603000" />
+      <workItem from="1740614171198" duration="11225000" />
+      <workItem from="1740679908335" duration="1673000" />
+      <workItem from="1740682087291" duration="379000" />
+      <workItem from="1740774557123" duration="4250000" />
+      <workItem from="1740779473751" duration="3237000" />
+      <workItem from="1740791646230" duration="1859000" />
+      <workItem from="1740884764655" duration="4137000" />
+      <workItem from="1740890286860" duration="6039000" />
+      <workItem from="1741014481969" duration="8275000" />
     </task>
     <task id="LOCAL-00001" summary="fixes">
       <option name="closed" value="true" />

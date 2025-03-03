@@ -18,7 +18,7 @@ export default function ProductCard10({ product }) {
   return (
     <div className="card-product">
       <div className="card-product-wrapper">
-        <Link href={`/product-detail/${product.id}`} className="product-img">
+        <Link href={`/product-detail/${product.slug}`} className="product-img">
           <Image
             className="lazyload img-product"
             data-src={product.image}
@@ -39,7 +39,7 @@ export default function ProductCard10({ product }) {
         <div className="list-product-btn absolute-2">
           <a
             href="#quick_add"
-            onClick={() => setQuickAddItem(product.id)}
+            onClick={() => setQuickAddItem(product.slug)}
             data-bs-toggle="modal"
             className="box-icon bg_white quick-add tf-btn-loading"
           >
@@ -47,16 +47,16 @@ export default function ProductCard10({ product }) {
             <span className="tooltip">Quick Add</span>
           </a>
           <a
-            onClick={() => addToWishlist(product.id)}
+            onClick={() => addToWishlist(product.slug)}
             className="box-icon bg_white wishlist btn-icon-action"
           >
             <span
               className={`icon icon-heart ${
-                isAddedtoWishlist(product.id) ? "added" : ""
+                isAddedtoWishlist(product.slug) ? "added" : ""
               }`}
             />
             <span className="tooltip">
-              {isAddedtoWishlist(product.id)
+              {isAddedtoWishlist(product.slug)
                 ? "Already Wishlisted"
                 : "Add to Wishlist"}
             </span>
@@ -75,7 +75,7 @@ export default function ProductCard10({ product }) {
         </div>
       </div>
       <div className="card-product-info">
-        <Link href={`/product-detail/${product.id}`} className="title link">
+        <Link href={`/product-detail/${product.slug}`} className="title link">
           {product.name}
         </Link>
         <span className="price">${product.price}</span>

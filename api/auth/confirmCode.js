@@ -1,5 +1,6 @@
 import { useMutation ,useQueryClient} from "@tanstack/react-query";
 import {api, token} from '../api';
+import toast from "react-hot-toast";
 
 export const useConfirmCode = () => {
     const queryClient = useQueryClient();
@@ -14,10 +15,9 @@ export const useConfirmCode = () => {
       },
       mutationFn: async (data) => {
         return await api.post('/auth/confirm_code', data, {
-          headers: {
-            'Content-Type': 'application/json',
-            'SYSTEM-KEY':"NOMAHD-SECRIT"
-          },
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
         });
       },
     });

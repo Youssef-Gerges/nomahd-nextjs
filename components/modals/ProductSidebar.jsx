@@ -115,7 +115,7 @@ export default function ProductSidebar() {
                   {featuredProducts2.map((product, index) => (
                     <div className="featured-product-item" key={index}>
                       <Link
-                        href={`/product-detail/${product.id}`}
+                        href={`/product-detail/${product.slug}`}
                         className="card-product-wrapper"
                       >
                         <Image
