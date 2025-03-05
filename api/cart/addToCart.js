@@ -25,7 +25,7 @@ export const useAddToCart = () => {
             if (data?.data?.temp_user_id) {
                 localStorage.setItem('temp_user_id', data.data?.temp_user_id)
             }
-            window.location.href = '/view-cart'
+            location.href = '/view-cart'
             queryClient.invalidateQueries();
         },
     });

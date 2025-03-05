@@ -116,7 +116,7 @@ export default function OrderDetails({orderId}) {
                 </div>
                 <div className="item">
                     <div className="text-2 text_black-2">Payment Status</div>
-                    <div className="text-2 mt_4 fw-6">{order?.payment_status_string}</div>
+                    <div className="text-2 mt_4 fw-6">{order?.payment_status_string} - {order?.payment_type}</div>
                 </div>
                 <div className="item">
                     <div className="text-2 text_black-2">Order Time</div>

@@ -4,66 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7e0f22cc-b165-4f73-a729-e41ac12c4d99" name="Changes" comment="fixes">
-      <change afterPath="$PROJECT_DIR$/api/cart/changeQuantity.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/(dashboard)/layout.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/(otherPages)/seller-login/page.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/(otherPages)/seller-register/page.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/(otherPages)/verify-user/page.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/(shop)/shops/[slug]/page.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/othersPages/SellerRegister.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/othersPages/VerifyUser.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/shop/SellerHeader.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/shop/SellerProducts.jsx" afterDir="false" />
+    <list default="true" id="7e0f22cc-b165-4f73-a729-e41ac12c4d99" name="Changes" comment="- [x]  Confirmation page &lt; ADD &lt; download invoices&#10;- [x]  checkout guard&#10;- [x]  order confirmation guard&#10;- [x]  account login guard&#10;- [x]  Slider &gt; Link with hyperlink&#10;- [x]  Categories you might like (Fix linkes)&#10;- [x]  Menus and sub menus (Fix linkks)&#10;- [x]  Change pagination &gt; Load more&#10;- [x]  Flash sales (in Home) + Add separated page for all flash sales (Like the main source [nomahd.com](http://nomahd.com/) including counter time)&#10;- [x]  Link sellers to sellers profile (Add store profile page )&#10;- [x]  Shop seller (Register &amp; Login page ) &gt; Redirect Blade (Seller) ################# imporsonate logic need to be checked&#10;- [x]  Coupons system (just check)&#10;- [x]  OTP (choose your own) ############# when access dashboard for first time&#10;- [x]  Images in whole website (Fix alignment)&#10;- [x]  Redirect (after add to cart &gt; close add &gt; open cart)&#10;- [x]  Quantity in card &gt; need fix&#10;- [x]  Fix sold out (in proudct details bottom sticky bar)&#10;- [x]  Wish list (Language &gt; need fix&#10;- [x]  Footer ( Same like main source nomahd.com)&#10;- [x]  Add size chart in Product details &gt; instead of delivery *&amp; return&#10;- [x]  Delivery and return popup &gt; link to backend">
+      <change afterPath="$PROJECT_DIR$/api/general/getTrackBar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/address/getUserAddress.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/address/getUserAddress.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/auth/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/auth/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/auth/confirmCode.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/auth/confirmCode.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/brand/getTopBrands.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/brand/getTopBrands.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/cart/addToCart.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/cart/addToCart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/categories/getLinkCategories.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/categories/getLinkCategories.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/coupon/applyCoupon.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/coupon/applyCoupon.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/products/getAllSellerProducts.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/products/getAllSellerProducts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/shop/getAllShops.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/shop/getAllShops.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/shop/getShopInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/shop/getShopInfo.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(otherPages)/login/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(otherPages)/login/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(otherPages)/payment-confirmation/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(otherPages)/payment-confirmation/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(otherPages)/register/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(otherPages)/register/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop)/shop-collection-sub/[name]/[id]/sub/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(shop)/shop-collection-sub/[name]/[id]/sub/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(shop)/shop-infinite-scrolling/page.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/footers/Footer1.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/footers/Footer1.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/headers/Header2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/headers/Header2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/home-men/Collections.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/home-men/Collections.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/multi-brand/BannerCollection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/multi-brand/BannerCollection.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/multi-brand/Brands.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/multi-brand/Brands.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/multi-brand/Categories2.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/multi-brand/Categories2.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/multi-brand/FlashSale.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/multi-brand/FlashSale.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/multi-brand/Hero.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/multi-brand/Hero.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/modals/Compare.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/modals/Compare.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/modals/DeliveryReturn.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/modals/DeliveryReturn.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/modals/HomesModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/modals/HomesModal.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/modals/MobileMenu.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/modals/MobileMenu.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/modals/ProductSidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/modals/ProductSidebar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/modals/ShopCart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/modals/ShopCart.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/othersPages/Cart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/Cart.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/othersPages/Checkout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/Checkout.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/othersPages/Compare.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/Compare.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/homes/multi-brand/Announcment.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/multi-brand/Announcment.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/othersPages/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/Login.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/othersPages/PaymentConfirmation.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/PaymentConfirmation.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/othersPages/Register.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/Register.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/othersPages/dashboard/AccountAddress.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/dashboard/AccountAddress.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/othersPages/dashboard/Wishlist.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/dashboard/Wishlist.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/shop/ShopDefault.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shop/ShopDefault.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/shop/ShopFilter.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shop/ShopFilter.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/shop/Sorting.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shop/Sorting.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/shop/Subcollections.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shop/Subcollections.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/shopCards/ProductCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shopCards/ProductCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/shopCards/ProductCard10.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shopCards/ProductCard10.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/shopDetails/DetailsOuterZoom.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shopDetails/DetailsOuterZoom.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/context/Context.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/context/Context.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/footerLinks.js" beforeDir="false" afterPath="$PROJECT_DIR$/data/footerLinks.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/middleware.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/othersPages/dashboard/OrderDetails.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/dashboard/OrderDetails.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +43,7 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;H:/projects/nomahd_next/app/(dashboard)/verify-user&quot;,
+    &quot;last_opened_file_path&quot;: &quot;H:/projects/nomahd_next/api/general&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -108,11 +55,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="H:\projects\nomahd_next\api\general" />
       <recent name="H:\projects\nomahd_next\app\(dashboard)\verify-user" />
       <recent name="H:\projects\nomahd_next\app\(dashboard)" />
       <recent name="H:\projects\nomahd_next\components\othersPages" />
       <recent name="H:\projects\nomahd_next\app\(otherPages)" />
-      <recent name="H:\projects\nomahd_next\components\shop" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="H:\projects\nomahd_next\app\(otherPages)" />
@@ -152,7 +99,9 @@
       <workItem from="1740791646230" duration="1859000" />
       <workItem from="1740884764655" duration="4137000" />
       <workItem from="1740890286860" duration="6039000" />
-      <workItem from="1741014481969" duration="8275000" />
+      <workItem from="1741014481969" duration="9375000" />
+      <workItem from="1741106254797" duration="3762000" />
+      <workItem from="1741194383829" duration="3105000" />
     </task>
     <task id="LOCAL-00001" summary="fixes">
       <option name="closed" value="true" />
@@ -162,7 +111,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740337605303</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="- [x]  Confirmation page &lt; ADD &lt; download invoices&#10;- [x]  checkout guard&#10;- [x]  order confirmation guard&#10;- [x]  account login guard&#10;- [x]  Slider &gt; Link with hyperlink&#10;- [x]  Categories you might like (Fix linkes)&#10;- [x]  Menus and sub menus (Fix linkks)&#10;- [x]  Change pagination &gt; Load more&#10;- [x]  Flash sales (in Home) + Add separated page for all flash sales (Like the main source [nomahd.com](http://nomahd.com/) including counter time)&#10;- [x]  Link sellers to sellers profile (Add store profile page )&#10;- [x]  Shop seller (Register &amp; Login page ) &gt; Redirect Blade (Seller) ################# imporsonate logic need to be checked&#10;- [x]  Coupons system (just check)&#10;- [x]  OTP (choose your own) ############# when access dashboard for first time&#10;- [x]  Images in whole website (Fix alignment)&#10;- [x]  Redirect (after add to cart &gt; close add &gt; open cart)&#10;- [x]  Quantity in card &gt; need fix&#10;- [x]  Fix sold out (in proudct details bottom sticky bar)&#10;- [x]  Wish list (Language &gt; need fix&#10;- [x]  Footer ( Same like main source nomahd.com)&#10;- [x]  Add size chart in Product details &gt; instead of delivery *&amp; return&#10;- [x]  Delivery and return popup &gt; link to backend">
+      <option name="closed" value="true" />
+      <created>1741031204233</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1741031204233</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -183,7 +140,8 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixes" />
+    <MESSAGE value="- [x]  Confirmation page &lt; ADD &lt; download invoices&#10;- [x]  checkout guard&#10;- [x]  order confirmation guard&#10;- [x]  account login guard&#10;- [x]  Slider &gt; Link with hyperlink&#10;- [x]  Categories you might like (Fix linkes)&#10;- [x]  Menus and sub menus (Fix linkks)&#10;- [x]  Change pagination &gt; Load more&#10;- [x]  Flash sales (in Home) + Add separated page for all flash sales (Like the main source [nomahd.com](http://nomahd.com/) including counter time)&#10;- [x]  Link sellers to sellers profile (Add store profile page )&#10;- [x]  Shop seller (Register &amp; Login page ) &gt; Redirect Blade (Seller) ################# imporsonate logic need to be checked&#10;- [x]  Coupons system (just check)&#10;- [x]  OTP (choose your own) ############# when access dashboard for first time&#10;- [x]  Images in whole website (Fix alignment)&#10;- [x]  Redirect (after add to cart &gt; close add &gt; open cart)&#10;- [x]  Quantity in card &gt; need fix&#10;- [x]  Fix sold out (in proudct details bottom sticky bar)&#10;- [x]  Wish list (Language &gt; need fix&#10;- [x]  Footer ( Same like main source nomahd.com)&#10;- [x]  Add size chart in Product details &gt; instead of delivery *&amp; return&#10;- [x]  Delivery and return popup &gt; link to backend" />
+    <option name="LAST_COMMIT_MESSAGE" value="- [x]  Confirmation page &lt; ADD &lt; download invoices&#10;- [x]  checkout guard&#10;- [x]  order confirmation guard&#10;- [x]  account login guard&#10;- [x]  Slider &gt; Link with hyperlink&#10;- [x]  Categories you might like (Fix linkes)&#10;- [x]  Menus and sub menus (Fix linkks)&#10;- [x]  Change pagination &gt; Load more&#10;- [x]  Flash sales (in Home) + Add separated page for all flash sales (Like the main source [nomahd.com](http://nomahd.com/) including counter time)&#10;- [x]  Link sellers to sellers profile (Add store profile page )&#10;- [x]  Shop seller (Register &amp; Login page ) &gt; Redirect Blade (Seller) ################# imporsonate logic need to be checked&#10;- [x]  Coupons system (just check)&#10;- [x]  OTP (choose your own) ############# when access dashboard for first time&#10;- [x]  Images in whole website (Fix alignment)&#10;- [x]  Redirect (after add to cart &gt; close add &gt; open cart)&#10;- [x]  Quantity in card &gt; need fix&#10;- [x]  Fix sold out (in proudct details bottom sticky bar)&#10;- [x]  Wish list (Language &gt; need fix&#10;- [x]  Footer ( Same like main source nomahd.com)&#10;- [x]  Add size chart in Product details &gt; instead of delivery *&amp; return&#10;- [x]  Delivery and return popup &gt; link to backend" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
 </project>

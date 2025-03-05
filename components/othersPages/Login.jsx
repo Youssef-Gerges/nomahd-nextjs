@@ -3,10 +3,8 @@ import React, {useState} from "react";
 import Link from "next/link";
 import {useLogin} from "@/api/auth/auth";
 import {useSendToMail} from "@/api/auth/resetPassword";
-import {useRouter} from "next/navigation";
 
 export default function Login({type}) {
-    const router = useRouter();
     const [formData, setFormData] = useState({
         email: "",
         password: "",
