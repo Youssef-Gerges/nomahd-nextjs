@@ -4,13 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7e0f22cc-b165-4f73-a729-e41ac12c4d99" name="Changes" comment="- [x]  Confirmation page &lt; ADD &lt; download invoices&#10;- [x]  checkout guard&#10;- [x]  order confirmation guard&#10;- [x]  account login guard&#10;- [x]  Slider &gt; Link with hyperlink&#10;- [x]  Categories you might like (Fix linkes)&#10;- [x]  Menus and sub menus (Fix linkks)&#10;- [x]  Change pagination &gt; Load more&#10;- [x]  Flash sales (in Home) + Add separated page for all flash sales (Like the main source [nomahd.com](http://nomahd.com/) including counter time)&#10;- [x]  Link sellers to sellers profile (Add store profile page )&#10;- [x]  Shop seller (Register &amp; Login page ) &gt; Redirect Blade (Seller) ################# imporsonate logic need to be checked&#10;- [x]  Coupons system (just check)&#10;- [x]  OTP (choose your own) ############# when access dashboard for first time&#10;- [x]  Images in whole website (Fix alignment)&#10;- [x]  Redirect (after add to cart &gt; close add &gt; open cart)&#10;- [x]  Quantity in card &gt; need fix&#10;- [x]  Fix sold out (in proudct details bottom sticky bar)&#10;- [x]  Wish list (Language &gt; need fix&#10;- [x]  Footer ( Same like main source nomahd.com)&#10;- [x]  Add size chart in Product details &gt; instead of delivery *&amp; return&#10;- [x]  Delivery and return popup &gt; link to backend">
-      <change afterPath="$PROJECT_DIR$/api/general/getTrackBar.js" afterDir="false" />
+    <list default="true" id="7e0f22cc-b165-4f73-a729-e41ac12c4d99" name="Changes" comment="order details">
+      <change afterPath="$PROJECT_DIR$/i18n/request.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/messages/en.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/cart/addToCart.js" beforeDir="false" afterPath="$PROJECT_DIR$/api/cart/addToCart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/homes/multi-brand/Announcment.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/homes/multi-brand/Announcment.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/othersPages/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/Login.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/othersPages/dashboard/OrderDetails.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/dashboard/OrderDetails.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +50,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;ts.external.directory.path&quot;: &quot;H:\\projects\\nomahd_next\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -101,7 +103,8 @@
       <workItem from="1740890286860" duration="6039000" />
       <workItem from="1741014481969" duration="9375000" />
       <workItem from="1741106254797" duration="3762000" />
-      <workItem from="1741194383829" duration="3105000" />
+      <workItem from="1741194383829" duration="8783000" />
+      <workItem from="1741283837255" duration="2084000" />
     </task>
     <task id="LOCAL-00001" summary="fixes">
       <option name="closed" value="true" />
@@ -119,7 +122,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741031204233</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="order details">
+      <option name="closed" value="true" />
+      <created>1741200534764</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1741200534764</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -141,7 +152,8 @@
     <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="fixes" />
     <MESSAGE value="- [x]  Confirmation page &lt; ADD &lt; download invoices&#10;- [x]  checkout guard&#10;- [x]  order confirmation guard&#10;- [x]  account login guard&#10;- [x]  Slider &gt; Link with hyperlink&#10;- [x]  Categories you might like (Fix linkes)&#10;- [x]  Menus and sub menus (Fix linkks)&#10;- [x]  Change pagination &gt; Load more&#10;- [x]  Flash sales (in Home) + Add separated page for all flash sales (Like the main source [nomahd.com](http://nomahd.com/) including counter time)&#10;- [x]  Link sellers to sellers profile (Add store profile page )&#10;- [x]  Shop seller (Register &amp; Login page ) &gt; Redirect Blade (Seller) ################# imporsonate logic need to be checked&#10;- [x]  Coupons system (just check)&#10;- [x]  OTP (choose your own) ############# when access dashboard for first time&#10;- [x]  Images in whole website (Fix alignment)&#10;- [x]  Redirect (after add to cart &gt; close add &gt; open cart)&#10;- [x]  Quantity in card &gt; need fix&#10;- [x]  Fix sold out (in proudct details bottom sticky bar)&#10;- [x]  Wish list (Language &gt; need fix&#10;- [x]  Footer ( Same like main source nomahd.com)&#10;- [x]  Add size chart in Product details &gt; instead of delivery *&amp; return&#10;- [x]  Delivery and return popup &gt; link to backend" />
-    <option name="LAST_COMMIT_MESSAGE" value="- [x]  Confirmation page &lt; ADD &lt; download invoices&#10;- [x]  checkout guard&#10;- [x]  order confirmation guard&#10;- [x]  account login guard&#10;- [x]  Slider &gt; Link with hyperlink&#10;- [x]  Categories you might like (Fix linkes)&#10;- [x]  Menus and sub menus (Fix linkks)&#10;- [x]  Change pagination &gt; Load more&#10;- [x]  Flash sales (in Home) + Add separated page for all flash sales (Like the main source [nomahd.com](http://nomahd.com/) including counter time)&#10;- [x]  Link sellers to sellers profile (Add store profile page )&#10;- [x]  Shop seller (Register &amp; Login page ) &gt; Redirect Blade (Seller) ################# imporsonate logic need to be checked&#10;- [x]  Coupons system (just check)&#10;- [x]  OTP (choose your own) ############# when access dashboard for first time&#10;- [x]  Images in whole website (Fix alignment)&#10;- [x]  Redirect (after add to cart &gt; close add &gt; open cart)&#10;- [x]  Quantity in card &gt; need fix&#10;- [x]  Fix sold out (in proudct details bottom sticky bar)&#10;- [x]  Wish list (Language &gt; need fix&#10;- [x]  Footer ( Same like main source nomahd.com)&#10;- [x]  Add size chart in Product details &gt; instead of delivery *&amp; return&#10;- [x]  Delivery and return popup &gt; link to backend" />
+    <MESSAGE value="order details" />
+    <option name="LAST_COMMIT_MESSAGE" value="order details" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
 </project>

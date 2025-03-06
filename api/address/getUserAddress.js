@@ -2,16 +2,13 @@ import {useQuery} from '@tanstack/react-query';
 import {api, token} from '../api';
 import toast from 'react-hot-toast';
 
-export const useGetUserAddress = (id) => {
+export const useGetUserAddress = () => {
     return useQuery({
-            queryKey: ['userAddress', id],
+            queryKey: ['userAddress'],
             queryFn: async () => {
-                if (!id) {
-                    throw new Error('An ID is required to fetch the user address');
-                }
 
                 try {
-                    const response = await api.get(`/user/shipping/address/`, {
+                    const response = await api.get(`user/shipping/address`, {
                         headers: {
                             Authorization: `Bearer ${token}`
                         },

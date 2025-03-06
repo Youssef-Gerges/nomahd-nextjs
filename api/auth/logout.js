@@ -68,14 +68,13 @@ export const useLogout = () => {
       localStorage.removeItem('name');
 
         Cookies.remove('token')
+        Cookies.remove('id')
       // Step 2: Clear cart and wishlist data from the cache
       queryClient.setQueryData(['wishlist'], []); // Empty the wishlist
       queryClient.setQueryData(['cart'], []); // Empty the cart
 
       // Step 3: Invalidate the queries to ensure a clean state
-      queryClient.invalidateQueries(['wishlist']);
-      queryClient.invalidateQueries([ 'cart' ]);
-      console.log('Logged out successfully and cleared cart/wishlist data');
+        queryClient.invalidateQueries();
       
     },
     onError: (error) => {

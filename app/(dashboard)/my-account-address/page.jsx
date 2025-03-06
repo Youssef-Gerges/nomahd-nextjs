@@ -1,6 +1,6 @@
 import Footer1 from "@/components/footers/Footer1";
 import Header2 from "@/components/headers/Header2";
-import AccountAddress from "@/components/othersPages/dashboard/AccountAddress";
+import CheckoutAddress from "@/components/othersPages/dashboard/CheckoutAddress";
 import DashboardNav from "@/components/othersPages/dashboard/DashboardNav";
 import React from "react";
 
@@ -24,7 +24,7 @@ export default function page() {
               <DashboardNav />
             </div>
             <div className="col-lg-9">
-              <AccountAddress />
+              <CheckoutAddress />
             </div>
           </div>
         </div>

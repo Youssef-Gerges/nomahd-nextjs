@@ -2,11 +2,10 @@
 import {useGetCartData} from "@/api/cart/getCart";
 import {useGetSummary} from "@/api/cart/getSummary";
 import {useGetPaymentTypes} from "@/api/payment/getPaymentTypes";
+import {useWalletPay} from "@/api/payment/walletPay";
 import {usePlaceOrder} from "@/api/payment/placeOrder";
 import {useSelectAddress} from "@/api/cart/selectAddress";
 import {useAddUserAddress} from "@/api/address/postUserAddress";
-import {useGetCountries} from "@/api/address/getCountries";
-import {useGetCities} from "@/api/address/getCities";
 import Image from "next/image";
 import Link from "next/link";
 import React, {useEffect, useState} from "react";
@@ -14,22 +13,22 @@ import {useRouter} from "next/navigation";
 import {useGetBusinessSettings} from "@/api/general/getBusinessSettings";
 import {ThreeDots} from "react-loader-spinner";
 import Cookies from "js-cookie";
-import AccountAddress from "@/components/othersPages/dashboard/AccountAddress";
+import CheckoutAddress from "@/components/othersPages/dashboard/CheckoutAddress";
 import {useApplyCoupon} from "@/api/coupon/applyCoupon";
 import toast from "react-hot-toast";
 import {useQueryClient} from "@tanstack/react-query";
-import {temp_user_id} from "@/api/api";
+import {temp_user_id, token, user_id} from "@/api/api";
 
 
 export default function Checkout() {
     const queryClient = useQueryClient();
+    const [selectedAddress, setSelectedAddress] = useState()
     const {data: cartData} = useGetCartData();
     const {data: cartSummery} = useGetSummary();
-    const {data: countries} = useGetCountries();
     const {data: settings} = useGetBusinessSettings();
     const [freeShipping, setFreeShipping] = useState(0)
-    const {data: cities} = useGetCities();
     const {data: paymentTypes} = useGetPaymentTypes();
+    const walletPay = useWalletPay();
     const router = useRouter();
     const [address, setAddress] = useState({
         country_id: "",
@@ -58,8 +57,8 @@ export default function Checkout() {
     }, [settings])
 
     useEffect(() => {
-        setUserId(localStorage.getItem('id'));
-    }, []);
+        setUserId(user_id ?? temp_user_id);
+    }, [user_id]);
     useEffect(() => {
         if (cartData) {
             let items = [];
@@ -86,42 +85,101 @@ export default function Checkout() {
             return;
         }
 
-        createAddress.mutate(
-            {
-                ...address,
-                state_id: parseInt(address.city),
-                city_id: parseInt(address.city),
-                country_id: parseInt(address.country_id)
-            },
-            {
-                onSuccess: (data) => {
-                    selectAddress.mutate(
-                        {address_id: data.id, user_id: userId},
-                        {
-                            onSuccess: (data) => {
-                                placeOrder.mutate(
-                                    {
-                                        user_id: userId,
-                                        payment_type: paymentType,
-                                        whatsapp: address.whatsapp
-                                    },
-                                    {
-                                        onSuccess: (orderData) => {
-                                            if (paymentType === 'stripe_payment') {
-                                                window.location.href = 'https://nomahd.com/api/v2/stripe?payment_type?payment_type=cart_payment&combined_order_id=' + orderData.combined_order_id + '&amount=' + cartSummery?.grand_total_value + '&user_id=' + userId;
-                                            } else {
-                                                Cookies.set('order-confirmation', 'true');
-                                                router.push('/payment-confirmation');
+
+        if (selectedAddress === 0) {
+
+            createAddress.mutate(
+                {
+                    ...address,
+                    state_id: parseInt(address.city),
+                    city_id: parseInt(address.city),
+                    country_id: parseInt(address.country_id)
+                },
+                {
+                    onSuccess: (data) => {
+                        selectAddress.mutate(
+                            {address_id: data.id, user_id: userId},
+                            {
+                                onSuccess: (data) => {
+                                    if (paymentType === 'wallet_system') {
+                                        walletPay.mutate({
+                                                user_id: userId,
+                                                payment_type: paymentType,
+                                                whatsapp: address.whatsapp,
+                                            },
+                                            {
+                                                onSuccess: (orderData) => {
+                                                    Cookies.set('order-confirmation', 'true');
+                                                    window.location.href = '/payment-confirmation';
+                                                }
+                                            })
+                                    } else {
+                                        placeOrder.mutate(
+                                            {
+                                                user_id: userId,
+                                                payment_type: paymentType,
+                                                whatsapp: address.whatsapp,
+                                            },
+                                            {
+                                                onSuccess: (orderData) => {
+                                                    if (paymentType === 'stripe_payment') {
+                                                        window.location.href = 'https://nomahd.com/api/v2/stripe?payment_type?payment_type=cart_payment&combined_order_id=' + orderData.combined_order_id + '&amount=' + cartSummery?.grand_total_value + '&user_id=' + userId;
+                                                    } else {
+                                                        Cookies.set('order-confirmation', 'true');
+                                                        window.location.href = '/payment-confirmation';
+                                                    }
+                                                }
                                             }
+                                        );
+                                    }
+                                }
+                            }
+                        );
+                    },
+                }
+            );
+        } else {
+
+            selectAddress.mutate(
+                {address_id: selectedAddress, user_id: userId},
+                {
+                    onSuccess: (data) => {
+                        if (paymentType === 'wallet_system') {
+                            walletPay.mutate({
+                                    user_id: userId,
+                                    payment_type: paymentType,
+                                    whatsapp: address.whatsapp,
+                                },
+                                {
+                                    onSuccess: (orderData) => {
+                                        Cookies.set('order-confirmation', 'true');
+                                        window.location.href = '/payment-confirmation';
+                                    }
+                                })
+                        } else {
+                            placeOrder.mutate(
+                                {
+                                    user_id: userId,
+                                    payment_type: paymentType,
+                                    whatsapp: address.whatsapp
+                                },
+                                {
+                                    onSuccess: (orderData) => {
+                                        if (paymentType === 'stripe_payment') {
+                                            window.location.href = 'https://nomahd.com/api/v2/stripe?payment_type?payment_type=cart_payment&combined_order_id=' + orderData.combined_order_id + '&amount=' + cartSummery?.grand_total_value + '&user_id=' + userId;
+                                        } else {
+                                            Cookies.set('order-confirmation', 'true');
+                                            window.location.href = '/payment-confirmation';
                                         }
                                     }
-                                );
-                            }
+                                }
+                            );
                         }
-                    );
-                },
-            }
-        );
+                    }
+                }
+            );
+
+        }
 
     };
 
@@ -129,12 +187,12 @@ export default function Checkout() {
         applyCoupon.mutate({
             code: coupon,
             temp_user_id
-        },{
+        }, {
             onSuccess: (data) => {
-                if(data.data?.response_message?.response === 'success'){
+                if (data.data?.response_message?.response === 'success') {
                     toast.success(data.data?.response_message.message);
                     queryClient.invalidateQueries(['summery'])
-                }else{
+                } else {
                     toast.error(data.data.message);
                 }
             }
@@ -154,91 +212,61 @@ export default function Checkout() {
                             onSubmit={(e) => e.preventDefault()}
                             className="form-checkout"
                         >
-                            <AccountAddress/>
-                            <fieldset className="box fieldset">
-                                <label htmlFor="country_id">Country/Region</label>
-                                <div className="select-custom">
-                                    <select
-                                        required
-                                        className="tf-select w-100"
-                                        id="country_id"
-                                        name="address[country_id]"
-                                        data-default=""
-                                        onChange={handleAddress}
-                                    >
-                                        <option value="---" data-provinces="[]">
-                                            ---
-                                        </option>
-                                        {countries?.data?.map((country, i) => (
-                                            <option key={i} value={country.id}>
-                                                {country.name}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                            </fieldset>
+                            <CheckoutAddress handleAddress={handleAddress} setSelectedAddress={setSelectedAddress}
+                                             selectedAddress={selectedAddress}/>
+                            {!token && <>
+                                <fieldset className="box fieldset">
+                                    <label htmlFor="country_id">Your Full Name</label>
+                                    <div className="select-custom">
+                                        <input
+                                            required
+                                            type="text"
+                                            id="full_name"
+                                            onChange={handleAddress}
+                                        />
+                                    </div>
+                                </fieldset>
 
-                            <fieldset className="box fieldset">
-                                <label htmlFor="city">City</label>
-                                <div className="select-custom">
-                                    <select
-                                        required
-                                        className="tf-select w-100"
-                                        id="city"
-                                        name="address[city]"
-                                        data-default=""
-                                        onChange={handleAddress}
-                                    >
-                                        <option value="---" data-provinces="[]">
-                                            ---
-                                        </option>
-                                        {cities?.data?.map((country, i) => (
-                                            <option key={i} value={country.id}>
-                                                {country.name}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                            </fieldset>
+                                <fieldset className="box fieldset">
+                                    <label htmlFor="country_id">Email</label>
+                                    <div className="select-custom">
+                                        <input
+                                            required
+                                            type="email"
+                                            id="email"
+                                            onChange={handleAddress}
+                                        />
+                                    </div>
+                                </fieldset>
 
-                            <fieldset className="box fieldset">
-                                <label htmlFor="address">Address</label>
-                                <input
-                                    required
-                                    type="text"
-                                    id="address"
-                                    onChange={handleAddress}
-                                />
-                            </fieldset>
-                            <fieldset className="box fieldset">
-                                <label htmlFor="postal">Postal Code</label>
-                                <input
-                                    required
-                                    type="text"
-                                    id="postal_code"
-                                    onChange={handleAddress}
-                                />
-                            </fieldset>
 
-                            <fieldset className="box fieldset">
-                                <label htmlFor="phone">Phone Number</label>
-                                <input
-                                    required
-                                    type="number"
-                                    id="phone"
-                                    onChange={handleAddress}
-                                />
-                            </fieldset>
+                                <fieldset className="box fieldset">
+                                    <label htmlFor="country_id">Password</label>
+                                    <div className="select-custom">
+                                        <input
+                                            required
+                                            type="password"
+                                            id="password"
+                                            onChange={handleAddress}
+                                        />
+                                    </div>
+                                </fieldset>
 
-                            <fieldset className="box fieldset">
-                                <label htmlFor="whatsapp">WhatsApp Number</label>
-                                <input
-                                    required
-                                    type="number"
-                                    id="whatsapp"
-                                    onChange={handleAddress}
-                                />
-                            </fieldset>
+                                <fieldset className="box fieldset">
+                                    <label htmlFor="country_id">Confirm Password</label>
+                                    <div className="select-custom">
+                                        <input
+                                            required
+                                            type="password"
+                                            id="password_comfirmation"
+                                            onChange={handleAddress}
+                                        />
+                                    </div>
+                                </fieldset>
+                            </>
+                            }
+
+
                         </form>
                     </div>
                     <div className="tf-page-cart-footer">
@@ -353,10 +381,11 @@ export default function Checkout() {
                                     <p className="total fw-5">{cartSummery?.packaging_cost}</p>
                                 </div>
 
-                                {cartSummery?.coupon_applied && <div className="d-flex justify-content-between line pb_20">
-                                    <p className="fw-5">Discount</p>
-                                    <p className="total fw-5">{cartSummery?.discount}</p>
-                                </div>}
+                                {cartSummery?.coupon_applied &&
+                                    <div className="d-flex justify-content-between line pb_20">
+                                        <p className="fw-5">Discount</p>
+                                        <p className="total fw-5">{cartSummery?.discount}</p>
+                                    </div>}
 
                                 <div className="d-flex justify-content-between line pb_20">
                                     <h6 className="fw-5">Total</h6>
