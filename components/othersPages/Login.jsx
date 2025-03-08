@@ -1,15 +1,52 @@
 "use client";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import {useLogin} from "@/api/auth/auth";
 import {useSendToMail} from "@/api/auth/resetPassword";
+import {useGerActiveSocialProviders} from "@/api/auth/getActiveSocialProviders";
+import GoogleButton from 'react-google-button'
+import TwitterButton from "react-twitter-button";
+import {useSignInWithSocial} from "@/api/auth/signInWithSocial";
+import {GoogleOAuthProvider, GoogleLogin, useGoogleLogin} from "@react-oauth/google";
+
+const config = {
+    text: 'Sign in with twitter',
+    style: {
+        boxShadow: 'none',
+        borderRadius: '0',
+        marginTop: 0
+    },
+    hoverStyle: {
+        right: '0',
+        bottom: '0'
+    }
+};
+
+const LoginButton = () => {
+    const signInWithSocial = useSignInWithSocial()
+
+    const login = useGoogleLogin({
+        onSuccess: async (tokenResponse) => {
+            signInWithSocial.mutate({
+                social_provider: 'google',
+                access_token: tokenResponse.access_token
+            })
+        },
+        onError: () => console.log("Login Failed"),
+    });
+
+    return <GoogleButton onClick={() => login()} />;
+};
 
 export default function Login({type}) {
+    const signInWithSocial = useSignInWithSocial()
     const [formData, setFormData] = useState({
         email: "",
         password: "",
         login_by: "email",
     });
+
+
     const [resetPassword, setResetPassword] = useState({
         email_or_phone: "",
         send_code_by: "email",
@@ -18,6 +55,24 @@ export default function Login({type}) {
     const [success, setSuccess] = useState(null);
     const loginMutation = useLogin();
     const sentToMail = useSendToMail();
+    const {data: socialProviders} = useGerActiveSocialProviders();
+    const [activeProviders, setActiveProviders] = useState({
+        google: false,
+        twitter: false,
+        facebook: false,
+    });
+
+
+    useEffect(() => {
+        if (socialProviders) {
+            console.log(socialProviders);
+            setActiveProviders({
+                google: socialProviders.some(item => item.type === "google_login" && item.value === "1"),
+                twitter: socialProviders.some(item => item.type === "twitter_login" && item.value === "1"),
+                facebook: socialProviders.some(item => item.type === "facebook_login" && item.value === "1"),
+            });
+        }
+    }, [socialProviders]);
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -197,6 +252,58 @@ export default function Login({type}) {
                                         >
                                             {loginMutation.isLoading ? "Loading..." : "Log in"}
                                         </button>
+                                    </div>
+
+
+                                    <div className="line-container">
+                                        <div className="line"></div>
+                                        <span className="line-text">Or</span>
+                                        <div className="line"></div>
+                                    </div>
+
+                                    <div className={"mt-3 d-flex flex-column align-items-center ms-3"}
+                                         style={{gap: '1rem'}}>
+
+
+                                        {activeProviders.google && (
+                                            <GoogleOAuthProvider clientId="834482764295-lu5dkqr4dukasqfqhppnte1pghr0eu9g.apps.googleusercontent.com">
+                                                <LoginButton />
+                                            </GoogleOAuthProvider>
+                                        )}
+                                        {
+                                            activeProviders.facebook && (
+                                                <div>
+                                                    <button className="btn-fb" onClick={() => {
+                                                        signInWithSocial.mutate({
+                                                            social_provider: 'facebook'
+                                                        })
+                                                    }}>
+                                                        <div className="fb-content">
+                                                            <div className="logo">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="32"
+                                                                     height="32" viewBox="0 0 32 32" version="1">
+                                                                    <path fill="#FFFFFF"
+                                                                          d="M32 30a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h28a2 2 0 0 1 2 2v28z"/>
+                                                                    <path fill="#4267b2"
+                                                                          d="M22 32V20h4l1-5h-5v-2c0-2 1.002-3 3-3h2V5h-4c-3.675 0-6 2.881-6 7v3h-4v5h4v12h5z"/>
+                                                                </svg>
+                                                            </div>
+                                                            <p>Sign in with Facebook</p>
+                                                        </div>
+                                                    </button>
+                                                </div>
+                                            )
+                                        }
+
+                                        {
+                                            activeProviders.twitter && (
+                                                <TwitterButton config={config} onClick={() => {
+                                                    signInWithSocial.mutate({
+                                                        social_provider: 'facebook'
+                                                    })
+                                                }}/>
+                                            )
+                                        }
                                     </div>
                                 </form>
                             </div>

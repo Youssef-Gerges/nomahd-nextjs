@@ -4,13 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7e0f22cc-b165-4f73-a729-e41ac12c4d99" name="Changes" comment="order details">
-      <change afterPath="$PROJECT_DIR$/i18n/request.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messages/en.json" afterDir="false" />
+    <list default="true" id="7e0f22cc-b165-4f73-a729-e41ac12c4d99" name="Changes" comment="fix build">
+      <change afterPath="$PROJECT_DIR$/api/auth/getActiveSocialProviders.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/auth/signInWithSocial.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/othersPages/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/Login.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/bootstrap.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/drift-basic.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/drift-basic.min.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,7 +46,7 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;H:/projects/nomahd_next/api/general&quot;,
+    &quot;last_opened_file_path&quot;: &quot;H:/projects/nomahd_next/api/auth&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -57,11 +59,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="H:\projects\nomahd_next\api\auth" />
+      <recent name="H:\projects\nomahd_next\api\payment" />
+      <recent name="H:\projects\nomahd_next\components\othersPages\dashboard" />
       <recent name="H:\projects\nomahd_next\api\general" />
       <recent name="H:\projects\nomahd_next\app\(dashboard)\verify-user" />
-      <recent name="H:\projects\nomahd_next\app\(dashboard)" />
-      <recent name="H:\projects\nomahd_next\components\othersPages" />
-      <recent name="H:\projects\nomahd_next\app\(otherPages)" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="H:\projects\nomahd_next\app\(otherPages)" />
@@ -105,6 +107,9 @@
       <workItem from="1741106254797" duration="3762000" />
       <workItem from="1741194383829" duration="8783000" />
       <workItem from="1741283837255" duration="2084000" />
+      <workItem from="1741285943958" duration="11174000" />
+      <workItem from="1741365084043" duration="11554000" />
+      <workItem from="1741401344250" duration="4560000" />
     </task>
     <task id="LOCAL-00001" summary="fixes">
       <option name="closed" value="true" />
@@ -130,7 +135,31 @@
       <option name="project" value="LOCAL" />
       <updated>1741200534764</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="wallet">
+      <option name="closed" value="true" />
+      <created>1741300601108</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1741300601108</updated>
+    </task>
+    <task id="LOCAL-00005" summary="wallet">
+      <option name="closed" value="true" />
+      <created>1741300613953</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1741300613953</updated>
+    </task>
+    <task id="LOCAL-00006" summary="fix build">
+      <option name="closed" value="true" />
+      <created>1741300886565</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1741300886565</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -153,7 +182,9 @@
     <MESSAGE value="fixes" />
     <MESSAGE value="- [x]  Confirmation page &lt; ADD &lt; download invoices&#10;- [x]  checkout guard&#10;- [x]  order confirmation guard&#10;- [x]  account login guard&#10;- [x]  Slider &gt; Link with hyperlink&#10;- [x]  Categories you might like (Fix linkes)&#10;- [x]  Menus and sub menus (Fix linkks)&#10;- [x]  Change pagination &gt; Load more&#10;- [x]  Flash sales (in Home) + Add separated page for all flash sales (Like the main source [nomahd.com](http://nomahd.com/) including counter time)&#10;- [x]  Link sellers to sellers profile (Add store profile page )&#10;- [x]  Shop seller (Register &amp; Login page ) &gt; Redirect Blade (Seller) ################# imporsonate logic need to be checked&#10;- [x]  Coupons system (just check)&#10;- [x]  OTP (choose your own) ############# when access dashboard for first time&#10;- [x]  Images in whole website (Fix alignment)&#10;- [x]  Redirect (after add to cart &gt; close add &gt; open cart)&#10;- [x]  Quantity in card &gt; need fix&#10;- [x]  Fix sold out (in proudct details bottom sticky bar)&#10;- [x]  Wish list (Language &gt; need fix&#10;- [x]  Footer ( Same like main source nomahd.com)&#10;- [x]  Add size chart in Product details &gt; instead of delivery *&amp; return&#10;- [x]  Delivery and return popup &gt; link to backend" />
     <MESSAGE value="order details" />
-    <option name="LAST_COMMIT_MESSAGE" value="order details" />
+    <MESSAGE value="wallet" />
+    <MESSAGE value="fix build" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix build" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
 </project>
