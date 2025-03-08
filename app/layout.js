@@ -18,7 +18,6 @@ import BlogSidebar from "@/components/modals/BlogSidebar";
 import ColorCompare from "@/components/modals/ColorCompare";
 import DeliveryReturn from "@/components/modals/DeliveryReturn";
 import FindSize from "@/components/modals/FindSize";
-import Login from "@/components/modals/Login";
 import MobileMenu from "@/components/modals/MobileMenu";
 import Register from "@/components/modals/Register";
 import ResetPass from "@/components/modals/ResetPass";
@@ -31,6 +30,9 @@ import ScrollTop from "@/components/common/ScrollTop";
 import Head from "next/head";
 import AddPackage from "../components/modals/AddPackage";
 import { Toaster } from "react-hot-toast";
+import dynamic from "next/dynamic";
+
+const Login = dynamic(() => import('@/components/modals/Login'), { ssr: false });
 
 function RootLayout({ children }) {
   const pathname = usePathname();

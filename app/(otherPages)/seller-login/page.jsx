@@ -1,12 +1,14 @@
 import Footer1 from "@/components/footers/Footer1";
 import Header2 from "@/components/headers/Header2";
-import Login from "@/components/othersPages/Login";
 import React from "react";
+import dynamic from "next/dynamic";
 
 export const metadata = {
   title: "Login || Nomahd - Ultimate Ecommerce",
   description: "Nomahd - Ultimate Ecommerce",
 };
+const Login = dynamic(() => import('@/components/othersPages/Login'), { ssr: false });
+
 export default function page() {
   return (
     <>
