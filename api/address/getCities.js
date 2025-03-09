@@ -6,7 +6,7 @@ export const useGetCities = () => {
   return useQuery({
     queryKey: ['cities'],
     queryFn: async () => {
-      const response = await api.get('/cities');
+      const response = await api.get('/states');
 
       if (response.status !== 200) {
         throw new Error('Failed to fetch cities');

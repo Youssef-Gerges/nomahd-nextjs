@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7e0f22cc-b165-4f73-a729-e41ac12c4d99" name="Changes" comment="social login">
-      <change beforePath="$PROJECT_DIR$/components/othersPages/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/othersPages/Login.jsx" afterDir="false" />
-    </list>
+    <list default="true" id="7e0f22cc-b165-4f73-a729-e41ac12c4d99" name="Changes" comment="fix build" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -102,6 +100,7 @@
       <workItem from="1741285943958" duration="11174000" />
       <workItem from="1741365084043" duration="11554000" />
       <workItem from="1741401344250" duration="4858000" />
+      <workItem from="1741445269498" duration="2288000" />
     </task>
     <task id="LOCAL-00001" summary="fixes">
       <option name="closed" value="true" />
@@ -159,7 +158,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741406062824</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="fix build">
+      <option name="closed" value="true" />
+      <created>1741447336645</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1741447336645</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -183,9 +190,9 @@
     <MESSAGE value="- [x]  Confirmation page &lt; ADD &lt; download invoices&#10;- [x]  checkout guard&#10;- [x]  order confirmation guard&#10;- [x]  account login guard&#10;- [x]  Slider &gt; Link with hyperlink&#10;- [x]  Categories you might like (Fix linkes)&#10;- [x]  Menus and sub menus (Fix linkks)&#10;- [x]  Change pagination &gt; Load more&#10;- [x]  Flash sales (in Home) + Add separated page for all flash sales (Like the main source [nomahd.com](http://nomahd.com/) including counter time)&#10;- [x]  Link sellers to sellers profile (Add store profile page )&#10;- [x]  Shop seller (Register &amp; Login page ) &gt; Redirect Blade (Seller) ################# imporsonate logic need to be checked&#10;- [x]  Coupons system (just check)&#10;- [x]  OTP (choose your own) ############# when access dashboard for first time&#10;- [x]  Images in whole website (Fix alignment)&#10;- [x]  Redirect (after add to cart &gt; close add &gt; open cart)&#10;- [x]  Quantity in card &gt; need fix&#10;- [x]  Fix sold out (in proudct details bottom sticky bar)&#10;- [x]  Wish list (Language &gt; need fix&#10;- [x]  Footer ( Same like main source nomahd.com)&#10;- [x]  Add size chart in Product details &gt; instead of delivery *&amp; return&#10;- [x]  Delivery and return popup &gt; link to backend" />
     <MESSAGE value="order details" />
     <MESSAGE value="wallet" />
-    <MESSAGE value="fix build" />
     <MESSAGE value="social login" />
-    <option name="LAST_COMMIT_MESSAGE" value="social login" />
+    <MESSAGE value="fix build" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix build" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
 </project>

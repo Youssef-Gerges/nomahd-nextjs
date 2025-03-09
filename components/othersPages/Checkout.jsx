@@ -1,33 +1,32 @@
 "use client";
-import {useGetCartData} from "@/api/cart/getCart";
-import {useGetSummary} from "@/api/cart/getSummary";
-import {useGetPaymentTypes} from "@/api/payment/getPaymentTypes";
-import {useWalletPay} from "@/api/payment/walletPay";
-import {usePlaceOrder} from "@/api/payment/placeOrder";
-import {useSelectAddress} from "@/api/cart/selectAddress";
-import {useAddUserAddress} from "@/api/address/postUserAddress";
+import { useGetCartData } from "@/api/cart/getCart";
+import { useGetSummary } from "@/api/cart/getSummary";
+import { useGetPaymentTypes } from "@/api/payment/getPaymentTypes";
+import { useWalletPay } from "@/api/payment/walletPay";
+import { usePlaceOrder } from "@/api/payment/placeOrder";
+import { useSelectAddress } from "@/api/cart/selectAddress";
+import { useAddUserAddress } from "@/api/address/postUserAddress";
 import Image from "next/image";
 import Link from "next/link";
-import React, {useEffect, useState} from "react";
-import {useRouter} from "next/navigation";
-import {useGetBusinessSettings} from "@/api/general/getBusinessSettings";
-import {ThreeDots} from "react-loader-spinner";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useGetBusinessSettings } from "@/api/general/getBusinessSettings";
+import { ThreeDots } from "react-loader-spinner";
 import Cookies from "js-cookie";
 import CheckoutAddress from "@/components/othersPages/dashboard/CheckoutAddress";
-import {useApplyCoupon} from "@/api/coupon/applyCoupon";
+import { useApplyCoupon } from "@/api/coupon/applyCoupon";
 import toast from "react-hot-toast";
-import {useQueryClient} from "@tanstack/react-query";
-import {temp_user_id, token, user_id} from "@/api/api";
-
+import { useQueryClient } from "@tanstack/react-query";
+import { temp_user_id, token, user_id } from "@/api/api";
 
 export default function Checkout() {
     const queryClient = useQueryClient();
-    const [selectedAddress, setSelectedAddress] = useState()
-    const {data: cartData} = useGetCartData();
-    const {data: cartSummery} = useGetSummary();
-    const {data: settings} = useGetBusinessSettings();
-    const [freeShipping, setFreeShipping] = useState(0)
-    const {data: paymentTypes} = useGetPaymentTypes();
+    const [selectedAddress, setSelectedAddress] = useState();
+    const { data: cartData, isLoading: isCartLoading } = useGetCartData();
+    const { data: cartSummery } = useGetSummary();
+    const { data: settings } = useGetBusinessSettings();
+    const [freeShipping, setFreeShipping] = useState(0);
+    const { data: paymentTypes } = useGetPaymentTypes();
     const walletPay = useWalletPay();
     const router = useRouter();
     const [address, setAddress] = useState({
@@ -51,26 +50,21 @@ export default function Checkout() {
 
     useEffect(() => {
         if (settings?.data) {
-            let weight = settings?.data?.filter(item => item.type == 'shipping_free_after_amount');
-            setFreeShipping(weight[0]?.value);
+            const weight = settings?.data?.find(item => item.type === 'shipping_free_after_amount');
+            setFreeShipping(weight?.value || 0);
         }
-    }, [settings])
+    }, [settings]);
 
     useEffect(() => {
         setUserId(user_id ?? temp_user_id);
     }, [user_id]);
+
     useEffect(() => {
         if (cartData) {
-            let items = [];
-
-            cartData.data?.map((shop) => {
-                items = [...items, ...shop.cart_items];
-            });
-
+            const items = cartData.data?.flatMap(shop => shop.cart_items) || [];
             setCartProducts(items);
         }
     }, [cartData]);
-
 
     const handleAddress = (e) => {
         setAddress({
@@ -85,53 +79,27 @@ export default function Checkout() {
             return;
         }
 
+        const orderDetails = {
+            user_id: userId,
+            payment_type: paymentType,
+            whatsapp: address.whatsapp,
+        };
 
         if (selectedAddress === 0) {
-
             createAddress.mutate(
                 {
                     ...address,
                     state_id: parseInt(address.city),
                     city_id: parseInt(address.city),
-                    country_id: parseInt(address.country_id)
+                    country_id: parseInt(address.country_id),
                 },
                 {
                     onSuccess: (data) => {
                         selectAddress.mutate(
-                            {address_id: data.id, user_id: userId},
+                            { address_id: data.id, user_id: userId },
                             {
-                                onSuccess: (data) => {
-                                    if (paymentType === 'wallet_system') {
-                                        walletPay.mutate({
-                                                user_id: userId,
-                                                payment_type: paymentType,
-                                                whatsapp: address.whatsapp,
-                                            },
-                                            {
-                                                onSuccess: (orderData) => {
-                                                    Cookies.set('order-confirmation', 'true');
-                                                    window.location.href = '/payment-confirmation';
-                                                }
-                                            })
-                                    } else {
-                                        placeOrder.mutate(
-                                            {
-                                                user_id: userId,
-                                                payment_type: paymentType,
-                                                whatsapp: address.whatsapp,
-                                            },
-                                            {
-                                                onSuccess: (orderData) => {
-                                                    if (paymentType === 'stripe_payment') {
-                                                        window.location.href = 'https://nomahd.com/api/v2/stripe?payment_type?payment_type=cart_payment&combined_order_id=' + orderData.combined_order_id + '&amount=' + cartSummery?.grand_total_value + '&user_id=' + userId;
-                                                    } else {
-                                                        Cookies.set('order-confirmation', 'true');
-                                                        window.location.href = '/payment-confirmation';
-                                                    }
-                                                }
-                                            }
-                                        );
-                                    }
+                                onSuccess: () => {
+                                    handlePayment(orderDetails);
                                 }
                             }
                         );
@@ -139,48 +107,37 @@ export default function Checkout() {
                 }
             );
         } else {
-
             selectAddress.mutate(
-                {address_id: selectedAddress, user_id: userId},
+                { address_id: selectedAddress, user_id: userId },
                 {
-                    onSuccess: (data) => {
-                        if (paymentType === 'wallet_system') {
-                            walletPay.mutate({
-                                    user_id: userId,
-                                    payment_type: paymentType,
-                                    whatsapp: address.whatsapp,
-                                },
-                                {
-                                    onSuccess: (orderData) => {
-                                        Cookies.set('order-confirmation', 'true');
-                                        window.location.href = '/payment-confirmation';
-                                    }
-                                })
-                        } else {
-                            placeOrder.mutate(
-                                {
-                                    user_id: userId,
-                                    payment_type: paymentType,
-                                    whatsapp: address.whatsapp
-                                },
-                                {
-                                    onSuccess: (orderData) => {
-                                        if (paymentType === 'stripe_payment') {
-                                            window.location.href = 'https://nomahd.com/api/v2/stripe?payment_type?payment_type=cart_payment&combined_order_id=' + orderData.combined_order_id + '&amount=' + cartSummery?.grand_total_value + '&user_id=' + userId;
-                                        } else {
-                                            Cookies.set('order-confirmation', 'true');
-                                            window.location.href = '/payment-confirmation';
-                                        }
-                                    }
-                                }
-                            );
-                        }
+                    onSuccess: () => {
+                        handlePayment(orderDetails);
                     }
                 }
             );
-
         }
+    };
 
+    const handlePayment = (orderDetails) => {
+        if (paymentType === 'wallet_system') {
+            walletPay.mutate(orderDetails, {
+                onSuccess: () => {
+                    Cookies.set('order-confirmation', 'true');
+                    window.location.href = '/payment-confirmation';
+                }
+            });
+        } else {
+            placeOrder.mutate(orderDetails, {
+                onSuccess: (orderData) => {
+                    if (paymentType === 'stripe_payment') {
+                        window.location.href = `https://nomahd.com/api/v2/stripe?payment_type=cart_payment&combined_order_id=${orderData.combined_order_id}&amount=${cartSummery?.grand_total_value}&user_id=${userId}`;
+                    } else {
+                        Cookies.set('order-confirmation', 'true');
+                        window.location.href = '/payment-confirmation';
+                    }
+                }
+            });
+        }
     };
 
     const handleCoupon = () => {
@@ -191,149 +148,87 @@ export default function Checkout() {
             onSuccess: (data) => {
                 if (data.data?.response_message?.response === 'success') {
                     toast.success(data.data?.response_message.message);
-                    queryClient.invalidateQueries(['summery'])
+                    queryClient.invalidateQueries(['summery']);
                 } else {
                     toast.error(data.data.message);
                 }
             }
-        })
+        });
     };
 
     const calculatePrice = (priceText) => {
         return parseFloat(priceText.replace("SAR", ""));
     };
+
+    // Check if loading cart data
+    if (isCartLoading) {
+        return <div>Loading...</div>; // Or a spinner/loading state
+    }
+
     return (
         <section className="flat-spacing-11">
             <div className="container">
                 <div className="tf-page-cart-wrap layout-2">
                     <div className="tf-page-cart-item">
                         <h5 className="fw-5 mb_20">Billing details</h5>
-                        <form
-                            onSubmit={(e) => e.preventDefault()}
-                            className="form-checkout"
-                        >
-                            <CheckoutAddress handleAddress={handleAddress} setSelectedAddress={setSelectedAddress}
-                                             selectedAddress={selectedAddress}/>
-                            {!token && <>
-                                <fieldset className="box fieldset">
-                                    <label htmlFor="country_id">Your Full Name</label>
-                                    <div className="select-custom">
-                                        <input
-                                            required
-                                            type="text"
-                                            id="full_name"
-                                            onChange={handleAddress}
-                                        />
-                                    </div>
-                                </fieldset>
+                        <form onSubmit={(e) => e.preventDefault()} className="form-checkout">
+                            <CheckoutAddress setAddress={setAddress} handleAddress={handleAddress} setSelectedAddress={setSelectedAddress} selectedAddress={selectedAddress} />
+                            {!token && (
+                                <>
+                                    <fieldset className="box fieldset">
+                                        <label htmlFor="full_name">Your Full Name</label>
+                                        <div className="select-custom">
+                                            <input required type="text" id="full_name" onChange={handleAddress} />
+                                        </div>
+                                    </fieldset>
 
-                                <fieldset className="box fieldset">
-                                    <label htmlFor="country_id">Email</label>
-                                    <div className="select-custom">
-                                        <input
-                                            required
-                                            type="email"
-                                            id="email"
-                                            onChange={handleAddress}
-                                        />
-                                    </div>
-                                </fieldset>
+                                    <fieldset className="box fieldset">
+                                        <label htmlFor="email">Email</label>
+                                        <div className="select-custom">
+                                            <input required type="email" id="email" onChange={handleAddress} />
+                                        </div>
+                                    </fieldset>
 
+                                    <fieldset className="box fieldset">
+                                        <label htmlFor="password">Password</label>
+                                        <div className="select-custom">
+                                            <input required type="password" id="password" onChange={handleAddress} />
+                                        </div>
+                                    </fieldset>
 
-                                <fieldset className="box fieldset">
-                                    <label htmlFor="country_id">Password</label>
-                                    <div className="select-custom">
-                                        <input
-                                            required
-                                            type="password"
-                                            id="password"
-                                            onChange={handleAddress}
-                                        />
-                                    </div>
-                                </fieldset>
+                                    <fieldset className="box fieldset">
+                                        <label htmlFor="password_confirmation">Confirm Password</label>
+                                        <div className="select-custom">
+                                            <input required type="password" id="password_confirmation" onChange={handleAddress} />
+                                        </div>
+                                    </fieldset>
+                                </>
+                            )}
 
-                                <fieldset className="box fieldset">
-                                    <label htmlFor="country_id">Confirm Password</label>
-                                    <div className="select-custom">
-                                        <input
-                                            required
-                                            type="password"
-                                            id="password_comfirmation"
-                                            onChange={handleAddress}
-                                        />
-                                    </div>
-                                </fieldset>
-                            </>
-                            }
-
-
+                            <fieldset className="box fieldset text-start">
+                                <label htmlFor="whatsapp">WhatsApp Number</label>
+                                <input required type="number" id="whatsapp" onChange={handleAddress} />
+                            </fieldset>
                         </form>
                     </div>
+
                     <div className="tf-page-cart-footer">
                         <div className="tf-cart-footer-inner">
                             <h5 className="fw-5 mb_20">Your order</h5>
-                            <div className="tf-free-shipping-bar">
-                                <div className="tf-progress-bar">
-                  <span style={{width: `${Math.min((cartData?.total_weight / freeShipping) * 100, 100)}%`}}>
-                    <div className="progress-car">
-                      <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width={21}
-                          height={14}
-                          viewBox="0 0 21 14"
-                          fill="currentColor"
-                      >
-                        <path
-                            fillRule="evenodd"
-                            clipRule="evenodd"
-                            d="M0 0.875C0 0.391751 0.391751 0 0.875 0H13.5625C14.0457 0 14.4375 0.391751 14.4375 0.875V3.0625H17.3125C17.5867 3.0625 17.845 3.19101 18.0104 3.40969L20.8229 7.12844C20.9378 7.2804 21 7.46572 21 7.65625V11.375C21 11.8582 20.6082 12.25 20.125 12.25H17.7881C17.4278 13.2695 16.4554 14 15.3125 14C14.1696 14 13.1972 13.2695 12.8369 12.25H7.72563C7.36527 13.2695 6.39293 14 5.25 14C4.10706 14 3.13473 13.2695 2.77437 12.25H0.875C0.391751 12.25 0 11.8582 0 11.375V0.875ZM2.77437 10.5C3.13473 9.48047 4.10706 8.75 5.25 8.75C6.39293 8.75 7.36527 9.48046 7.72563 10.5H12.6875V1.75H1.75V10.5H2.77437ZM14.4375 8.89937V4.8125H16.8772L19.25 7.94987V10.5H17.7881C17.4278 9.48046 16.4554 8.75 15.3125 8.75C15.0057 8.75 14.7112 8.80264 14.4375 8.89937ZM5.25 10.5C4.76676 10.5 4.375 10.8918 4.375 11.375C4.375 11.8582 4.76676 12.25 5.25 12.25C5.73323 12.25 6.125 11.8582 6.125 11.375C6.125 10.8918 5.73323 10.5 5.25 10.5ZM15.3125 10.5C14.8293 10.5 14.4375 10.8918 14.4375 11.375C14.4375 11.8582 14.8293 12.25 15.3125 12.25C15.7957 12.25 16.1875 11.8582 16.1875 11.375C16.1875 10.8918 15.7957 10.5 15.3125 10.5Z"
-                        />
-                      </svg>
-                    </div>
-                  </span>
-                                </div>
-                                {Math.min((cartData?.total_weight / freeShipping) * 100, 100) === 100 ?
-                                    <div className="tf-progress-msg text-success text-center">
-                                        You got free Cashback
-                                    </div>
-                                    :
-                                    <div className="tf-progress-msg">
-                                        Buy <span className="price fw-6">{freeShipping} Gram</span> more to enjoy{" "}
-                                        <span className="fw-6">Free Shipping</span>
-                                    </div>
-                                }
-                            </div>
-                            <form
-                                onSubmit={(e) => e.preventDefault()}
-                                className="tf-page-cart-checkout widget-wrap-checkout"
-                            >
+                            <form onSubmit={(e) => e.preventDefault()} className="tf-page-cart-checkout widget-wrap-checkout">
                                 <ul className="wrap-checkout-product">
                                     {cartProductsData?.map((elm, i) => (
                                         <li key={i} className="checkout-product-item">
                                             <figure className="img-product">
-                                                <Image
-                                                    alt="product"
-                                                    src={elm.product_thumbnail_image}
-                                                    width={720}
-                                                    height={1005}
-                                                />
+                                                <Image alt="product" src={elm.product_thumbnail_image} width={720} height={1005} />
                                                 <span className="quantity">{elm.quantity}</span>
                                             </figure>
                                             <div className="content">
                                                 <div className="info">
                                                     <p className="name">{elm.product_name}</p>
-                                                    <span className="variant">
-                            {elm.variation
-                                ? elm.variation.replace("-", " / ")
-                                : "No variation"}
-                          </span>
+                                                    <span className="variant">{elm.variation ? elm.variation.replace("-", " / ") : "No variation"}</span>
                                                 </div>
-                                                <span className="price">
-                          SAR{" "}
-                                                    {(calculatePrice(elm.price) * elm.quantity).toFixed(
-                                                        2
-                                                    )}
-                        </span>
+                                                <span className="price">SAR {(calculatePrice(elm.price) * elm.quantity).toFixed(2)}</span>
                                             </div>
                                         </li>
                                     ))}
@@ -341,15 +236,9 @@ export default function Checkout() {
                                 {!cartProductsData?.length && (
                                     <div className="container">
                                         <div className="row align-items-center mt-5 mb-5">
-                                            <div className="col-12 fs-18">
-                                                Your shop cart is empty
-                                            </div>
+                                            <div className="col-12 fs-18">Your shop cart is empty</div>
                                             <div className="col-12 mt-3">
-                                                <Link
-                                                    href={`/shop-default`}
-                                                    className="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center"
-                                                    style={{width: "fit-content"}}
-                                                >
+                                                <Link href={`/shop-default`} className="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center" style={{ width: "fit-content" }}>
                                                     Explore Products!
                                                 </Link>
                                             </div>
@@ -357,19 +246,8 @@ export default function Checkout() {
                                     </div>
                                 )}
                                 <div className="coupon-box">
-                                    <input
-                                        required
-                                        type="text"
-                                        placeholder="Discount code"
-                                        value={coupon}
-                                        onChange={(e) => setCoupon(e.target.value)}
-                                    />
-                                    <a
-                                        onClick={handleCoupon}
-                                        className="tf-btn btn-sm radius-3 btn-fill btn-icon animate-hover-btn"
-                                    >
-                                        Apply
-                                    </a>
+                                    <input required type="text" placeholder="Discount code" value={coupon} onChange={(e) => setCoupon(e.target.value)} />
+                                    <a onClick={handleCoupon} className="tf-btn btn-sm radius-3 btn-fill btn-icon animate-hover-btn">Apply</a>
                                 </div>
                                 <div className="d-flex justify-content-between">
                                     <p className="fw-5">Shipping</p>
@@ -377,72 +255,41 @@ export default function Checkout() {
                                 </div>
 
                                 <div className="d-flex justify-content-between">
-                                    <p className="fw-5">Packageing Fee</p>
+                                    <p className="fw-5">Packaging Fee</p>
                                     <p className="total fw-5">{cartSummery?.packaging_cost}</p>
                                 </div>
 
-                                {cartSummery?.coupon_applied &&
-                                    <div className="d-flex justify-content-between line pb_20">
+                                {cartSummery?.coupon_applied && (
+                                    <div className="d-flex justify-content-between pb_20">
                                         <p className="fw-5">Discount</p>
                                         <p className="total fw-5">{cartSummery?.discount}</p>
-                                    </div>}
+                                    </div>
+                                )}
 
-                                <div className="d-flex justify-content-between line pb_20">
+                                <div className="d-flex justify-content-between pb_20">
                                     <h6 className="fw-5">Total</h6>
                                     <h6 className="total fw-5">{cartSummery?.grand_total}</h6>
                                 </div>
                                 <div className="wd-check-payment">
                                     {paymentTypes?.map((method) => (
-                                        <div className="fieldset-radio mb_20">
-                                            <input
-                                                required
-                                                type="radio"
-                                                name="payment"
-                                                id={method.payment_type}
-                                                onChange={() => setPaymentType(method.payment_type)}
-                                                className="tf-check"
-                                            />
-                                            <label className="d-flex align-items-center justify-content-between w-100"
-                                                   htmlFor={method.payment_type}>
+                                        <div className="fieldset-radio mb_20" key={method.payment_type}>
+                                            <input required type="radio" name="payment" id={method.payment_type} onChange={() => setPaymentType(method.payment_type)} className="tf-check" />
+                                            <label className="d-flex align-items-center justify-content-between w-100" htmlFor={method.payment_type}>
                                                 {method.title}
-                                                <Image width={50} height={50} src={method.image}/>
+                                                <Image width={50} height={50} src={method.image} />
                                             </label>
                                         </div>
                                     ))}
-                                    {paymentError && (
-                                        <p className="text-danger mb_20">
-                                            Please chose payment method first
-                                        </p>
-                                    )}
+                                    {paymentError && <p className="text-danger mb_20">Please choose a payment method first</p>}
                                     <p className="text_black-2 mb_20">
-                                        Your personal data will be used to process your order,
-                                        support your experience throughout this website, and for
-                                        other purposes described in our
-                                        <Link
-                                            href={`/privacy-policy`}
-                                            className="text-decoration-underline ms-1"
-                                        >
-                                            privacy policy
-                                        </Link>
-                                        .
+                                        Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our
+                                        <Link href={`/privacy-policy`} className="text-decoration-underline ms-1">privacy policy</Link>.
                                     </p>
-
                                 </div>
-                                <button
-                                    onClick={checkoutHandler}
-                                    type="button"
-                                    className="tf-btn radius-3 btn-fill btn-icon animate-hover-btn justify-content-center"
-                                >
+                                <button onClick={checkoutHandler} type="button" className="tf-btn radius-3 btn-fill btn-icon animate-hover-btn justify-content-center">
                                     {createAddress.status === 'pending' || placeOrder.status === 'pending' || selectAddress.status === 'pending' ?
-                                        <ThreeDots
-                                            visible={true}
-                                            height={10}
-                                            color="#b7ec31"
-                                            radius="9"
-                                            ariaLabel="three-dots-loading"
-                                            wrapperStyle={{}}
-                                            wrapperClass=""
-                                        /> : 'Place order'}
+                                        <ThreeDots visible={true} height={10} color="#b7ec31" radius="9" ariaLabel="three-dots-loading" wrapperStyle={{}} wrapperClass="" /> :
+                                        'Place order'}
                                 </button>
                             </form>
                         </div>
